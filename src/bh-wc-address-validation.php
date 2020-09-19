@@ -70,7 +70,7 @@ namespace BH_WC_Address_Validation {
 
 	use BH_WC_Address_Validation\api\Settings;
 	use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
-	use BH_WC_Address_Validation\WPPB\WPPB_Loader;
+	use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Loader;
 
 	/**
 	 * Begins execution of the plugin.

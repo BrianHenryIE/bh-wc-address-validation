@@ -2,7 +2,7 @@
 
 namespace BH_WC_Address_Validation\woocommerce;
 
-use BH_WC_Address_Validation\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
 
 class Order_Status extends WPPB_Object {
 

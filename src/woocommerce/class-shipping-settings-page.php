@@ -15,7 +15,7 @@ use BH_WC_Address_Validation\admin\settings\Settings_Section_Element_Abstract;
 use BH_WC_Address_Validation\admin\settings\Settings_Section_Text_Element_Abstract;
 use BH_WC_Address_Validation\api\Settings;
 use BH_WC_Address_Validation\api\Settings_Interface;
-use BH_WC_Address_Validation\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
 
 /**
  * The settings page for the plugin.

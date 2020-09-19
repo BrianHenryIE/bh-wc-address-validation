@@ -6,7 +6,7 @@
 namespace BH_WC_Address_Validation\includes;
 
 use BH_WC_Address_Validation\api\API;
-use BH_WC_Address_Validation\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
 
 class Cron extends WPPB_Object {
 

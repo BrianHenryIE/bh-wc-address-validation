@@ -9,7 +9,7 @@ use WC_Order;
 use BH_WC_Address_Validation\api\API;
 use BH_WC_Address_Validation\includes\Cron;
 use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
-use BH_WC_Address_Validation\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
 
 class Order extends WPPB_Object {
 

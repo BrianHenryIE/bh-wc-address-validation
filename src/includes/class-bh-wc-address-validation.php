@@ -26,8 +26,8 @@ use BH_WC_Address_Validation\woocommerce\email\Emails;
 use BH_WC_Address_Validation\woocommerce\Order;
 use BH_WC_Address_Validation\woocommerce\Order_Status;
 use BH_WC_Address_Validation\woocommerce\Shipping_Settings_Page;
-use BH_WC_Address_Validation\WPPB\WPPB_Loader_Interface;
-use BH_WC_Address_Validation\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Loader_Interface;
+use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Plugin_Abstract;
 use WP_CLI;
 
 /**
@@ -44,7 +44,7 @@ use WP_CLI;
  * @subpackage BH_WC_Address_Validation/includes
  * @author     Brian Henry <BrianHenryIE@gmail.com>
  */
-class BH_WC_Address_Validation extends WPPB_Object {
+class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 
 	/**
 	 * @var WC_Logger
@@ -121,16 +121,6 @@ class BH_WC_Address_Validation extends WPPB_Object {
 	 * @var Shipping_Settings_Page
 	 */
 	public $shipping_settings_page;
-
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      WPPB_Loader_Interface    $loader    Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
 
 	/**
 	 * @var Settings
@@ -276,25 +266,6 @@ class BH_WC_Address_Validation extends WPPB_Object {
 			// vendor/bin/wp validate_address check_order 123 --path=vendor/wordpress/wordpress/build
 			WP_CLI::add_command( 'validate_address', CLI::class );
 		}
-	}
-
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-		$this->loader->run();
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    WPPB_Loader_Interface    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
 	}
 
 }

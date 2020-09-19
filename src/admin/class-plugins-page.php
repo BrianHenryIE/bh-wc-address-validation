@@ -12,7 +12,7 @@
 
 namespace BH_WC_Address_Validation\admin;
 
-use BH_WC_Address_Validation\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
 
 /**
  * This class adds a `Settings` link on the plugins.php page.

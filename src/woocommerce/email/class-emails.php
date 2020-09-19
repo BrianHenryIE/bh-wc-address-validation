@@ -3,7 +3,7 @@
 namespace BH_WC_Address_Validation\woocommerce\email;
 
 use WC_Email;
-use BH_WC_Address_Validation\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
 
 class Emails extends WPPB_Object {
 
