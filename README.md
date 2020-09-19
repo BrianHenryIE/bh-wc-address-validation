@@ -11,3 +11,10 @@
 ![Order Action Manual Check](./assets/order-action-manual-check.png "Order Action Manual Check")
 
 
+## Develop
+
+Add a `.env.secret` file in the root of the project containing your USPS username.
+
+```
+USPS_USERNAME="123BH0003210"
+```
