@@ -42,8 +42,6 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 
 		$api->check_address_for_order( $order );
 
-
-
 		// USPS Should respond with an object with the updated address
 
 		// $order should expect the appropriate methods called with that info, then saved

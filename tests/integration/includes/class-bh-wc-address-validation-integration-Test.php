@@ -53,7 +53,7 @@ class BH_WC_Address_Validation_Integration_Test extends \Codeception\TestCase\WP
 		$action_name       = 'woocommerce_admin_order_data_after_shipping_address';
 		$expected_priority = 10;
 		$class_type        = Order::class;
-		$method_name     = 'add_link_to_usps_tools_zip_lookup';
+		$method_name       = 'add_link_to_usps_tools_zip_lookup';
 
 		$hooked = $this->is_function_hooked_on_action( $class_type, $method_name, $action_name, $expected_priority );
 
@@ -73,14 +73,14 @@ class BH_WC_Address_Validation_Integration_Test extends \Codeception\TestCase\WP
 		$this->assertArrayHasKey( $expected_priority, $actions_hooked, "$method_name definitely not hooked to $action_name priority $expected_priority" );
 
 		$hooked_to_class = false;
-		$hooked_method = null;
+		$hooked_method   = null;
 		foreach ( $actions_hooked[ $expected_priority ] as $action ) {
 			$action_function = $action['function'];
 			if ( is_array( $action_function ) ) {
 				$action_class = $action_function[0];
 				if ( $action_class instanceof $class_type ) {
 					$hooked_to_class = true;
-					$action_method = $action_function[1];
+					$action_method   = $action_function[1];
 					if ( $method_name === $action_method ) {
 						$hooked_method = $action_method;
 						break;

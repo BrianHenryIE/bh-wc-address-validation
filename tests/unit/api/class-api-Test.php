@@ -46,8 +46,6 @@ class API_Test extends \Codeception\Test\Unit {
 
 		$api = new API( $settings, $address_verify );
 
-
-
 	}
 
 

@@ -47,9 +47,9 @@ class Order extends WPPB_Object {
 	public function check_address_on_single_order_processing( $order_id, $status_from, $status_to ) {
 
 		// TODO: should this not run when it's a bulk update.
-//		if ( isset( $_REQUEST['_wp_http_referer'] ) && '/wp-admin/edit.php?post_type=shop_order' === $_REQUEST['_wp_http_referer'] ) {
-//			return;
-//		}
+		// if ( isset( $_REQUEST['_wp_http_referer'] ) && '/wp-admin/edit.php?post_type=shop_order' === $_REQUEST['_wp_http_referer'] ) {
+		// return;
+		// }
 
 		if ( 'processing' === $status_to ) {
 
@@ -73,7 +73,7 @@ class Order extends WPPB_Object {
 
 		$args = array( $_REQUEST['post'] );
 
-		BH_WC_Address_Validation::log( 'Scheduling background process to check order ' . implode(', ', $_REQUEST['post'] ), 'debug' );
+		BH_WC_Address_Validation::log( 'Scheduling background process to check order ' . implode( ', ', $_REQUEST['post'] ), 'debug' );
 
 		wp_schedule_single_event( time() - 60, Cron::CHECK_ADDRESS_CRON_JOB, $args );
 

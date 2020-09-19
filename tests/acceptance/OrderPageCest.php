@@ -30,8 +30,8 @@ class OrderPageCest {
 
 		$I->selectOption( '#order_status', 'Processing' );
 
-//
-//		$I->makeHtmlSnapshot();
+		//
+		// $I->makeHtmlSnapshot();
 
 		$I->click( 'Update' );
 
