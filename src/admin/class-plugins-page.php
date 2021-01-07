@@ -33,11 +33,7 @@ class Plugins_Page extends WPPB_Object {
 	public function action_links( $links_array ) {
 
 		$settings_url       = admin_url( '/admin.php?page=wc-settings&tab=shipping&section=' . $this->get_plugin_name() );
-		$email_settings_url = admin_url( '/admin.php?page=wc-settings&tab=email&section=bad_address' );
-		$logs_url           = admin_url( '/admin.php?page=wc-status&tab=logs' );
 
-		array_unshift( $links_array, '<a href="' . $logs_url . '">Logs</a>' );
-		array_unshift( $links_array, '<a href="' . $email_settings_url . '">Configure Email</a>' );
 		array_unshift( $links_array, '<a href="' . $settings_url . '">Settings</a>' );
 
 		return $links_array;
