@@ -30,7 +30,7 @@ class Order_Status extends WPPB_Object {
 	}
 
 	/**
-	 * Add "wc-usps-bad-address" to WooCommerce's list of statuses.
+	 * Add "wc-bad-address" to WooCommerce's list of statuses.
 	 *
 	 * Adds the new order status before "processing".
 	 *

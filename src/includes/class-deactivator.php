@@ -26,7 +26,7 @@ use BH_WC_Address_Validation\woocommerce\Order_Status;
 class Deactivator {
 
 	/**
-	 * Changes all orders with usps-bad-address status to on-hold.
+	 * Changes all orders with bad-address status to on-hold.
 	 *
 	 * @since    1.0.0
 	 */
@@ -39,8 +39,9 @@ class Deactivator {
 			)
 		);
 
+		// TODO: add a meta key to check on activation.
 		foreach ( $orders as $order ) {
-			$order_note = 'Changed from USPS Bad Address on plugin deactivation.';
+			$order_note = 'Changed from Bad Address on plugin deactivation.';
 			$order->update_status( 'on-hold', $order_note );
 			$order->save();
 		}

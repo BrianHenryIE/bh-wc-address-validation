@@ -45,7 +45,7 @@ class Activator {
 
 		if ( ! empty( $earlier_version_notification_email_address ) ) {
 
-			$email_settings_option_key = 'woocommerce_usps_bad_address_admin_settings';
+			$email_settings_option_key = 'woocommerce_bad_address_admin_settings';
 
 			// Extremely unlikely this will already exist.
 			$email_settings = get_option( $email_settings_option_key, array() );
