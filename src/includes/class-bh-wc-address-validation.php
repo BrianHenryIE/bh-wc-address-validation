@@ -261,7 +261,7 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 
 		if ( class_exists( WP_CLI::class ) ) {
 			CLI::$api = $this->api;
-			// vendor/bin/wp validate_address check_order 123 --path=vendor/wordpress/wordpress/build
+			// vendor/bin/wp validate_address check_order 123
 			WP_CLI::add_command( 'validate_address', CLI::class );
 		}
 	}

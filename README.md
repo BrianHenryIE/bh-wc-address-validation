@@ -2,6 +2,16 @@
 
 # BH WC Address Validation
 
+Uses USPS API to validate and update addresses when an order is marked processing.
+
+* Only changes the address once when run automatically
+* Can be run manually repeatedly
+* Sets order status to on-hold when deactivated
+* Checks on-hold orders for plugin meta-key when activated to re-set orders to bad-address status
+* Optionally triggers an email to admin when an order needs attention
+
+TODO: Verify orders with bad-address status are correctly accounted for in reports. 
+
 ![Settings Page](./assets/settings-page.png "Setting Page")
 
 ![Order Notes After Automatic Check](./assets/order-notes-after-automatic-check.png "Order Notes After Automatic Check")
