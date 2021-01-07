@@ -9,7 +9,6 @@ use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
 use BH_WC_Address_Validation\USPS\Address;
 use BH_WC_Address_Validation\USPS\AddressVerify;
 use BH_WC_Address_Validation\woocommerce\Order_Status;
-use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
 
 class API {
 	const BH_WC_ADDRESS_VALIDATION_CHECKED_META = 'bh-wc-address-validation-checked';

@@ -1,5 +1,5 @@
 {
-    "name": "your-domain/bh-wc-address-validation",
+    "name": "brianhenryie/bh-wc-address-validation",
     "description": "This is a short description of what plugin_title does.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
@@ -71,6 +71,7 @@
         "phpcompatibility/phpcompatibility-wp": "*",
         "squizlabs/php_codesniffer": "dev-master#1371c59bd5da5cfc877ab8478753362edc9bbc9b",
         "wordpress/wordpress": "^5.5",
+        "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-plugin/woocommerce": "^4.5",
         "wpackagist-theme/storefront": "*",
@@ -78,8 +79,6 @@
     },
     "extra": {
         "patches": {
-            "coenjacobs/mozart": {
-            },
             "jaschilz/php-coverage-badger": {
                 "Allow customising the text": "https://github.com/JASchilz/PHPCoverageBadge/pull/1.patch"
             },

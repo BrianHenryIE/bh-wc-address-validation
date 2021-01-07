@@ -163,8 +163,6 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 
 		$this->settings = $settings;
 
-		$a = $settings->is_logging_enabled();
-
 		$this->api = new API( $this->settings );
 
 		self::$is_logging_enabled = $this->settings->is_logging_enabled();
