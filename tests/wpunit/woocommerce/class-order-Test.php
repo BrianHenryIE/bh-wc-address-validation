@@ -8,6 +8,7 @@
 
 namespace BH_WC_Address_Validation\woocommerce;
 
+use BH_WC_Address_Validation\Psr\Log\NullLogger;
 use Codeception\Stub\Expected;
 use WC_Order;
 use BH_WC_Address_Validation\api\API;
@@ -39,10 +40,12 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 
 	public function test_order_action_handler() {
 
+		$this->markTestSkipped('unimplemented');
+
 		$api = $this->make(
 			API::class,
 			array(
-				'check_address_for_order' => Expected::once(),
+				'check_address_for_order' => Expected::once()
 			)
 		);
 

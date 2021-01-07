@@ -5,13 +5,24 @@
 
 namespace BH_WC_Address_Validation\woocommerce;
 
+use BH_WC_Address_Validation\api\Settings_Interface;
+use BH_WC_Address_Validation\Psr\Log\LoggerInterface;
 use WC_Order;
 use BH_WC_Address_Validation\api\API;
 use BH_WC_Address_Validation\includes\Cron;
 use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
-use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
 
-class Order extends WPPB_Object {
+class Order {
+
+	/**
+	 * @var LoggerInterface
+	 */
+	protected $logger;
+
+	/**
+	 * @var Settings_Interface
+	 */
+	protected $settings;
 
 	/**
 	 * @var API
@@ -25,9 +36,10 @@ class Order extends WPPB_Object {
 	 * @param string $plugin_name
 	 * @param string $version
 	 */
-	public function __construct( $api, $plugin_name, $version ) {
-		parent::__construct( $plugin_name, $version );
+	public function __construct( $api, $settings, $logger ) {
 
+		$this->logger= $logger;
+		$this->settings = $settings;
 		$this->api = $api;
 	}
 
@@ -55,7 +67,7 @@ class Order extends WPPB_Object {
 
 			$args = array( $order_id );
 
-			BH_WC_Address_Validation::log( 'Scheduling background process to check order ' . $order_id, 'debug' );
+			$this->logger->debug( 'Scheduling background process to check order ' . $order_id, array( 'order_id' => $order_id )  );
 
 			wp_schedule_single_event( time() - 60, Cron::CHECK_SINGLE_ADDRESS_CRON_JOB, $args );
 		}
@@ -71,9 +83,12 @@ class Order extends WPPB_Object {
 			return;
 		}
 
-		$args = array( $_REQUEST['post'] );
+		// TODO: sanitize.
+		$order_ids = $_REQUEST['post'];
 
-		BH_WC_Address_Validation::log( 'Scheduling background process to check order ' . implode( ', ', $_REQUEST['post'] ), 'debug' );
+		$args = array( $order_ids );
+
+		$this->logger->debug( 'Scheduling background process to check orders ' . implode( ', ', $order_ids ), array( 'order_ids' => $order_ids ) );
 
 		wp_schedule_single_event( time() - 60, Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, $args );
 
@@ -104,7 +119,7 @@ class Order extends WPPB_Object {
 	 */
 	public function check_address_on_admin_order_action( $order ) {
 
-		BH_WC_Address_Validation::log( $order->get_id() . ' check address started from edit order page.' );
+		$this->logger->debug( $order->get_id() . ' check address started from edit order page.', array( 'order_id' => $order->get_id() )  );
 
 		$is_manual = true;
 

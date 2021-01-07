@@ -8,6 +8,7 @@
 
 namespace BH_WC_Address_Validation;
 
+use BH_WC_Address_Validation\api\API;
 use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
 
 /**
@@ -22,7 +23,7 @@ class Plugin_Load_Test extends \Codeception\TestCase\WPTestCase {
 
 		$this->assertArrayHasKey( 'bh_wc_address_validation', $GLOBALS );
 
-		$this->assertInstanceOf( BH_WC_Address_Validation::class, $GLOBALS['bh_wc_address_validation'] );
+		$this->assertInstanceOf( API::class, $GLOBALS['bh_wc_address_validation'] );
 	}
 
 }

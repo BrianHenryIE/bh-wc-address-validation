@@ -40,6 +40,14 @@
             "type": "git"
         },
         {
+            "type": "path",
+            "url": "../bh-wp-logger"
+        },
+        {
+            "url": "https://github.com/BrianHenryIE/bh-wp-logger",
+            "type": "git"
+        },
+        {
             "type":"composer",
             "url":"https://wpackagist.org"
         }
@@ -47,6 +55,7 @@
     "require": {
         "php": ">=7.2",
         "brianhenryie/wppb-lib": "dev-master",
+        "brianhenryie/wp-logger": "dev-master",
         "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master",
         "vinceg/usps-php-api": "^1.0"
     },
@@ -62,7 +71,7 @@
         "codeception/module-filesystem": "^1.0",
         "codeception/util-universalframework": "^1.0",
         "codeception/module-cli": "^1.0",
-        "coenjacobs/mozart": "dev-master",
+        "coenjacobs/mozart": "dev-master#5d8041fdefc94ff57edcbe83ab468a9988c4fc11",
         "cweagans/composer-patches": "~1.0",
         "jaschilz/php-coverage-badger": "^2.0",
         "kporras07/composer-symlinks": "dev-master",
@@ -79,6 +88,9 @@
     },
     "extra": {
         "patches": {
+            "coenjacobs/mozart": {
+                "Do not edit class declarations inside namespaces": "https://github.com/coenjacobs/mozart/pull/101.patch"
+            },
             "jaschilz/php-coverage-badger": {
                 "Allow customising the text": "https://github.com/JASchilz/PHPCoverageBadge/pull/1.patch"
             },

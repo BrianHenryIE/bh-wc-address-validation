@@ -2,11 +2,42 @@
 
 namespace BH_WC_Address_Validation\woocommerce;
 
-use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\api\API;
+use BH_WC_Address_Validation\api\Settings_Interface;
+use BH_WC_Address_Validation\Psr\Log\LoggerInterface;
 
-class Order_Status extends WPPB_Object {
+class Order_Status {
 
 	const BAD_ADDRESS_STATUS = 'bad-address';
+
+	/**
+	 * @var LoggerInterface
+	 */
+	protected $logger;
+
+	/**
+	 * @var Settings_Interface
+	 */
+	protected $settings;
+
+	/**
+	 * @var API
+	 */
+	protected $api;
+
+	/**
+	 * Order_Status constructor.
+	 *
+	 * @param API    $api
+	 * @param string $plugin_name
+	 * @param string $version
+	 */
+	public function __construct( $api, $settings, $logger ) {
+
+		$this->logger= $logger;
+		$this->settings = $settings;
+		$this->api = $api;
+	}
 
 	/**
 	 * Register the order/post status with WordPress.

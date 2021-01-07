@@ -80,7 +80,7 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function test_order_action_handler_hook_added() {
 
-		$action_name       = 'woocommerce_order_action_bh_wc_address_verify';
+		$action_name       = 'woocommerce_order_action_bh_wc_address_validate';
 		$expected_priority = 10;
 		$class_type        = Order::class;
 		$function_name     = 'check_address_on_admin_order_action';

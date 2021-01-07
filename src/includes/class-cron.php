@@ -6,12 +6,24 @@
 namespace BH_WC_Address_Validation\includes;
 
 use BH_WC_Address_Validation\api\API;
-use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\api\Settings_Interface;
+use BH_WC_Address_Validation\Psr\Log\LoggerInterface;
 
-class Cron extends WPPB_Object {
+class Cron {
 
 	const CHECK_SINGLE_ADDRESS_CRON_JOB     = 'bh_wc_address_validation_check_one_address';
 	const CHECK_MULTIPLE_ADDRESSES_CRON_JOB = 'bh_wc_address_validation_check_many_addresses';
+
+
+	/**
+	 * @var LoggerInterface
+	 */
+	protected $logger;
+
+	/**
+	 * @var Settings_Interface
+	 */
+	protected $settings;
 
 	/**
 	 * @var API
@@ -25,9 +37,10 @@ class Cron extends WPPB_Object {
 	 * @param string $plugin_name
 	 * @param string $version
 	 */
-	public function __construct( $api, $plugin_name, $version ) {
-		parent::__construct( $plugin_name, $version );
+	public function __construct( $api, $settings, $logger ) {
 
+		$this->logger= $logger;
+		$this->settings = $settings;
 		$this->api = $api;
 	}
 
@@ -47,7 +60,7 @@ class Cron extends WPPB_Object {
 
 		if ( ! $order instanceof \WC_Order ) {
 
-			BH_WC_Address_Validation::log( 'Invalid $order_id parameter passed to ' . __CLASS__ . '->' . __FUNCTION__ . '(' . json_encode( $order_id ) . ')', 'error' );
+			$this->logger->error( 'Invalid order_id.', array( 'order_id' => $order_id ) );
 
 			return;
 		}

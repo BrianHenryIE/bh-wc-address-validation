@@ -4,6 +4,7 @@
 namespace BH_WC_Address_Validation\api;
 
 use BH_WC_Address_Validation\includes\Deactivator;
+use BH_WC_Address_Validation\Psr\Log\LoggerInterface;
 use WC_Data_Exception;
 use WC_Order;
 use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
@@ -11,8 +12,12 @@ use BH_WC_Address_Validation\USPS\Address;
 use BH_WC_Address_Validation\USPS\AddressVerify;
 use BH_WC_Address_Validation\woocommerce\Order_Status;
 
-class API {
+class API implements API_Interface {
+
 	const BH_WC_ADDRESS_VALIDATION_CHECKED_META = 'bh-wc-address-validation-checked';
+
+	/** @var LoggerInterface  */
+	protected $logger;
 
 	/** @var Settings_Interface */
 	protected $settings;
@@ -25,11 +30,13 @@ class API {
 	/**
 	 * API constructor.
 	 *
-	 * @param AddressVerify      $address_verify
 	 * @param Settings_Interface $settings
+	 * @param LoggerInterface    $logger
+	 * @param AddressVerify      $address_verify
 	 */
-	public function __construct( $settings, $address_verify = null ) {
+	public function __construct( $settings, $logger, $address_verify = null ) {
 
+		$this->logger = $logger;
 		$this->settings = $settings;
 
 		if ( ! empty( $this->settings->get_usps_username() ) ) {
@@ -49,17 +56,17 @@ class API {
 	public function check_address_for_order( $order, $is_manual = false ) {
 
 		if ( ! $order instanceof WC_Order ) {
-			BH_WC_Address_Validation::log( 'Object passed to check_address_for_order not WC_Order' );
+			$this->logger->debug( 'Object passed to check_address_for_order not WC_Order', array( 'order' => get_class( $order )) );
 			return;
 		}
 
 		if ( empty( $this->settings->get_usps_username() ) ) {
-			BH_WC_Address_Validation::log( 'USPS username not set.' );
+			$this->logger->debug( 'USPS username not set.' );
 			return;
 		}
 
 		if ( empty( $this->address_verify ) ) {
-			BH_WC_Address_Validation::log( 'AddressVerify null' );
+			$this->logger->error( 'AddressVerify null' );
 			return;
 		}
 
@@ -78,7 +85,7 @@ class API {
 			$order->save();
 		}
 
-		BH_WC_Address_Validation::log( 'Checking address for order ' . $order->get_id() );
+		$this->logger->debug( 'Checking address for order ' . $order->get_id(), array( 'order_id', $order->get_id() ) );
 
 		$order_address              = array();
 		$order_address['address_1'] = $order->get_shipping_address_1();
@@ -89,7 +96,7 @@ class API {
 		$order_address['country']   = $order->get_shipping_country();
 
 		if ( 'US' !== $order_address['country'] ) {
-			BH_WC_Address_Validation::log( $order->get_id() . ' – Not a US address: ' . $order->get_shipping_country() );
+			$this->logger->info( $order->get_id() . ' – Not a US address: ' . $order->get_shipping_country() );
 			return;
 		}
 
@@ -131,7 +138,7 @@ class API {
 				$old_address = $order->get_formatted_shipping_address();
 
 				if ( ! isset( $response_address['State'] ) ) {
-					BH_WC_Address_Validation::log( ' State not set : ' . json_encode( $response ) );
+					$this->logger->info( ' State not set : ' . json_encode( $response ) );
 
 					// This is happening when USPS is returning two results together.
 					// The correct address is probably in that array.
@@ -141,9 +148,9 @@ class API {
 					return;
 				}
 
-				// TODO: This is a weird decision
+				// TODO: This is a weird scenario.
 				if ( strtoupper( $order->get_shipping_state() ) !== $response_address['State'] ) {
-					BH_WC_Address_Validation::log( 'Order ' . $order->get_id() . ' : State returned from USPS ' . $response_address['State'] . 'did not match customer supplied state ' . strtoupper( $order->get_shipping_state() ) . ' : ' . json_encode( $response ), 'alert' );
+					$this->logger->notice( 'Order ' . $order->get_id() . ' : State returned from USPS ' . $response_address['State'] . 'did not match customer supplied state ' . strtoupper( $order->get_shipping_state() ) . ' : ' . json_encode( $response ) );
 					// DO NOTHING!
 					return;
 				}
@@ -159,7 +166,7 @@ class API {
 				$message = 'Shipping address updated by USPS Address Verification API. Old address was : ' . implode( ' ', $address_to_validate->getAddressInfo() );
 				$order->add_order_note( $message );
 
-				BH_WC_Address_Validation::log( $message );
+				$this->logger->debug( $message );
 
 				// If this is a re-check, update order status from bad-address to processing.
 				if ( Order_Status::BAD_ADDRESS_STATUS === $order->get_status() ) {
@@ -175,13 +182,13 @@ class API {
 			// "Peer’s Certificate has expired."
 
 			$message = 'USPS Address Information API failed validation: ' . $this->address_verify->getErrorMessage();
-			BH_WC_Address_Validation::log( 'Order ' . $order->get_id() . ': ' . $message );
+			$this->logger->debug( 'Order ' . $order->get_id() . ': ' . $message );
 
 			if ( strpos( $this->address_verify->getErrorMessage(), 'Multiple addresses were found' ) === 0 ) {
 
 				$response = $this->address_verify->convertResponseToArray();
 
-				BH_WC_Address_Validation::log( $response );
+				$this->logger->debug( $response );
 
 			}
 

@@ -13,6 +13,7 @@ namespace BH_WC_Address_Validation\woocommerce;
 
 use BH_WC_Address_Validation\api\Settings;
 use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
+use BH_WC_Address_Validation\Psr\Log\LogLevel;
 
 /**
  * The settings page for the plugin.
@@ -69,14 +70,22 @@ class Shipping_Settings_Page extends WPPB_Object {
 				'type' => 'text',
 			);
 
-			// Enable logging checkbox.
+
+			$log_levels        = array( 'none', LogLevel::ERROR, LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG );
+			$log_levels_option = array();
+			foreach ( $log_levels as $log_level ) {
+				$log_levels_option[ $log_level ] = ucfirst( $log_level );
+			}
+
 			$settings[] = array(
-				'name'     => __( 'Enable logging', 'bh-wc-address-validation' ),
-				'desc_tip' => __( 'Logs each action to the WooCommerce logs', 'bh-wc-address-validation' ),
-				'id'       => Settings::IS_LOGGING_ENABLED_OPTION,
-				'type'     => 'checkbox',
-				'css'      => 'min-width:300px;',
-				'desc'     => __( 'Enable Logging', 'bh-wc-address-validation' ),
+				'title'    => __( 'Log Level', 'text-domain' ),
+				'label'    => __( 'Enable Logging', 'text-domain' ),
+				'type'     => 'select',
+				'options'  => $log_levels_option,
+				'desc'     => __( 'Increasing levels of logs.', 'text-domain' ),
+				'desc_tip' => true,
+				'default'  => 'notice',
+				'id'       => 'bh-wc-address-validation-log-level',
 			);
 
 			$settings[] = array(

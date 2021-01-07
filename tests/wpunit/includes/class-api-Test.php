@@ -8,6 +8,7 @@
 
 namespace BH_WC_Address_Validation\api;
 
+use BH_WC_Address_Validation\Psr\Log\NullLogger;
 use Codeception\Stub\Expected;
 use WC_Order;
 use BH_WC_Address_Validation\USPS\AddressVerify;
@@ -69,7 +70,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 			)
 		);
 
-		$api = new API( $settings, $address_verify );
+		$api = new API( $settings, new NullLogger(), $address_verify );
 
 		$order = $this->make(
 			WC_Order::class,

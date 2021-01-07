@@ -68,7 +68,9 @@ namespace {
 
 namespace BH_WC_Address_Validation {
 
+	use BH_WC_Address_Validation\api\API;
 	use BH_WC_Address_Validation\api\Settings;
+	use BH_WC_Address_Validation\BrianHenryIE\WP_Logger\Logger;
 	use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
 	use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Loader;
 
@@ -84,17 +86,24 @@ namespace BH_WC_Address_Validation {
 	function instantiate_bh_wc_address_validation() {
 
 		$settings = new Settings();
-		$loader   = new WPPB_Loader();
+		$logger   = Logger::instance( $settings );
+		$api      = new API( $settings, $logger );
 
-		$plugin = new BH_WC_Address_Validation( $settings, $loader );
+		$loader = new WPPB_Loader();
 
-		return $plugin;
+		/**
+		 * The core plugin class that is used to define internationalization,
+		 * admin-specific hooks, and frontend-facing site hooks.
+		 */
+		$plugin = new BH_WC_Address_Validation( $loader, $api, $settings, $logger );
+		$plugin->run();
+
+		return $api;
 	}
 
 	/**
-	 * The core plugin class that is used to define internationalization,
-	 * admin-specific hooks, and woocommerce-facing site hooks.
+	 * @var BH_WC_Address_Validation\api\API
 	 */
-	$GLOBALS['bh_wc_address_validation'] = $bh_wc_address_validation = instantiate_bh_wc_address_validation();
-	$bh_wc_address_validation->run();
+	$GLOBALS['bh_wc_address_validation'] = instantiate_bh_wc_address_validation();
+
 }

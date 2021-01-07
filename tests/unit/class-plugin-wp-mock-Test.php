@@ -8,6 +8,7 @@
 
 namespace BH_WC_Address_Validation;
 
+use BH_WC_Address_Validation\api\API;
 use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
 
 /**
@@ -53,10 +54,19 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 		\WP_Mock::userFunction(
 			'get_option',
 			array(
-				'args'   => array( 'bh-wc-address-validation-is-logging-enabled', false ),
-				'return' => false,
+				'args'   => array( 'bh-wc-address-validation-log-level', 'notice' ),
+				'return' => 'notice',
 			)
 		);
+
+		\WP_Mock::userFunction(
+			'get_option',
+			array(
+				'args'   => array( 'active_plugins' ),
+				'return' => array(),
+			)
+		);
+
 
 		\WP_Mock::userFunction(
 			'get_option',
@@ -70,7 +80,7 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 
 		$this->assertArrayHasKey( 'bh_wc_address_validation', $GLOBALS );
 
-		$this->assertInstanceOf( BH_WC_Address_Validation::class, $GLOBALS['bh_wc_address_validation'] );
+		$this->assertInstanceOf( API::class, $GLOBALS['bh_wc_address_validation'] );
 
 	}
 
