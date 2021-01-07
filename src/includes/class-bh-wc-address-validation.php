@@ -221,7 +221,7 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 		$this->loader->add_action( 'admin_action_mark_processing', $woocommerce_order, 'check_address_on_bulk_order_processing' );
 
 		$this->loader->add_filter( 'woocommerce_order_actions', $woocommerce_order, 'add_admin_ui_order_action' );
-		$this->loader->add_action( 'woocommerce_order_action_bh_wc_address_verify', $woocommerce_order, 'check_address_on_admin_order_action' );
+		$this->loader->add_action( 'woocommerce_order_action_bh_wc_address_validate', $woocommerce_order, 'check_address_on_admin_order_action' );
 
 		$this->loader->add_filter( 'woocommerce_admin_order_data_after_shipping_address', $woocommerce_order, 'add_link_to_usps_tools_zip_lookup' );
 
