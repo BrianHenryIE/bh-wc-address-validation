@@ -151,13 +151,13 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 	 */
 	public function __construct( $settings, $loader ) {
 		if ( defined( 'BH_WC_ADDRESS_VALIDATION_VERSION' ) ) {
-			$this->version = BH_WC_ADDRESS_VALIDATION_VERSION;
+			$version = BH_WC_ADDRESS_VALIDATION_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$version = '1.0.0';
 		}
-		$this->plugin_name = 'bh-wc-address-validation';
+		$plugin_name = 'bh-wc-address-validation';
 
-		parent::__construct( $this->plugin_name, $this->version );
+		parent::__construct( $loader, $plugin_name, $version );
 
 		$this->loader = $loader;
 
