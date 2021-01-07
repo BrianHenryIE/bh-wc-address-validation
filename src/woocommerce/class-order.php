@@ -46,7 +46,7 @@ class Order extends WPPB_Object {
 	 */
 	public function check_address_on_single_order_processing( $order_id, $status_from, $status_to ) {
 
-		// TODO: should this not run when it's a bulk update.
+		// TODO: This is also running on the bulk update action... only one is needed.
 		// if ( isset( $_REQUEST['_wp_http_referer'] ) && '/wp-admin/edit.php?post_type=shop_order' === $_REQUEST['_wp_http_referer'] ) {
 		// return;
 		// }
@@ -57,7 +57,7 @@ class Order extends WPPB_Object {
 
 			BH_WC_Address_Validation::log( 'Scheduling background process to check order ' . $order_id, 'debug' );
 
-			wp_schedule_single_event( time() - 60, Cron::CHECK_ADDRESS_CRON_JOB, $args );
+			wp_schedule_single_event( time() - 60, Cron::CHECK_SINGLE_ADDRESS_CRON_JOB, $args );
 		}
 	}
 
@@ -75,12 +75,14 @@ class Order extends WPPB_Object {
 
 		BH_WC_Address_Validation::log( 'Scheduling background process to check order ' . implode( ', ', $_REQUEST['post'] ), 'debug' );
 
-		wp_schedule_single_event( time() - 60, Cron::CHECK_ADDRESS_CRON_JOB, $args );
+		wp_schedule_single_event( time() - 60, Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, $args );
 
 	}
 
 	/**
 	 * Add "Validate address" to order actions in admin UI order edit page.
+	 *
+	 * TODO: Do not add if settings are not configured!
 	 *
 	 * @hooked woocommerce_order_actions
 	 * @see class-wc-meta-box-order-actions.php
@@ -104,7 +106,9 @@ class Order extends WPPB_Object {
 
 		BH_WC_Address_Validation::log( $order->get_id() . ' check address started from edit order page.' );
 
-		$this->api->check_address_for_order( $order );
+		$is_manual = true;
+
+		$this->api->check_address_for_order( $order, $is_manual );
 
 		// TODO: Add admin notice.
 	}

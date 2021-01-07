@@ -3,6 +3,7 @@
 
 namespace BH_WC_Address_Validation\api;
 
+use BH_WC_Address_Validation\includes\Deactivator;
 use WC_Data_Exception;
 use WC_Order;
 use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
@@ -45,7 +46,7 @@ class API {
 	 * @param WC_Order $order
 	 * @throws WC_Data_Exception
 	 */
-	public function check_address_for_order( $order ) {
+	public function check_address_for_order( $order, $is_manual = false ) {
 
 		if ( ! $order instanceof WC_Order ) {
 			BH_WC_Address_Validation::log( 'Object passed to check_address_for_order not WC_Order' );
@@ -60,6 +61,21 @@ class API {
 		if ( empty( $this->address_verify ) ) {
 			BH_WC_Address_Validation::log( 'AddressVerify null' );
 			return;
+		}
+
+		$already_checked = $order->get_meta( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META );
+		$reactivating    = $order->get_meta( Deactivator::DEACTIVATED_BAD_ADDRESS_META_KEY );
+
+		// Only automatically run once, except when reactivating.
+		// Always run when manually run.
+		if ( ! empty( $already_checked ) && $is_manual === false && empty( $reactivating ) ) {
+			return;
+		}
+
+		// Clear the reactivating meta key so it only kicks in once and doesn't interfere later.
+		if ( ! empty( $reactivating ) ) {
+			$order->delete_meta_data( Deactivator::DEACTIVATED_BAD_ADDRESS_META_KEY );
+			$order->save();
 		}
 
 		BH_WC_Address_Validation::log( 'Checking address for order ' . $order->get_id() );
@@ -145,16 +161,11 @@ class API {
 
 				BH_WC_Address_Validation::log( $message );
 
-				// If this is a re-check.
+				// If this is a re-check, update order status from bad-address to processing.
 				if ( Order_Status::BAD_ADDRESS_STATUS === $order->get_status() ) {
-					// TODO: Will this cause a repeat check?
+
 					$order->set_status( 'processing' );
 				}
-
-				// wp post meta delete 11 bh-wc-address-validation-checked
-				$order->add_meta_data( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META, 'true' );
-				$order->save();
-
 			}
 		} else {
 
@@ -174,19 +185,15 @@ class API {
 
 			}
 
-			$already_checked = $order->get_meta( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META );
-			if ( empty( $already_checked ) || 'true' !== $already_checked ) {
-				$order->set_status( Order_Status::BAD_ADDRESS_STATUS );
-			} else {
-				$message .= "\n\nOrder status not updated.";
-			}
+			$order->set_status( Order_Status::BAD_ADDRESS_STATUS );
 
 			$order->add_order_note( $message );
 
-			$order->save();
-
-			// TODO: Send email? --> do this inside the a WC_Email class.
 		}
+
+		// wp post meta delete 11 bh-wc-address-validation-checked
+		$order->add_meta_data( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META, time() );
+		$order->save();
 
 	}
 

@@ -252,8 +252,8 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 
 		$this->cron = new Cron( $this->api, $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( CRON::CHECK_ADDRESS_CRON_JOB, $this->cron, 'check_address_for_single_order' );
-		$this->loader->add_action( CRON::CHECK_ADDRESS_CRON_JOB, $this->cron, 'check_address_for_multiple_orders' );
+		$this->loader->add_action( CRON::CHECK_SINGLE_ADDRESS_CRON_JOB, $this->cron, 'check_address_for_single_order' );
+		$this->loader->add_action( CRON::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, $this->cron, 'check_address_for_multiple_orders' );
 
 	}
 

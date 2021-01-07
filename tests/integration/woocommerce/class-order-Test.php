@@ -18,7 +18,7 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 
 		$wp_cron_before    = _get_cron_array();
 		$cron_hooks_before = array_keys( call_user_func_array( 'array_merge', $wp_cron_before ) );
-		$this->assertNotContains( Cron::CHECK_ADDRESS_CRON_JOB, $cron_hooks_before );
+		$this->assertNotContains( Cron::CHECK_SINGLE_ADDRESS_CRON_JOB, $cron_hooks_before );
 
 		// Act
 		$order->set_status( 'processing' );
@@ -27,7 +27,7 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 		$wp_cron_after    = _get_cron_array();
 		$cron_hooks_after = array_keys( call_user_func_array( 'array_merge', $wp_cron_after ) );
 
-		$this->assertContains( CRON::CHECK_ADDRESS_CRON_JOB, $cron_hooks_after, 'cron job was not scheduled when order was marked processing.' );
+		$this->assertContains( CRON::CHECK_SINGLE_ADDRESS_CRON_JOB, $cron_hooks_after, 'cron job was not scheduled when order was marked processing.' );
 
 	}
 

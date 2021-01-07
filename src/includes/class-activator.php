@@ -26,9 +26,15 @@ use BH_WC_Address_Validation\api\Settings;
 class Activator {
 
 	/**
-	 * Short Description. (use period)
+	 * Checks was a user using woocommerce-usps-address-verification plugin and ports their settings.
+	 * // TODO: email is disabled by default, enable it for these users.
 	 *
-	 * Does not get called on updates.
+	 * Checks on-hold orders to see if they were previously marked bad-address before a plugin-deactivation,
+	 * and if so, checks them again (schedules a cron).
+	 *
+	 * @see https://wordpress.org/plugins/woocommerce-usps-address-verification/
+	 *
+	 * Activation hook does not get called on updates!
 	 *
 	 * @since    1.0.0
 	 */
@@ -60,17 +66,23 @@ class Activator {
 		$orders = wc_get_orders(
 			array(
 				'limit'  => -1,
-				'status' => array( 'wc-on-hold' ),
+				'status' => array( 'on-hold' ),
 			)
 		);
 
+		$orders_to_check = array();
+
 		foreach ( $orders as $order ) {
-			// check its address
 
-			// TODO notify admin of changes so we're not messing their actual on-hold reason
-			$args = array( $order->get_id() );
+			$had_bad_address_status = $order->get_meta( Deactivator::DEACTIVATED_BAD_ADDRESS_META_KEY );
 
-			wp_schedule_single_event( time(), Cron::CHECK_ADDRESS_CRON_JOB, $args );
+			if ( ! empty( $had_bad_address_status ) ) {
+				$orders_to_check[] = $order->get_id();
+			}
+		}
+
+		if ( ! empty( $orders_to_check ) ) {
+			wp_schedule_single_event( time(), Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, array( $orders_to_check ) );
 		}
 
 	}

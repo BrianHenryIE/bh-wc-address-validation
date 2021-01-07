@@ -25,8 +25,11 @@ use BH_WC_Address_Validation\woocommerce\Order_Status;
  */
 class Deactivator {
 
+	const DEACTIVATED_BAD_ADDRESS_META_KEY = 'bh-wc-address-validation-was-bad-address';
+
 	/**
 	 * Changes all orders with bad-address status to on-hold.
+	 * Add a meta-key indicating they were previously bad-address which is checked when reactivated.
 	 *
 	 * @since    1.0.0
 	 */
@@ -39,10 +42,10 @@ class Deactivator {
 			)
 		);
 
-		// TODO: add a meta key to check on activation.
 		foreach ( $orders as $order ) {
 			$order_note = 'Changed from Bad Address on plugin deactivation.';
-			$order->update_status( 'on-hold', $order_note );
+			$order->set_status( 'on-hold', $order_note );
+			$order->add_meta_data( self::DEACTIVATED_BAD_ADDRESS_META_KEY, time(), true );
 			$order->save();
 		}
 	}

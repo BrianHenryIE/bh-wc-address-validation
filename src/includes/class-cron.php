@@ -10,7 +10,8 @@ use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Object;
 
 class Cron extends WPPB_Object {
 
-	const CHECK_ADDRESS_CRON_JOB = 'bh_wc_address_validation_check_address';
+	const CHECK_SINGLE_ADDRESS_CRON_JOB     = 'bh_wc_address_validation_check_one_address';
+	const CHECK_MULTIPLE_ADDRESSES_CRON_JOB = 'bh_wc_address_validation_check_many_addresses';
 
 	/**
 	 * @var API
@@ -39,7 +40,6 @@ class Cron extends WPPB_Object {
 
 		if ( is_array( $order_id ) ) {
 
-			$this->check_address_for_multiple_orders( $order_id );
 			return;
 		}
 
@@ -56,6 +56,9 @@ class Cron extends WPPB_Object {
 
 	}
 
+	/**
+	 * @param int[] $order_ids
+	 */
 	public function check_address_for_multiple_orders( $order_ids ) {
 
 		if ( ! is_array( $order_ids ) ) {
