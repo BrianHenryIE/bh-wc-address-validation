@@ -141,7 +141,7 @@ class Bad_Address_Email extends WC_Email {
 				'title'   => __( 'Enable/Disable', 'bh-wc-address-validation' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable this email notification', 'bh-wc-address-validation' ),
-				'default' => 'yes',
+				'default' => 'no',
 			),
 			'recipient'          => array(
 				'title'       => __( 'Recipient(s)', 'bh-wc-address-validation' ),
