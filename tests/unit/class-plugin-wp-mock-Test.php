@@ -75,6 +75,24 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 			)
 		);
 
+		\WP_Mock::userFunction(
+			'is_admin',
+			array(
+				'return_arg' => false,
+			)
+		);
+
+		\WP_Mock::userFunction(
+			'get_current_user_id'
+		);
+
+		\WP_Mock::userFunction(
+			'wp_normalize_path',
+			array(
+				'return_arg' => true,
+			)
+		);
+
 		require_once $plugin_root_dir . '/bh-wc-address-validation.php';
 
 		$this->assertArrayHasKey( 'bh_wc_address_validation', $GLOBALS );
