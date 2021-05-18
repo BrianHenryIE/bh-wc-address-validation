@@ -161,6 +161,7 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 		$this->loader->add_action( 'woocommerce_init', $order_status, 'register_status' );
 		$this->loader->add_filter( 'wc_order_statuses', $order_status, 'add_order_status_to_woocommerce' );
 		$this->loader->add_filter( 'woocommerce_order_is_paid_statuses', $order_status, 'add_to_paid_status_list' );
+		add_filter( 'woocommerce_reports_order_statuses', array( $order_status, 'add_to_reports_status_list' ) );
 
 		$woocommerce_email = new Emails( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_filter( 'woocommerce_email_classes', $woocommerce_email, 'register_email', 10, 1 );

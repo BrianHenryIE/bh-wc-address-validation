@@ -97,4 +97,37 @@ class Order_Status {
 		$statuses[] = self::BAD_ADDRESS_STATUS;
 		return $statuses;
 	}
+
+	/**
+	 * WooCommerce's reports do not respect wc_get_is_paid_statuses() so we need to add the status here too.
+	 *
+	 * @hooked woocommerce_reports_order_statuses
+	 * @see \WC_Admin_Report::get_order_report_data()
+	 * @see wp-admin/admin.php?page=wc-reports
+	 *
+	 * @param $order_status
+	 *
+	 * @return false|string[]
+	 */
+	public function add_to_reports_status_list( $order_status ) {
+
+		// In the refund report it is false.
+		if ( false === $order_status || ! is_array( $order_status ) ) {
+			return $order_status;
+		}
+
+		// In all paid scenarios, there are at least 'completed', 'processing', 'on-hold' already in the list.
+		if ( ! ( in_array( 'completed', $order_status, true )
+			&& in_array( 'processing', $order_status, true )
+			&& in_array( 'on-hold', $order_status, true )
+			) ) {
+			return $order_status;
+		}
+
+		$this->logger->debug( 'Adding order status to reports status list', array( 'hooked' => 'woocommerce_reports_order_statuses' ) );
+
+		$order_status[] = self::BAD_ADDRESS_STATUS;
+
+		return $order_status;
+	}
 }
