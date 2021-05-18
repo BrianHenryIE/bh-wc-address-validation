@@ -1,6 +1,6 @@
 {
     "name": "brianhenryie/bh-wc-address-validation",
-    "description": "This is a short description of what plugin_title does.",
+    "description": "Checks WooCommerce orders' addresses against the USPS API after payment.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
     "authors": [
@@ -12,31 +12,16 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "process-timeout": 0
+        "process-timeout": 0,
+        "sort-packages": true
     },
     "repositories": [
         {
-            "url": "https://github.com/WordPress/wordpress-develop",
-            "type": "git"
-        },
-        {
-            "url": "https://github.com/pablo-sg-pacheco/wp-namespace-autoloader",
-            "type": "git"
-        },
-        {
-            "url": "https://github.com/BrianHenryIE/WPPB-lib",
-            "type": "git"
-        },
-        {
-            "url": "https://github.com/BrianHenryIE/bh-wp-dev",
-            "type": "git"
-        },
-        {
-            "url": "https://github.com/woocommerce/woocommerce",
-            "type": "git"
-        },
-        {
             "url": "https://github.com/BrianHenryIE/composer-phpstorm",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/WordPress/wordpress-develop",
             "type": "git"
         },
         {
@@ -48,13 +33,16 @@
             "type": "git"
         },
         {
+            "url": "https://github.com/BrianHenryIE/admin-notices",
+            "type": "git"
+        },
+        {
             "type":"composer",
             "url":"https://wpackagist.org"
         }
     ],
     "require": {
-        "php": ">=7.2",
-        "brianhenryie/wppb-lib": "dev-master",
+        "php": ">=7.4",
         "brianhenryie/wp-logger": "dev-master",
         "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master",
         "vinceg/usps-php-api": "^1.0"
@@ -62,48 +50,45 @@
     "require-dev": {
         "10up/wp_mock": "0.4.2",
         "brianhenryie/composer-phpstorm": "dev-master",
-        "brianhenryie/wp-dev": "dev-master",
-        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "brianhenryie/strauss": "*",
         "codeception/module-asserts": "^1.0",
+        "codeception/module-cli": "^1.0",
         "codeception/module-db": "^1.0.0",
+        "codeception/module-filesystem": "^1.0",
         "codeception/module-phpbrowser": "^1.0.0",
         "codeception/module-webdriver": "^1.0",
-        "codeception/module-filesystem": "^1.0",
         "codeception/util-universalframework": "^1.0",
-        "codeception/module-cli": "^1.0",
-        "coenjacobs/mozart": "dev-master#5d8041fdefc94ff57edcbe83ab468a9988c4fc11",
-        "cweagans/composer-patches": "~1.0",
+        "cweagans/composer-patches": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
         "jaschilz/php-coverage-badger": "^2.0",
         "kporras07/composer-symlinks": "dev-master",
         "lucatume/wp-browser": "*",
-        "phpunit/phpcov": "^5.0",
         "phpcompatibility/phpcompatibility-wp": "*",
-        "squizlabs/php_codesniffer": "dev-master#1371c59bd5da5cfc877ab8478753362edc9bbc9b",
-        "wordpress/wordpress": "^5.5",
+        "php-stubs/woocommerce-stubs": "^5.2",
+        "phpstan/extension-installer": "^1.1",
+        "phpunit/phpcov": "*",
+        "squizlabs/php_codesniffer": "*",
+        "szepeviktor/phpstan-wordpress": "^0.7.2",
+        "voku/portable-ascii": "dev-master",
+        "wordpress/wordpress": "*",
         "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
-        "wpackagist-plugin/woocommerce": "^4.5",
-        "wpackagist-theme/storefront": "*",
-        "phpoption/phpoption": "^1.7"
+        "wpackagist-plugin/woocommerce": "^5.1",
+        "wpackagist-theme/storefront": "*"
     },
     "extra": {
         "patches": {
-            "coenjacobs/mozart": {
-                "Do not edit class declarations inside namespaces": "https://github.com/coenjacobs/mozart/pull/101.patch"
-            },
             "jaschilz/php-coverage-badger": {
                 "Allow customising the text": "https://github.com/JASchilz/PHPCoverageBadge/pull/1.patch"
             },
-            "squizlabs/php_codesniffer": {
-                "Add GitHub Actions Annotations report type": "https://github.com/squizlabs/PHP_CodeSniffer/pull/2918.patch"
+            "10up/wp_mock": {
+                "Add AnyObject matcher": "https://github.com/BrianHenryIE/wp_mock/pull/1.patch"
             }
         },
-        "mozart": {
-            "dep_namespace": "BH_WC_Address_Validation\\",
-            "dep_directory": "/src/vendor/",
-            "classmap_prefix": "BH_WC_Address_Validation_",
-            "classmap_directory": "/src/dependencies/",
-            "delete_vendor_directories": false
+        "strauss": {
+            "namespace_prefix": "BrianHenryIE\\WC_Address_Validation\\",
+            "target_directory": "/src/strauss/",
+            "classmap_prefix": "BH_WC_Address_Validation_"
         },
         "symlinks": {
             "wp-content": "wordpress/wp-content",
@@ -126,18 +111,18 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "\"vendor/bin/mozart\" compose",
+            "vendor/bin/strauss",
             "vendor/bin/wp core download --path=wordpress --allow-root || true;",
-            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --allow-root || true",
+            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --allow-root --extra-php=\"define( 'WP_DEBUG', true ); define( 'WP_DEBUG_LOG', true );\" || true",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
             "BrianHenryIE\\ComposerPhpStorm\\PHPUnitRunConfigurations::update"
         ],
         "post-update-cmd": [
-            "\"vendor/bin/mozart\" compose",
+            "vendor/bin/strauss",
             "vendor/bin/wp core download --path=wordpress --allow-root || true;",
-            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --allow-root || true",
+            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --allow-root --extra-php=\"define( 'WP_DEBUG', true ); define( 'WP_DEBUG_LOG', true );\" || true",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "mkdir -p wordpress/wp-content/uploads",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
@@ -149,11 +134,8 @@
         "coverage-tests": [
             "vendor/bin/codecept run unit --coverage unit.cov",
             "vendor/bin/codecept run wpunit --coverage wpunit.cov",
-            "vendor/bin/phpcov merge --clover tests/_output/clover.xml --html tests/_output/html tests/_output --text;",
+            "vendor/bin/phpcov merge --clover tests/_output/clover.xml --html tests/_output/html tests/_output;",
             "open tests/_output/html/index.html"
-        ],
-        "create-plugin-archive": [
-            "BrianHenryIE\\WP_Dev\\CreatePluginArchive::createZip"
         ]
     }
 }
