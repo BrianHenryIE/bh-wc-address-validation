@@ -74,7 +74,7 @@ class Order {
 	}
 
 	/**
-	 * @hooked admin_action_mark_processing
+	 * @hooked admin_action_marked_processing
 	 */
 	public function check_address_on_bulk_order_processing() {
 

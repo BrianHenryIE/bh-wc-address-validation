@@ -143,7 +143,7 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 		$woocommerce_order = new Order( $this->api, $this->settings, $this->logger );
 
 		$this->loader->add_action( 'woocommerce_order_status_changed', $woocommerce_order, 'check_address_on_single_order_processing', 10, 3 );
-		$this->loader->add_action( 'admin_action_mark_processing', $woocommerce_order, 'check_address_on_bulk_order_processing' );
+		$this->loader->add_action( 'admin_action_marked_processing', $woocommerce_order, 'check_address_on_bulk_order_processing' );
 
 		$this->loader->add_filter( 'woocommerce_order_actions', $woocommerce_order, 'add_admin_ui_order_action' );
 		$this->loader->add_action( 'woocommerce_order_action_bh_wc_address_validate', $woocommerce_order, 'check_address_on_admin_order_action' );
