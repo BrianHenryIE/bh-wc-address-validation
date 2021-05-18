@@ -70,7 +70,6 @@ class Shipping_Settings_Page extends WPPB_Object {
 				'type' => 'text',
 			);
 
-
 			$log_levels        = array( 'none', LogLevel::ERROR, LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG );
 			$log_levels_option = array();
 			foreach ( $log_levels as $log_level ) {

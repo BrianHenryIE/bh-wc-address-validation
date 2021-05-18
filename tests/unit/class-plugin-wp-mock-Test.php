@@ -67,7 +67,6 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 			)
 		);
 
-
 		\WP_Mock::userFunction(
 			'get_option',
 			array(

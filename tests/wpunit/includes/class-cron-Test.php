@@ -24,7 +24,7 @@ class Cron_Test extends \Codeception\TestCase\WPTestCase {
 
 	public function test_cron_calls_api() {
 
-	    $this->markTestSkipped();
+		$this->markTestSkipped();
 
 		$order = new WC_Order();
 		$order->save();
@@ -55,36 +55,36 @@ class Cron_Test extends \Codeception\TestCase\WPTestCase {
 
 	public function test_cron_is_registered() {
 
-	    $api = $this->makeEmpty( API_Interface::class );
-	    $settings = $this->makeEmpty( Settings_Interface::class);
-	    $logger = new NullLogger();
+		$api      = $this->makeEmpty( API_Interface::class );
+		$settings = $this->makeEmpty( Settings_Interface::class );
+		$logger   = new NullLogger();
 
-	    $cron = new Cron( $api, $settings, $logger );
+		$cron = new Cron( $api, $settings, $logger );
 
-	    assert( !wp_next_scheduled( Cron::RECHECK_BAD_ADDRESSES_CRON_JOB ) );
+		assert( ! wp_next_scheduled( Cron::RECHECK_BAD_ADDRESSES_CRON_JOB ) );
 
-	    $cron->add_cron_jon();
+		$cron->add_cron_jon();
 
-	    $this->assertNotFalse( wp_next_scheduled( Cron::RECHECK_BAD_ADDRESSES_CRON_JOB ) );
-    }
+		$this->assertNotFalse( wp_next_scheduled( Cron::RECHECK_BAD_ADDRESSES_CRON_JOB ) );
+	}
 
-    public function test_recheck_bad_addresses_cron_calls_api() {
+	public function test_recheck_bad_addresses_cron_calls_api() {
 
-        $api = $this->makeEmpty(
-            API_Interface::class,
-            array(
-                'recheck_bad_address_orders' => Expected::once()
-            )
-        );
+		$api = $this->makeEmpty(
+			API_Interface::class,
+			array(
+				'recheck_bad_address_orders' => Expected::once(),
+			)
+		);
 
-        $settings = $this->makeEmpty( Settings_Interface::class);
-        $logger = new NullLogger();
+		$settings = $this->makeEmpty( Settings_Interface::class );
+		$logger   = new NullLogger();
 
-        $cron = new Cron( $api, $settings, $logger );
+		$cron = new Cron( $api, $settings, $logger );
 
-        $cron->recheck_bad_address_orders();
+		$cron->recheck_bad_address_orders();
 
-    }
+	}
 
 
 }

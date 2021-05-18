@@ -38,9 +38,9 @@ class Order {
 	 */
 	public function __construct( $api, $settings, $logger ) {
 
-		$this->logger= $logger;
+		$this->logger   = $logger;
 		$this->settings = $settings;
-		$this->api = $api;
+		$this->api      = $api;
 	}
 
 	/**
@@ -67,7 +67,7 @@ class Order {
 
 			$args = array( $order_id );
 
-			$this->logger->debug( 'Scheduling background process to check order ' . $order_id, array( 'order_id' => $order_id )  );
+			$this->logger->debug( 'Scheduling background process to check order ' . $order_id, array( 'order_id' => $order_id ) );
 
 			wp_schedule_single_event( time() - 60, Cron::CHECK_SINGLE_ADDRESS_CRON_JOB, $args );
 		}
@@ -119,7 +119,7 @@ class Order {
 	 */
 	public function check_address_on_admin_order_action( $order ) {
 
-		$this->logger->debug( $order->get_id() . ' check address started from edit order page.', array( 'order_id' => $order->get_id() )  );
+		$this->logger->debug( $order->get_id() . ' check address started from edit order page.', array( 'order_id' => $order->get_id() ) );
 
 		$is_manual = true;
 

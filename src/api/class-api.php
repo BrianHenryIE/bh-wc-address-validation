@@ -36,7 +36,7 @@ class API implements API_Interface {
 	 */
 	public function __construct( $settings, $logger, $address_verify = null ) {
 
-		$this->logger = $logger;
+		$this->logger   = $logger;
 		$this->settings = $settings;
 
 		if ( ! empty( $this->settings->get_usps_username() ) ) {
@@ -56,7 +56,7 @@ class API implements API_Interface {
 	public function check_address_for_order( $order, $is_manual = false ) {
 
 		if ( ! $order instanceof WC_Order ) {
-			$this->logger->debug( 'Object passed to check_address_for_order not WC_Order', array( 'order' => get_class( $order )) );
+			$this->logger->debug( 'Object passed to check_address_for_order not WC_Order', array( 'order' => get_class( $order ) ) );
 			return;
 		}
 

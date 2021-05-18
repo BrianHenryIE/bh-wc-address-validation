@@ -40,9 +40,11 @@ class Cron {
 	 */
 	public function __construct( $api, $settings, $logger ) {
 
-		$this->logger= $logger;
+		$this->logger   = $logger;
 		$this->settings = $settings;
-		$this->api = $api;
+		$this->api      = $api;
+	}
+
 
 	/**
 	 * Schedules or deletes the cron as per the settings.

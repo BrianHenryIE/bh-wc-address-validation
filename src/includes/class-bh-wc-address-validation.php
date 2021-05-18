@@ -74,9 +74,9 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 	 * @since    1.0.0
 	 *
 	 * @param WPPB_Loader_Interface $loader The WPPB class which adds the hooks and filters to WordPress.
-	 * @param API_Interface $api
+	 * @param API_Interface         $api
 	 * @param Settings_Interface    $settings
-	 * @param LoggerInterface  $logger
+	 * @param LoggerInterface       $logger
 	 */
 	public function __construct( $loader, $api, $settings, $logger ) {
 		if ( defined( 'BH_WC_ADDRESS_VALIDATION_VERSION' ) ) {
@@ -88,9 +88,9 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 
 		parent::__construct( $loader, $plugin_name, $version );
 
-		$this->logger = $logger;
+		$this->logger   = $logger;
 		$this->settings = $settings;
-		$this->api = $api;
+		$this->api      = $api;
 
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -125,8 +125,8 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 	 */
 	protected function define_admin_hooks() {
 
-		$plugins_page = new Plugins_Page( $this->get_plugin_name(), $this->get_version() );
-		$plugin_basename    = $this->get_plugin_name() . '/' . $this->get_plugin_name() . '.php';
+		$plugins_page    = new Plugins_Page( $this->get_plugin_name(), $this->get_version() );
+		$plugin_basename = $this->get_plugin_name() . '/' . $this->get_plugin_name() . '.php';
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugins_page, 'action_links' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugins_page, 'row_meta', 20, 4 );
 	}
@@ -157,7 +157,7 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 		/**
 		 * The Order_Status class defines one new order status, wc-bad-address.
 		 */
-		$order_status = new Order_Status( $this->api, $this->settings, $this->logger  );
+		$order_status = new Order_Status( $this->api, $this->settings, $this->logger );
 		$this->loader->add_action( 'woocommerce_init', $order_status, 'register_status' );
 		$this->loader->add_filter( 'wc_order_statuses', $order_status, 'add_order_status_to_woocommerce' );
 		$this->loader->add_filter( 'woocommerce_order_is_paid_statuses', $order_status, 'add_to_paid_status_list' );
@@ -176,7 +176,7 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 	 */
 	protected function define_cron_hooks() {
 
-		$cron = new Cron( $this->api, $this->settings, $this->logger  );
+		$cron = new Cron( $this->api, $this->settings, $this->logger );
 
 		$this->loader->add_action( CRON::CHECK_SINGLE_ADDRESS_CRON_JOB, $cron, 'check_address_for_single_order' );
 		$this->loader->add_action( CRON::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, $cron, 'check_address_for_multiple_orders' );

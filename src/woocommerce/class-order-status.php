@@ -34,9 +34,9 @@ class Order_Status {
 	 */
 	public function __construct( $api, $settings, $logger ) {
 
-		$this->logger= $logger;
+		$this->logger   = $logger;
 		$this->settings = $settings;
-		$this->api = $api;
+		$this->api      = $api;
 	}
 
 	/**
