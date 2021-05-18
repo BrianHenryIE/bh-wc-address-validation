@@ -180,6 +180,9 @@ class BH_WC_Address_Validation extends WPPB_Plugin_Abstract {
 		$this->loader->add_action( CRON::CHECK_SINGLE_ADDRESS_CRON_JOB, $cron, 'check_address_for_single_order' );
 		$this->loader->add_action( CRON::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, $cron, 'check_address_for_multiple_orders' );
 
+		add_action( CRON::RECHECK_BAD_ADDRESSES_CRON_JOB, array( $cron, 'recheck_bad_address_orders' ) );
+		add_action( 'plugins_loaded', array( $cron, 'add_cron_jon' ) );
+
 	}
 
 	protected function define_cli_commands() {

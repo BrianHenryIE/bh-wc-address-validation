@@ -13,6 +13,7 @@ class Cron {
 
 	const CHECK_SINGLE_ADDRESS_CRON_JOB     = 'bh_wc_address_validation_check_one_address';
 	const CHECK_MULTIPLE_ADDRESSES_CRON_JOB = 'bh_wc_address_validation_check_many_addresses';
+	const RECHECK_BAD_ADDRESSES_CRON_JOB    = 'bh_wc_address_validation_recheck_bad_addresses';
 
 
 	/**
@@ -42,6 +43,21 @@ class Cron {
 		$this->logger= $logger;
 		$this->settings = $settings;
 		$this->api = $api;
+
+	/**
+	 * Schedules or deletes the cron as per the settings.
+	 *
+	 * @see wp_get_schedules()
+	 *
+	 * @hooked plugins_loaded
+	 */
+	public function add_cron_jon(): void {
+
+		if ( ! wp_next_scheduled( self::RECHECK_BAD_ADDRESSES_CRON_JOB ) ) {
+			wp_schedule_event( time(), 'twicedaily', self::RECHECK_BAD_ADDRESSES_CRON_JOB );
+			$this->logger->notice( 'Cron job scheduled' );
+		}
+
 	}
 
 	/**
@@ -82,5 +98,9 @@ class Cron {
 			$this->check_address_for_single_order( $order_id );
 		}
 
+	}
+
+	public function recheck_bad_address_orders() {
+		$this->api->recheck_bad_address_orders();
 	}
 }

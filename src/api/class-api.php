@@ -204,4 +204,24 @@ class API implements API_Interface {
 
 	}
 
+	/**
+	 * Often the USPS API returns "no address" but later a manual invokation will validate the address.
+	 *
+	 * This function is intended to be hooked on a regular cron (~4 hours) to re-run the check.
+	 */
+	public function recheck_bad_address_orders(): void {
+
+		$orders = wc_get_orders(
+			array(
+				'limit'  => -1,
+				'type'   => 'shop_order',
+				'status' => array( 'wc-' . Order_Status::BAD_ADDRESS_STATUS ),
+			)
+		);
+
+		foreach ( $orders as $order ) {
+
+			$this->check_address_for_order( $order, true );
+		}
+	}
 }
