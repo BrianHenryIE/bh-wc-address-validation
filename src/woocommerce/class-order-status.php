@@ -63,7 +63,7 @@ class Order_Status {
 	/**
 	 * Add "wc-bad-address" to WooCommerce's list of statuses.
 	 *
-	 * Adds the new order status before "processing".
+	 * Adds the new order status after "on-hold".
 	 *
 	 * @hooked wc_order_statuses
 	 * @see wc_get_order_statuses()
@@ -76,10 +76,10 @@ class Order_Status {
 		$new_order_statuses = array();
 
 		foreach ( $order_statuses as $key => $status ) {
-			if ( 'wc-processing' === $key ) {
+			$new_order_statuses[ $key ] = $status;
+			if ( 'wc-on-hold' === $key ) {
 				$new_order_statuses[ 'wc-' . self::BAD_ADDRESS_STATUS ] = 'Bad Address';
 			}
-			$new_order_statuses[ $key ] = $status;
 		}
 		return $new_order_statuses;
 	}
