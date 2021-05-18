@@ -40,12 +40,12 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 
 	public function test_order_action_handler() {
 
-		$this->markTestSkipped('unimplemented');
+		$this->markTestSkipped( 'unimplemented' );
 
 		$api = $this->make(
 			API::class,
 			array(
-				'check_address_for_order' => Expected::once()
+				'check_address_for_order' => Expected::once(),
 			)
 		);
 

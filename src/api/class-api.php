@@ -7,7 +7,6 @@ use BH_WC_Address_Validation\includes\Deactivator;
 use BH_WC_Address_Validation\Psr\Log\LoggerInterface;
 use WC_Data_Exception;
 use WC_Order;
-use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
 use BH_WC_Address_Validation\USPS\Address;
 use BH_WC_Address_Validation\USPS\AddressVerify;
 use BH_WC_Address_Validation\woocommerce\Order_Status;
@@ -188,7 +187,7 @@ class API implements API_Interface {
 
 				$response = $this->address_verify->convertResponseToArray();
 
-				$this->logger->debug( $response );
+				$this->logger->debug( $this->address_verify->getErrorMessage(), array( 'response' => $response ) );
 
 			}
 

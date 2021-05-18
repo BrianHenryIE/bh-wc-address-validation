@@ -63,6 +63,10 @@ class Activator {
 			delete_option( 'notif_email' );
 		}
 
+		if ( ! function_exists( 'wc_get_orders' ) ) {
+			return;
+		}
+
 		$orders = wc_get_orders(
 			array(
 				'limit'  => -1,
