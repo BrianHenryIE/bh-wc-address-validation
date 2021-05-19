@@ -12,6 +12,7 @@ use BrianHenryIE\WC_Address_Validation\API\API;
 
 /**
  * Verifies the plugin has been instantiated and added to PHP's $GLOBALS variable.
+ *
  * @coversNothing
  */
 class Plugin_Load_Test extends \Codeception\TestCase\WPTestCase {

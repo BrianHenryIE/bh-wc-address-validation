@@ -13,6 +13,7 @@ use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 
 /**
  * Class Develop_Test
+ *
  * @coversNothing
  */
 class BH_WC_Address_Validation_Integration_Test extends \Codeception\TestCase\WPTestCase {

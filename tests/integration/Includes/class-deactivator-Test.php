@@ -10,6 +10,7 @@ use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 
 /**
  * Class Deactivator_Test
+ *
  * @package BrianHenryIE\WC_Address_Validation\Includes
  * @coversNothing
  */

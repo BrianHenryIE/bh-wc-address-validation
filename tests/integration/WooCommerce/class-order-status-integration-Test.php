@@ -4,6 +4,7 @@ namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
 /**
  * Class Order_Status_Integration_Test
+ *
  * @package BrianHenryIE\WC_Address_Validation\WooCommerce
  * @coversNothing
  */
