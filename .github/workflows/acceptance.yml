@@ -50,9 +50,9 @@ jobs:
           env-file: .env.testing
 
       - name: Make envfile from Secrets
-        uses: SpicyPizza/create-envfile@v1
+        uses: SpicyPizza/create-envfile@v1.1
         with:
-          envkey_SECRET_KEY: ${{ secrets.USPS_USERNAME }}
+          envkey_USPS_USERNAME: ${{ secrets.USPS_USERNAME }}
           file_name: .env.secret
 
       - name: Read .env.secret
