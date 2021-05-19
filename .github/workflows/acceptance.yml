@@ -34,7 +34,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           tools: composer, cs2pr
-          extensions: ext-zip
+          extensions: zip
 
       - name: Update environment config for GitHub Actions
         run: |

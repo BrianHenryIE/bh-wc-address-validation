@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e17e4140a6607ce601c3d64846feafde",
+    "content-hash": "3281d9dc2ce750b6ee08eceeafb85050",
     "packages": [
         {
             "name": "brianhenryie/wp-logger",
@@ -11633,7 +11633,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "ext-zip": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
