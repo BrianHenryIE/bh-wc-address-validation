@@ -24,86 +24,83 @@
  * Domain Path:       /languages
  */
 
-namespace {
+namespace BrianHenryIE\WC_Address_Validation;
 
-	use BH_WC_Address_Validation\includes\Activator;
-	use BH_WC_Address_Validation\includes\Deactivator;
+use BrianHenryIE\WC_Address_Validation\API\API;
+use BrianHenryIE\WC_Address_Validation\API\Settings;
+use BrianHenryIE\WC_Address_Validation\WP_Logger\Logger;
+use BrianHenryIE\WC_Address_Validation\Includes\BH_WC_Address_Validation;
+use BrianHenryIE\WC_Address_Validation\Includes\Activator;
+use BrianHenryIE\WC_Address_Validation\Includes\Deactivator;
 
-	// If this file is called directly, abort.
-	if ( ! defined( 'WPINC' ) ) {
-		die;
-	}
-
-	require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
-
-	/**
-	 * Currently plugin version.
-	 * Start at version 1.0.0 and use SemVer - https://semver.org
-	 * Rename this for your plugin and update it as you release new versions.
-	 */
-	define( 'BH_WC_ADDRESS_VALIDATION_VERSION', '1.1.0' );
-
-	/**
-	 * The code that runs during plugin activation.
-	 * This action is documented in includes/class-activator.php
-	 */
-	function activate_bh_wc_address_validation() {
-
-		Activator::activate();
-	}
-
-	/**
-	 * The code that runs during plugin deactivation.
-	 * This action is documented in includes/class-deactivator.php
-	 */
-	function deactivate_bh_wc_address_validation() {
-
-		Deactivator::deactivate();
-	}
-
-	register_activation_hook( __FILE__, 'activate_bh_wc_address_validation' );
-	register_deactivation_hook( __FILE__, 'deactivate_bh_wc_address_validation' );
-
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
 
-namespace BH_WC_Address_Validation {
+require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
 
-	use BH_WC_Address_Validation\api\API;
-	use BH_WC_Address_Validation\api\Settings;
-	use BH_WC_Address_Validation\BrianHenryIE\WP_Logger\Logger;
-	use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
-	use BH_WC_Address_Validation\BrianHenryIE\WPPB\WPPB_Loader;
+/**
+ * Currently plugin version.
+ * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Rename this for your plugin and update it as you release new versions.
+ */
+define( 'BH_WC_ADDRESS_VALIDATION_VERSION', '1.1.0' );
 
-	/**
-	 * Begins execution of the plugin.
-	 *
-	 * Since everything within the plugin is registered via hooks,
-	 * then kicking off the plugin from this point in the file does
-	 * not affect the page life cycle.
-	 *
-	 * @since    1.0.0
-	 */
-	function instantiate_bh_wc_address_validation() {
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-activator.php
+ */
+function activate_bh_wc_address_validation() {
 
-		$settings = new Settings();
-		$logger   = Logger::instance( $settings );
-		$api      = new API( $settings, $logger );
-
-		$loader = new WPPB_Loader();
-
-		/**
-		 * The core plugin class that is used to define internationalization,
-		 * admin-specific hooks, and frontend-facing site hooks.
-		 */
-		$plugin = new BH_WC_Address_Validation( $loader, $api, $settings, $logger );
-		$plugin->run();
-
-		return $api;
-	}
-
-	/**
-	 * @var BH_WC_Address_Validation\api\API
-	 */
-	$GLOBALS['bh_wc_address_validation'] = instantiate_bh_wc_address_validation();
-
+	Activator::activate();
 }
+
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-deactivator.php
+ */
+function deactivate_bh_wc_address_validation() {
+
+	Deactivator::deactivate();
+}
+
+register_activation_hook( __FILE__, 'activate_bh_wc_address_validation' );
+register_deactivation_hook( __FILE__, 'deactivate_bh_wc_address_validation' );
+
+
+
+
+
+
+
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    1.0.0
+ */
+function instantiate_bh_wc_address_validation() {
+
+	$settings = new Settings();
+	$logger   = Logger::instance( $settings );
+	$api      = new API( $settings, $logger );
+
+	/**
+	 * The core plugin class that is used to define internationalization,
+	 * admin-specific hooks, and frontend-facing site hooks.
+	 */
+	$plugin = new BH_WC_Address_Validation( $api, $settings, $logger );
+
+	return $api;
+}
+
+/**
+ * @var BrianHenryIE\WC_Address_Validation\API\API
+ */
+$GLOBALS['bh_wc_address_validation'] = instantiate_bh_wc_address_validation();
+
+

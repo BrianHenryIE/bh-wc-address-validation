@@ -88,7 +88,10 @@
         "strauss": {
             "namespace_prefix": "BrianHenryIE\\WC_Address_Validation\\",
             "target_directory": "/src/strauss/",
-            "classmap_prefix": "BH_WC_Address_Validation_"
+            "classmap_prefix": "BH_WC_Address_Validation_",
+            "namespace_replacement_patterns": {
+                "~BrianHenryIE\\\\(.*)~" : "BrianHenryIE\\WC_Address_Validation\\\\$1"
+            }
         },
         "symlinks": {
             "wp-content": "wordpress/wp-content",

@@ -6,10 +6,9 @@
  * @author  Brian Henry <BrianHenryIE@gmail.com>
  */
 
-namespace BH_WC_Address_Validation;
+namespace BrianHenryIE\WC_Address_Validation;
 
-use BH_WC_Address_Validation\api\API;
-use BH_WC_Address_Validation\includes\BH_WC_Address_Validation;
+use BrianHenryIE\WC_Address_Validation\API\API;
 
 /**
  * Class Plugin_WP_Mock_Test
