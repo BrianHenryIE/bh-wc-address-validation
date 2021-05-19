@@ -33,6 +33,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Checkout GitHub Pages branch for code coverage report
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: tests/reports/html
+
       - name: Install PHP
         uses: shivammathur/setup-php@2.11.0
         with:
