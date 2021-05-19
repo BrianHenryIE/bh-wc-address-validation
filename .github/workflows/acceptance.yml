@@ -82,6 +82,7 @@ jobs:
 
       - name: Start webserver
         run: |
+          chmod -R a+w wp-content
           php -S localhost:8080 -t wordpress/ &
           sleep 5
 
