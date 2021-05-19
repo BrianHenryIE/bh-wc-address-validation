@@ -53,6 +53,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.1
         with:
           envkey_USPS_USERNAME: ${{ secrets.USPS_USERNAME }}
+          directory: $GITHUB_WORKSPACE
           file_name: .env.secret
 
       - name: Read .env.secret
