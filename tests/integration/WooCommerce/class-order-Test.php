@@ -7,6 +7,7 @@ use WC_Order;
 
 /**
  * Class Order_Test
+ *
  * @package BrianHenryIE\WC_Address_Validation\WooCommerce
  * @coversNothing
  */
