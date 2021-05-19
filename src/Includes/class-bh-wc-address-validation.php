@@ -131,9 +131,9 @@ class BH_WC_Address_Validation {
 
 		add_filter( 'woocommerce_admin_order_data_after_shipping_address', array( $woocommerce_order, 'add_link_to_usps_tools_zip_lookup' ) );
 
-		$this->shipping_settings_page = new Shipping_Settings_Page();
-		add_filter( 'woocommerce_get_sections_shipping', array( $this->shipping_settings_page, 'address_validation_section' ), 10, 1 );
-		add_filter( 'woocommerce_get_settings_shipping', array( $this->shipping_settings_page, 'address_validation_settings' ), 10, 2 );
+		$shipping_settings_page = new Shipping_Settings_Page();
+		add_filter( 'woocommerce_get_sections_shipping', array( $shipping_settings_page, 'address_validation_section' ), 10, 1 );
+		add_filter( 'woocommerce_get_settings_shipping', array( $shipping_settings_page, 'address_validation_settings' ), 10, 2 );
 
 		/**
 		 * The Order_Status class defines one new order status, wc-bad-address.
