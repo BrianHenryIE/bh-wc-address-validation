@@ -14,6 +14,7 @@ use BrianHenryIE\WC_Address_Validation\USPS\AddressVerify;
 
 /**
  * Class API_Test
+ * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\API\API
  */
 class API_Test extends \Codeception\Test\Unit {
 	//

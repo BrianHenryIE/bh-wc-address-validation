@@ -5,6 +5,11 @@ namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 use BrianHenryIE\WC_Address_Validation\Includes\Cron;
 use WC_Order;
 
+/**
+ * Class Order_Test
+ * @package BrianHenryIE\WC_Address_Validation\WooCommerce
+ * @coversNothing
+ */
 class Order_Test extends \Codeception\TestCase\WPTestCase {
 
 	/**

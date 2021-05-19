@@ -12,6 +12,7 @@ namespace BrianHenryIE\WC_Address_Validation\Includes;
  * Class BH_WC_Address_Validation_Test
  *
  * @see I18n
+ * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\Includes\I18n
  */
 class I18n_Test extends \Codeception\TestCase\WPTestCase {
 

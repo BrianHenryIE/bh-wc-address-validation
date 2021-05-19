@@ -16,6 +16,7 @@ use BrianHenryIE\WC_Address_Validation\API\API;
  * Class API_Test
  *
  * @see API
+ * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\WooCommerce\Order
  */
 class Order_Test extends \Codeception\TestCase\WPTestCase {
 

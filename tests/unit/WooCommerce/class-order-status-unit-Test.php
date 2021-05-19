@@ -13,7 +13,7 @@ use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
 use Psr\Log\NullLogger;
 
 /**
- *
+ * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status
  */
 class Order_Status_Unit_Test extends \Codeception\Test\Unit {
 	//

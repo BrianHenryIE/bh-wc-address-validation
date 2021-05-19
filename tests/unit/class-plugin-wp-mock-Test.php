@@ -12,6 +12,7 @@ use BrianHenryIE\WC_Address_Validation\API\API;
 
 /**
  * Class Plugin_WP_Mock_Test
+ * @coversNothing
  */
 class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 

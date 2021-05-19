@@ -19,6 +19,7 @@ use BrianHenryIE\WC_Address_Validation\API\API;
  * Class Cron_Test
  *
  * @see Cron
+ * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\Includes\Cron
  */
 class Cron_Test extends \Codeception\TestCase\WPTestCase {
 

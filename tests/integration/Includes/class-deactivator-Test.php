@@ -8,6 +8,11 @@ namespace BrianHenryIE\WC_Address_Validation\Includes;
 use WC_Order;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 
+/**
+ * Class Deactivator_Test
+ * @package BrianHenryIE\WC_Address_Validation\Includes
+ * @coversNothing
+ */
 class Deactivator_Test extends \Codeception\TestCase\WPTestCase {
 
 	/**

@@ -53,4 +53,41 @@ mysql_password="secret"
 # Create the databases:
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_SITE_DB_NAME"; USE "$TEST_SITE_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_SITE_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
 mysql -u $mysql_username -p$mysql_password -e "CREATE DATABASE "$TEST_DB_NAME"; USE "$TEST_DB_NAME"; GRANT ALL PRIVILEGES ON "$TEST_DB_NAME".* TO '"$TEST_DB_USER"'@'%';";
+
+### Tests
+
+Tests use the [Codeception](https://codeception.com/) add-on [WP-Browser](https://github.com/lucatume/wp-browser) and include vanilla PHPUnit tests with [WP_Mock](https://github.com/10up/wp_mock).
+
+Run tests with:
+
+```
+vendor/bin/codecept run unit;
+vendor/bin/codecept run wpunit;
+vendor/bin/codecept run integration;
+vendor/bin/codecept run acceptance;
+```
+
+Show code coverage (unit+wpunit):
+
+```
+XDEBUG_MODE=coverage composer run-script coverage-tests 
+```
+
+Static analysis:
+
+```
+vendor/bin/phpstan analyse --memory-limit 1G
+```
+
+To save changes made to the acceptance database:
+
+```
+export $(grep -v '^#' .env.testing | xargs)
+mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD $TEST_SITE_DB_NAME > tests/_data/dump.sql
+```
+
+To clear Codeception cache after moving/removing test files:
+
+```
+vendor/bin/codecept clean
 ```
