@@ -115,9 +115,10 @@ jobs:
           git add *
           cd ../../..
 
-      - name: Discard MySQL port changes in .env before commiting other changes
+      - name: Discard environment changes before commiting other changes
         run: |
           git checkout -- .env.testing
+          git checkout -- tests/_data/dump.sql
 
       - name: Commit code coverage to gh-pages
         uses: stefanzweifel/git-auto-commit-action@v4.1.1
