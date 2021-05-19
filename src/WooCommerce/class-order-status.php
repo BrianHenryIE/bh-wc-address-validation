@@ -1,6 +1,6 @@
 <?php
 
-namespace BrianHenryIE\WC_Address_Validation\woocommerce;
+namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
 use BrianHenryIE\WC_Address_Validation\API\API;
 use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
