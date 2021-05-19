@@ -53,3 +53,5 @@ auth.json
 
 *.zip
 composer.lock
+
+docker_tag
