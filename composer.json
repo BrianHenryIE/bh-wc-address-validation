@@ -25,10 +25,6 @@
             "type": "git"
         },
         {
-            "type": "path",
-            "url": "../bh-wp-logger"
-        },
-        {
             "url": "https://github.com/BrianHenryIE/bh-wp-logger",
             "type": "git"
         },
@@ -60,11 +56,12 @@
         "codeception/util-universalframework": "^1.0",
         "cweagans/composer-patches": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "hoa/console": "^3.17",
         "jaschilz/php-coverage-badger": "^2.0",
         "kporras07/composer-symlinks": "dev-master",
         "lucatume/wp-browser": "*",
-        "phpcompatibility/phpcompatibility-wp": "*",
         "php-stubs/woocommerce-stubs": "^5.2",
+        "phpcompatibility/phpcompatibility-wp": "*",
         "phpstan/extension-installer": "^1.1",
         "phpunit/phpcov": "*",
         "squizlabs/php_codesniffer": "*",

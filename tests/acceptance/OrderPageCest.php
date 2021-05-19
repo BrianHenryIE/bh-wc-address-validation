@@ -25,13 +25,22 @@ class OrderPageCest {
 
 		sleep( 0.5 );
 
+		$I->seeInField('bh-wc-address-validation-usps-username', $usps_username);
+
 		// An order.
 		$I->amOnPage( "/wp-admin/post.php?post={$order_id}&action=edit" );
 
-		$I->selectOption( '#order_status', 'Processing' );
+        $I->pause();
 
-		//
-		// $I->makeHtmlSnapshot();
+//        $I->grabValueFrom(['id'=>'order_status']);
+//
+//        $I->selectOption( ['id'=>'order_status'], 'BADINPUT-wc-processing' );
+
+        $I->selectOption( ['id'=>'order_status'], 'wc-processing' );
+
+//        $I->canSeeOptionIsSelected( ['id'=>'order_status'], 'wc-processing' );
+
+//        $I->grabValueFrom(['id'=>'order_status']);
 
 		$I->click( 'Update' );
 
