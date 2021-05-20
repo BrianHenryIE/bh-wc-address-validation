@@ -88,7 +88,7 @@ jobs:
 
       - name: Run PHPCS to add annotations to the code
         continue-on-error: true
-        run: vendor/bin/phpcs --report=checkstyle | cs2pr
+        run: vendor/bin/phpcs -q -n --report=checkstyle | cs2pr
 
       - name: Discard environment changes before commiting other changes
         run: |
