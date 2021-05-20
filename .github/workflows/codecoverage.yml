@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: gh-pages
-          path: tests/reports/html
+          path: tests/_output/html
 
       - name: Install PHP
         uses: shivammathur/setup-php@2.11.0
@@ -93,7 +93,7 @@ jobs:
 
       - name: Clear previous code coverage
         run: |
-          cd tests/reports/html
+          cd tests/_output/html
           rm -rf *
           cd ../../..
 
@@ -108,7 +108,7 @@ jobs:
 
       - name: Edit phpcov html output to work with gh-pages
         run: |
-          cd tests/reports/html
+          cd tests/_output/html
           mv _css css; find . -depth -name '*.html' -exec sed -i "s/_css\//css\//" {} +
           mv _icons icons; find . -depth -name '*.html' -exec sed -i "s/_icons\//icons\//" {} +
           mv _js js; find . -depth -name '*.html' -exec sed -i "s/_js\//js\//" {} +
@@ -123,7 +123,7 @@ jobs:
       - name: Commit code coverage to gh-pages
         uses: stefanzweifel/git-auto-commit-action@v4.1.1
         with:
-          repository: tests/reports/html
+          repository: tests/_output/html
           branch: gh-pages
           commit_message: "Commit code coverage to gh-pages"
           commit_options:
@@ -131,7 +131,7 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Update README badge
-        run: vendor/bin/php-coverage-badger tests/reports/clover.xml .github/coverage.svg
+        run: vendor/bin/php-coverage-badger tests/_output/clover.xml .github/coverage.svg
 
       - name: Commit code coverage badge
         uses: stefanzweifel/git-auto-commit-action@v4.1.1

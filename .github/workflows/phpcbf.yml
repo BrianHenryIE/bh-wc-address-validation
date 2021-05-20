@@ -98,4 +98,4 @@ jobs:
       - name: Commit PHPCBF changes
         uses: stefanzweifel/git-auto-commit-action@v4.1.1
         with:
-          commit_message: "PHPCBF"
+          commit_message: "🤖 PHPCBF"

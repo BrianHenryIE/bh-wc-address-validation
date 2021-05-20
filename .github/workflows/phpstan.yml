@@ -8,7 +8,7 @@ on:
       - master
 
 jobs:
-  php-codesniffer:
+  phpstan:
     runs-on: ubuntu-latest
 
     services:
@@ -84,13 +84,3 @@ jobs:
       - name: Run PHPStan to add annotations to the code
         continue-on-error: true
         run: vendor/bin/phpstan analyse --memory-limit 1G --error-format=checkstyle | cs2pr
-
-      - name: Discard environment changes before commiting other changes
-        run: |
-          git checkout -- .env.testing
-          git checkout -- tests/_data/dump.sql
-
-      - name: Commit PHPCBF changes
-        uses: stefanzweifel/git-auto-commit-action@v4.1.1
-        with:
-          commit_message: "🤖 PHPStan"
