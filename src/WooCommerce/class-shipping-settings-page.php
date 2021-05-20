@@ -13,7 +13,6 @@ namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
 use BrianHenryIE\WC_Address_Validation\API\Settings;
 
-use BrianHenryIE\WC_Address_Validation\api\Settings_Interface;
 use Psr\Log\LogLevel;
 
 /**
@@ -28,25 +27,24 @@ class Shipping_Settings_Page {
 	/**
 	 * @hooked woocommerce_get_sections_shipping
 	 *
-	 * @param $sections
-	 * @return mixed
+	 * @param array<string, string> $sections
+	 * @return array<string, string>
 	 */
-	function address_validation_section( $sections ) {
+	function address_validation_section( $sections ): array {
 
-		$sections['bh-wc-address-validation'] = __( 'Address Validation', 'text-domain' );
+		$sections['bh-wc-address-validation'] = __( 'Address Validation', 'bh-wc-address-validation' );
+
 		return $sections;
-
 	}
 
 	/**
 	 *
 	 * @hooked woocommerce_get_settings_shipping
 	 *
-	 * @param $settings
-	 * @param $current_section
-	 * @return array
+	 * @param array  $settings
+	 * @param string $current_section
 	 */
-	function address_validation_settings( $settings, $current_section ) {
+	function address_validation_settings( array $settings, string $current_section ): array {
 
 		/**
 		 * Check the current section is what we want
@@ -97,4 +95,5 @@ class Shipping_Settings_Page {
 
 		return $settings;
 	}
+
 }

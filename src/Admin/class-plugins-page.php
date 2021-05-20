@@ -9,10 +9,9 @@
  * @subpackage BH_WC_Address_Validation/admin
  */
 
-
 namespace BrianHenryIE\WC_Address_Validation\Admin;
 
-use BrianHenryIE\WC_Address_Validation\api\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
 
 /**
  * This class adds a `Settings` link on the plugins.php page.
@@ -32,11 +31,11 @@ class Plugins_Page {
 	/**
 	 * Add link to settings page in plugins.php list.
 	 *
-	 * @param array $links_array The existing plugin links (usually "Deactivate").
+	 * @param array<int|string, string> $links_array The existing plugin links (usually "Deactivate").
 	 *
-	 * @return array The links to display below the plugin name on plugins.php.
+	 * @return array<int|string, string> The links to display below the plugin name on plugins.php.
 	 */
-	public function action_links( $links_array ) {
+	public function action_links( array $links_array ): array {
 
 		$settings_url = admin_url( '/admin.php?page=wc-settings&tab=shipping&section=' . $this->settings->get_plugin_slug() );
 
@@ -50,14 +49,14 @@ class Plugins_Page {
 	 *
 	 * @see https://rudrastyh.com/wordpress/plugin_action_links-plugin_row_meta.html
 	 *
-	 * @param string[] $plugin_meta The meta information/links displayed by the plugin description.
-	 * @param string   $plugin_file_name The plugin filename to match when filtering.
-	 * @param array    $plugin_data Associative array including PluginURI, slug, Author, Version.
-	 * @param string   $status The plugin status, e.g. 'Inactive'.
+	 * @param array<int|string, string> $plugin_meta The meta information/links displayed by the plugin description.
+	 * @param string                    $plugin_file_name The plugin filename to match when filtering.
+	 * @param array                     $_plugin_data Associative array including PluginURI, slug, Author, Version.
+	 * @param string                    $_status The plugin status, e.g. 'Inactive'.
 	 *
-	 * @return array The filtered $plugin_meta.
+	 * @return array<int|string, string> The filtered $plugin_meta.
 	 */
-	public function row_meta( $plugin_meta, $plugin_file_name, $plugin_data, $status ) {
+	public function row_meta( array $plugin_meta, string $plugin_file_name, array $_plugin_data, string $_status ): array {
 
 		if ( $this->settings->get_plugin_basename() === $plugin_file_name ) {
 

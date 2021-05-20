@@ -27,11 +27,10 @@
 namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\WC_Address_Validation\API\API;
+use BrianHenryIE\WC_Address_Validation\API\API_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Settings;
 use BrianHenryIE\WC_Address_Validation\WP_Logger\Logger;
 use BrianHenryIE\WC_Address_Validation\Includes\BH_WC_Address_Validation;
-use BrianHenryIE\WC_Address_Validation\Includes\Activator;
-use BrianHenryIE\WC_Address_Validation\Includes\Deactivator;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -51,28 +50,13 @@ define( 'BH_WC_ADDRESS_VALIDATION_VERSION', '1.1.0' );
  * The code that runs during plugin activation.
  * This action is documented in includes/class-activator.php
  */
-function activate_bh_wc_address_validation() {
-
-	Activator::activate();
-}
+register_activation_hook( __FILE__, array( 'Activator', 'activate' ) );
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-deactivator.php
  */
-function deactivate_bh_wc_address_validation() {
-
-	Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_bh_wc_address_validation' );
-register_deactivation_hook( __FILE__, 'deactivate_bh_wc_address_validation' );
-
-
-
-
-
-
+register_deactivation_hook( __FILE__, array( 'Deactivator', 'deactivate' ) );
 
 /**
  * Begins execution of the plugin.
@@ -83,7 +67,7 @@ register_deactivation_hook( __FILE__, 'deactivate_bh_wc_address_validation' );
  *
  * @since    1.0.0
  */
-function instantiate_bh_wc_address_validation() {
+function instantiate_bh_wc_address_validation(): API_Interface {
 
 	$settings = new Settings();
 	$logger   = Logger::instance( $settings );
@@ -93,13 +77,13 @@ function instantiate_bh_wc_address_validation() {
 	 * The core plugin class that is used to define internationalization,
 	 * admin-specific hooks, and frontend-facing site hooks.
 	 */
-	$plugin = new BH_WC_Address_Validation( $api, $settings, $logger );
+	new BH_WC_Address_Validation( $api, $settings, $logger );
 
 	return $api;
 }
 
 /**
- * @var BrianHenryIE\WC_Address_Validation\API\API
+ * @var \BrianHenryIE\WC_Address_Validation\API\API_Interface $GLOBALS['bh_wc_address_validation']
  */
 $GLOBALS['bh_wc_address_validation'] = instantiate_bh_wc_address_validation();
 

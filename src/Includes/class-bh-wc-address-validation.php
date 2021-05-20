@@ -45,17 +45,17 @@ class BH_WC_Address_Validation {
 	/**
 	 * @var LoggerInterface
 	 */
-	protected $logger;
+	protected LoggerInterface $logger;
 
 	/**
 	 * @var Settings_Interface
 	 */
-	protected $settings;
+	protected Settings_Interface $settings;
 
 	/**
-	 * @var API
+	 * @var API_Interface
 	 */
-	protected $api;
+	protected API_Interface $api;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -92,7 +92,7 @@ class BH_WC_Address_Validation {
 	 *
 	 * @since    1.0.0
 	 */
-	protected function set_locale() {
+	protected function set_locale(): void {
 
 		$plugin_i18n = new I18n();
 
@@ -105,7 +105,7 @@ class BH_WC_Address_Validation {
 	 *
 	 * @since    1.0.0
 	 */
-	protected function define_admin_hooks() {
+	protected function define_admin_hooks(): void {
 
 		$plugins_page    = new Plugins_Page( $this->settings );
 		$plugin_basename = $this->settings->get_plugin_basename();
@@ -119,7 +119,7 @@ class BH_WC_Address_Validation {
 	 *
 	 * @since    1.0.0
 	 */
-	protected function define_woocommerce_hooks() {
+	protected function define_woocommerce_hooks(): void {
 
 		$woocommerce_order = new Order( $this->api, $this->settings, $this->logger );
 
@@ -129,7 +129,7 @@ class BH_WC_Address_Validation {
 		add_filter( 'woocommerce_order_actions', array( $woocommerce_order, 'add_admin_ui_order_action' ) );
 		add_action( 'woocommerce_order_action_bh_wc_address_validate', array( $woocommerce_order, 'check_address_on_admin_order_action' ) );
 
-		add_filter( 'woocommerce_admin_order_data_after_shipping_address', array( $woocommerce_order, 'add_link_to_usps_tools_zip_lookup' ) );
+		add_filter( 'woocommerce_admin_order_data_after_shipping_address', array( $woocommerce_order, 'print_link_to_usps_tools_zip_lookup' ) );
 
 		$shipping_settings_page = new Shipping_Settings_Page();
 		add_filter( 'woocommerce_get_sections_shipping', array( $shipping_settings_page, 'address_validation_section' ), 10, 1 );
@@ -154,19 +154,19 @@ class BH_WC_Address_Validation {
 	 *
 	 * @since    1.0.0
 	 */
-	protected function define_cron_hooks() {
+	protected function define_cron_hooks(): void {
 
 		$cron = new Cron( $this->api, $this->settings, $this->logger );
 
-		add_action( CRON::CHECK_SINGLE_ADDRESS_CRON_JOB, array( $cron, 'check_address_for_single_order' ) );
-		add_action( CRON::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, array( $cron, 'check_address_for_multiple_orders' ) );
+		add_action( Cron::CHECK_SINGLE_ADDRESS_CRON_JOB, array( $cron, 'check_address_for_single_order' ) );
+		add_action( Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, array( $cron, 'check_address_for_multiple_orders' ) );
 
-		add_action( CRON::RECHECK_BAD_ADDRESSES_CRON_JOB, array( $cron, 'recheck_bad_address_orders' ) );
+		add_action( Cron::RECHECK_BAD_ADDRESSES_CRON_JOB, array( $cron, 'recheck_bad_address_orders' ) );
 		add_action( 'plugins_loaded', array( $cron, 'add_cron_jon' ) );
 
 	}
 
-	protected function define_cli_commands() {
+	protected function define_cli_commands(): void {
 
 		if ( class_exists( WP_CLI::class ) ) {
 			CLI::$api = $this->api;

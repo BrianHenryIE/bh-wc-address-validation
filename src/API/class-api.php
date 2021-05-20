@@ -4,6 +4,7 @@
 namespace BrianHenryIE\WC_Address_Validation\API;
 
 use BrianHenryIE\WC_Address_Validation\Includes\Deactivator;
+use Illuminate\Support\Facades\Log;
 use Psr\Log\LoggerInterface;
 use WC_Data_Exception;
 use WC_Order;
@@ -31,9 +32,8 @@ class API implements API_Interface {
 	 *
 	 * @param Settings_Interface $settings
 	 * @param LoggerInterface    $logger
-	 * @param AddressVerify      $address_verify
 	 */
-	public function __construct( $settings, $logger, $address_verify = null ) {
+	public function __construct( Settings_Interface $settings, LoggerInterface $logger ) {
 
 		$this->logger   = $logger;
 		$this->settings = $settings;
@@ -52,7 +52,7 @@ class API implements API_Interface {
 	 * @param WC_Order $order
 	 * @throws WC_Data_Exception
 	 */
-	public function check_address_for_order( $order, $is_manual = false ) {
+	public function check_address_for_order( WC_Order $order, bool $is_manual = false ): void {
 
 		if ( ! $order instanceof WC_Order ) {
 			$this->logger->debug( 'Object passed to check_address_for_order not WC_Order', array( 'order' => get_class( $order ) ) );
@@ -106,7 +106,7 @@ class API implements API_Interface {
 	 * @param string[] $order_address
 	 * @param WC_Order $order
 	 */
-	public function check_address( $order_address, $order ) {
+	public function check_address( $order_address, $order ): void {
 
 		$address_to_validate = new Address();
 
@@ -198,7 +198,7 @@ class API implements API_Interface {
 		}
 
 		// wp post meta delete 11 bh-wc-address-validation-checked
-		$order->add_meta_data( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META, time() );
+		$order->add_meta_data( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META, '' . time() );
 		$order->save();
 
 	}
@@ -217,6 +217,11 @@ class API implements API_Interface {
 				'status' => array( 'wc-' . Order_Status::BAD_ADDRESS_STATUS ),
 			)
 		);
+
+		// Probably enabled 'paginate' in the args.
+		if ( ! is_array( $orders ) ) {
+			return;
+		}
 
 		foreach ( $orders as $order ) {
 

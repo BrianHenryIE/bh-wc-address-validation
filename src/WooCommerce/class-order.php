@@ -5,7 +5,9 @@
 
 namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
+use BrianHenryIE\WC_Address_Validation\API\API_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use WC_Order;
 use BrianHenryIE\WC_Address_Validation\API\API;
@@ -13,31 +15,28 @@ use BrianHenryIE\WC_Address_Validation\Includes\Cron;
 
 class Order {
 
-	/**
-	 * @var LoggerInterface
-	 */
-	protected $logger;
+	use LoggerAwareTrait;
 
 	/**
 	 * @var Settings_Interface
 	 */
-	protected $settings;
+	protected Settings_Interface $settings;
 
 	/**
-	 * @var API
+	 * @var API_Interface
 	 */
-	protected $api;
+	protected API_Interface $api;
 
 	/**
 	 * Order constructor.
 	 *
-	 * @param API    $api
-	 * @param string $plugin_name
-	 * @param string $version
+	 * @param API_Interface      $api
+	 * @param Settings_Interface $settings
+	 * @param LoggerInterface    $logger
 	 */
-	public function __construct( $api, $settings, $logger ) {
+	public function __construct( API_Interface $api, Settings_Interface $settings, LoggerInterface $logger ) {
 
-		$this->logger   = $logger;
+		$this->setLogger( $logger );
 		$this->settings = $settings;
 		$this->api      = $api;
 	}
@@ -55,7 +54,7 @@ class Order {
 	 * @param string $status_from
 	 * @param string $status_to
 	 */
-	public function check_address_on_single_order_processing( $order_id, $status_from, $status_to ) {
+	public function check_address_on_single_order_processing( $order_id, $status_from, $status_to ): void {
 
 		// TODO: This is also running on the bulk update action... only one is needed.
 		// if ( isset( $_REQUEST['_wp_http_referer'] ) && '/wp-admin/edit.php?post_type=shop_order' === $_REQUEST['_wp_http_referer'] ) {
@@ -75,7 +74,7 @@ class Order {
 	/**
 	 * @hooked admin_action_marked_processing
 	 */
-	public function check_address_on_bulk_order_processing() {
+	public function check_address_on_bulk_order_processing(): void {
 
 		// The bulk update should have an array of post (order) ids.
 		if ( ! isset( $_REQUEST['post'] ) || ! is_array( $_REQUEST['post'] ) ) {
@@ -116,7 +115,7 @@ class Order {
 	 *
 	 * @param WC_Order $order
 	 */
-	public function check_address_on_admin_order_action( $order ) {
+	public function check_address_on_admin_order_action( $order ): void {
 
 		$this->logger->debug( $order->get_id() . ' check address started from edit order page.', array( 'order_id' => $order->get_id() ) );
 
@@ -134,7 +133,7 @@ class Order {
 	 *
 	 * @param WC_Order $order
 	 */
-	public function add_link_to_usps_tools_zip_lookup( $order ) {
+	public function print_link_to_usps_tools_zip_lookup( WC_Order $order ): void {
 
 		// Check order status
 		if ( Order_Status::BAD_ADDRESS_STATUS === $order->get_status() ) {

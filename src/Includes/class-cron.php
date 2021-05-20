@@ -5,21 +5,19 @@
 
 namespace BrianHenryIE\WC_Address_Validation\Includes;
 
-use BrianHenryIE\WC_Address_Validation\API\API;
+use BrianHenryIE\WC_Address_Validation\API\API_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
+use WC_Order;
 
 class Cron {
+
+	use LoggerAwareTrait;
 
 	const CHECK_SINGLE_ADDRESS_CRON_JOB     = 'bh_wc_address_validation_check_one_address';
 	const CHECK_MULTIPLE_ADDRESSES_CRON_JOB = 'bh_wc_address_validation_check_many_addresses';
 	const RECHECK_BAD_ADDRESSES_CRON_JOB    = 'bh_wc_address_validation_recheck_bad_addresses';
-
-
-	/**
-	 * @var LoggerInterface
-	 */
-	protected $logger;
 
 	/**
 	 * @var Settings_Interface
@@ -27,18 +25,18 @@ class Cron {
 	protected $settings;
 
 	/**
-	 * @var API
+	 * @var API_Interface
 	 */
-	protected $api;
+	protected API_Interface $api;
 
 	/**
 	 * Cron constructor.
 	 *
-	 * @param API    $api
-	 * @param string $plugin_name
-	 * @param string $version
+	 * @param API_Interface      $api
+	 * @param Settings_Interface $settings
+	 * @param LoggerInterface    $logger
 	 */
-	public function __construct( $api, $settings, $logger ) {
+	public function __construct( API_Interface $api, Settings_Interface $settings, LoggerInterface $logger ) {
 
 		$this->logger   = $logger;
 		$this->settings = $settings;
@@ -67,34 +65,25 @@ class Cron {
 	 *
 	 * @param int $order_id The order to check.
 	 */
-	public function check_address_for_single_order( $order_id ) {
-
-		if ( is_array( $order_id ) ) {
-
-			return;
-		}
+	public function check_address_for_single_order( int $order_id ): void {
 
 		$order = wc_get_order( $order_id );
 
-		if ( ! $order instanceof \WC_Order ) {
+		if ( ! $order instanceof WC_Order ) {
 
 			$this->logger->error( 'Invalid order_id.', array( 'order_id' => $order_id ) );
 
 			return;
 		}
 
-		$this->api->check_address_for_order( $order );
+		$this->api->check_address_for_order( $order, false );
 
 	}
 
 	/**
 	 * @param int[] $order_ids
 	 */
-	public function check_address_for_multiple_orders( $order_ids ) {
-
-		if ( ! is_array( $order_ids ) ) {
-			return;
-		}
+	public function check_address_for_multiple_orders( array $order_ids ): void {
 
 		foreach ( $order_ids as $order_id ) {
 			$this->check_address_for_single_order( $order_id );
@@ -102,7 +91,7 @@ class Cron {
 
 	}
 
-	public function recheck_bad_address_orders() {
+	public function recheck_bad_address_orders(): void {
 		$this->api->recheck_bad_address_orders();
 	}
 }

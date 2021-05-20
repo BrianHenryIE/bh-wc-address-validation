@@ -3,36 +3,35 @@
 namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
 use BrianHenryIE\WC_Address_Validation\API\API;
+use BrianHenryIE\WC_Address_Validation\API\API_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
 class Order_Status {
 
-	const BAD_ADDRESS_STATUS = 'bad-address';
+	use LoggerAwareTrait;
 
-	/**
-	 * @var LoggerInterface
-	 */
-	protected $logger;
+	const BAD_ADDRESS_STATUS = 'bad-address';
 
 	/**
 	 * @var Settings_Interface
 	 */
-	protected $settings;
+	protected Settings_Interface $settings;
 
 	/**
-	 * @var API
+	 * @var API_Interface
 	 */
-	protected $api;
+	protected API_Interface $api;
 
 	/**
 	 * Order_Status constructor.
 	 *
-	 * @param API    $api
-	 * @param string $plugin_name
-	 * @param string $version
+	 * @param API_Interface      $api
+	 * @param Settings_Interface $settings
+	 * @param LoggerInterface    $logger
 	 */
-	public function __construct( $api, $settings, $logger ) {
+	public function __construct( API_Interface $api, Settings_Interface $settings, LoggerInterface $logger ) {
 
 		$this->logger   = $logger;
 		$this->settings = $settings;
@@ -105,7 +104,7 @@ class Order_Status {
 	 * @see \WC_Admin_Report::get_order_report_data()
 	 * @see wp-admin/admin.php?page=wc-reports
 	 *
-	 * @param $order_status
+	 * @param false|string[] $order_status
 	 *
 	 * @return false|string[]
 	 */

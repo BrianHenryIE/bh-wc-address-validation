@@ -38,7 +38,7 @@ class Activator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function activate() {
+	public static function activate(): void {
 
 		$earlier_version_usps_username = get_option( 'usps_id' );
 
@@ -73,6 +73,10 @@ class Activator {
 				'status' => array( 'on-hold' ),
 			)
 		);
+
+		if ( ! is_array( $orders ) ) {
+			return;
+		}
 
 		$orders_to_check = array();
 
