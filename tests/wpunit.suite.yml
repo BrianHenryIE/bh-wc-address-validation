@@ -20,3 +20,4 @@ modules:
             title: "bh-wc-address-validation"
             plugins: ['woocommerce/woocommerce.php']
             activatePlugins: ['woocommerce/woocommerce.php']
+bootstrap: _bootstrap.php

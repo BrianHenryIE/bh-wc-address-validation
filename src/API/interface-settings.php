@@ -11,7 +11,11 @@ interface Settings_Interface {
 
 	public function get_usps_username(): ?string;
 
+	public function get_easypost_api_key(): ?string;
+
 	public function get_plugin_slug(): string;
 
 	public function get_plugin_basename(): string;
+
+
 }

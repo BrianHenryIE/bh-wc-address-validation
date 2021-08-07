@@ -38,7 +38,7 @@ class I18n {
 		load_plugin_textdomain(
 			'bh-wc-address-validation',
 			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+            plugin_basename( dirname( __FILE__, 2 ) ) . '/languages/'
 		);
 
 	}

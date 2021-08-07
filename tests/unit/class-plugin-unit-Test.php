@@ -9,20 +9,24 @@
 namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\WC_Address_Validation\API\API;
+use BrianHenryIE\WC_Address_Validation\Includes\BH_WC_Address_Validation;
 
 /**
  * Class Plugin_WP_Mock_Test
  *
- * @coversNothing
  */
-class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
+class BH_WC_Address_Validation_Unit_Test extends \Codeception\Test\Unit {
 
 	protected function _before() {
+        require_once __DIR__ . '/../bootstrap.php';
+        require_once __DIR__ . '/_bootstrap.php';
+//        parent::setUp();
 		\WP_Mock::setUp();
 	}
 
 	protected function _after() {
-		\WP_Mock::tearDown();
+        \WP_Mock::tearDown();
+//        parent::tearDown();
 	}
 
 	/**
@@ -30,7 +34,15 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 	 */
 	public function test_plugin_include() {
 
-		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
+//        $this->markTestSkipped();
+
+	    // Prevents code-coverage counting, and removes the need to define the WordPress functions that are used in that class.
+        \Patchwork\redefine(
+            array( BH_WC_Address_Validation::class, '__construct' ),
+            function( $api, $settings, $logger ) {}
+        );
+
+		$plugin_root_dir = dirname(__DIR__, 2) . '/src';
 
 		\WP_Mock::userFunction(
 			'plugin_dir_path',
@@ -105,10 +117,19 @@ class Plugin_WP_Mock_Test extends \Codeception\Test\Unit {
 
 	/**
 	 * Verifies the plugin does not output anything to screen.
+     *
 	 */
 	public function test_plugin_include_no_output() {
 
-		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
+//	    $this->markTestSkipped();
+
+        // Prevents code-coverage counting, and removes the need to define the WordPress functions that are used in that class.
+        \Patchwork\redefine(
+            array( BH_WC_Address_Validation::class, '__construct' ),
+            function( $api, $settings, $logger ) {}
+        );
+
+		$plugin_root_dir = dirname(__DIR__, 2) . '/src';
 
 		\WP_Mock::userFunction(
 			'plugin_dir_path',

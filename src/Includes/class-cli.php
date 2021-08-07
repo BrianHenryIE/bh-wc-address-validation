@@ -1,7 +1,8 @@
 <?php
 
-namespace BrianHenryIE\WC_Address_Validation\API;
+namespace BrianHenryIE\WC_Address_Validation\Includes;
 
+use BrianHenryIE\WC_Address_Validation\API\API_Interface;
 use WC_Order;
 use WP_CLI;
 use WP_CLI_Command;
@@ -12,7 +13,7 @@ class CLI extends WP_CLI_Command {
 	static API_Interface $api;
 
 	/**
-	 * wp validate_address check_order 123
+	 * wp address_validation check_order 123
 	 */
 	public function check_order( array $args ): void {
 
@@ -32,7 +33,7 @@ class CLI extends WP_CLI_Command {
 
 	/**
 	 *
-	 * wp validate_address check_address '{"address_1": "123 Main St.", "address_2": "APT 456", "city":"New York", "state:": "NY", "country":"USA"}'
+	 * wp address_validation check_address '{"address_1": "123 Main St.", "address_2": "APT 456", "city":"New York", "state:": "NY", "country":"USA"}'
 	 */
 	public function check_address( array $args ): void {
 

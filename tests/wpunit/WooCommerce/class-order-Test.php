@@ -8,6 +8,9 @@
 
 namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
+use BrianHenryIE\ColorLogger\ColorLogger;
+use BrianHenryIE\WC_Address_Validation\API\API_Interface;
+use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
 use Codeception\Stub\Expected;
 use WC_Order;
 use BrianHenryIE\WC_Address_Validation\API\API;
@@ -27,7 +30,12 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function test_add_admin_ui_order_action() {
 
-		$order = new Order( null, 'bh-wc-address-validation', '1.0.0' );
+		$logger = new ColorLogger();
+
+		$api      = $this->makeEmpty( API_Interface::class );
+		$settings = $this->makeEmpty( Settings_Interface::class );
+
+		$order = new Order( $api, $settings, $logger );
 
 		$result = $order->add_admin_ui_order_action( array() );
 
@@ -39,16 +47,17 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 
 	public function test_order_action_handler() {
 
-		$this->markTestSkipped( 'unimplemented' );
-
-		$api = $this->make(
-			API::class,
+		$logger = new ColorLogger();
+		$api    = $this->makeEmpty(
+			API_Interface::class,
 			array(
 				'check_address_for_order' => Expected::once(),
 			)
 		);
 
-		$order = new Order( $api, 'bh-wc-address-validation', '1.0.0' );
+		$settings = $this->makeEmpty( Settings_Interface::class );
+
+		$order = new Order( $api, $settings, $logger );
 
 		$an_order = new WC_Order();
 

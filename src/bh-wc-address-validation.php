@@ -29,6 +29,8 @@ namespace BrianHenryIE\WC_Address_Validation;
 use BrianHenryIE\WC_Address_Validation\API\API;
 use BrianHenryIE\WC_Address_Validation\API\API_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Settings;
+use BrianHenryIE\WC_Address_Validation\Includes\Activator;
+use BrianHenryIE\WC_Address_Validation\Includes\Deactivator;
 use BrianHenryIE\WC_Address_Validation\WP_Logger\Logger;
 use BrianHenryIE\WC_Address_Validation\Includes\BH_WC_Address_Validation;
 
@@ -50,13 +52,13 @@ define( 'BH_WC_ADDRESS_VALIDATION_VERSION', '1.1.0' );
  * The code that runs during plugin activation.
  * This action is documented in includes/class-activator.php
  */
-register_activation_hook( __FILE__, array( 'Activator', 'activate' ) );
+register_activation_hook( __FILE__, array( Activator::class, 'activate' ) );
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-deactivator.php
  */
-register_deactivation_hook( __FILE__, array( 'Deactivator', 'deactivate' ) );
+register_deactivation_hook( __FILE__, array( Deactivator::class , 'deactivate' ) );
 
 /**
  * Begins execution of the plugin.
@@ -69,9 +71,10 @@ register_deactivation_hook( __FILE__, array( 'Deactivator', 'deactivate' ) );
  */
 function instantiate_bh_wc_address_validation(): API_Interface {
 
-	$settings = new Settings();
-	$logger   = Logger::instance( $settings );
-	$api      = new API( $settings, $logger );
+	$settings  = new Settings();
+	$logger    = Logger::instance( $settings );
+	$container = new Container( $settings, $logger );
+	$api       = new API( $container, $settings, $logger );
 
 	/**
 	 * The core plugin class that is used to define internationalization,

@@ -16,14 +16,12 @@ namespace BrianHenryIE\WC_Address_Validation\Includes;
 
 use BrianHenryIE\WC_Address_Validation\API\API_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
-use Psr\Log\LoggerInterface;
 use BrianHenryIE\WC_Address_Validation\Admin\Plugins_Page;
-use BrianHenryIE\WC_Address_Validation\API\API;
-use BrianHenryIE\WC_Address_Validation\API\CLI;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Email\Emails;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Shipping_Settings_Page;
+use Psr\Log\LoggerInterface;
 use WP_CLI;
 
 /**
@@ -77,6 +75,7 @@ class BH_WC_Address_Validation {
 		$this->api      = $api;
 
 		$this->set_locale();
+
 		$this->define_admin_hooks();
 		$this->define_woocommerce_hooks();
 		$this->define_cron_hooks();
@@ -96,7 +95,7 @@ class BH_WC_Address_Validation {
 
 		$plugin_i18n = new I18n();
 
-		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
+		add_action( 'init', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 	}
 
 	/**
@@ -161,7 +160,6 @@ class BH_WC_Address_Validation {
 		add_action( Cron::CHECK_SINGLE_ADDRESS_CRON_JOB, array( $cron, 'check_address_for_single_order' ) );
 		add_action( Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, array( $cron, 'check_address_for_multiple_orders' ) );
 
-		add_action( Cron::RECHECK_BAD_ADDRESSES_CRON_JOB, array( $cron, 'recheck_bad_address_orders' ) );
 		add_action( 'plugins_loaded', array( $cron, 'add_cron_jon' ) );
 
 	}
@@ -170,8 +168,8 @@ class BH_WC_Address_Validation {
 
 		if ( class_exists( WP_CLI::class ) ) {
 			CLI::$api = $this->api;
-			// vendor/bin/wp validate_address check_order 123
-			WP_CLI::add_command( 'validate_address', CLI::class );
+			// vendor/bin/wp address_validation check_order 123
+			WP_CLI::add_command( 'address_validation', CLI::class );
 		}
 	}
 

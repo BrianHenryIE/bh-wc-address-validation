@@ -61,13 +61,20 @@ class Shipping_Settings_Page {
 				'id'   => 'bh-wc-address-validation',
 			);
 
-			// USPS username text input.
-			$settings[] = array(
-				'name' => __( 'USPS Username', 'bh-wc-address-validation' ),
-				'desc' => __( 'Your USPS Web Tools API username', 'bh-wc-address-validation' ),
-				'id'   => Settings::USPS_USERNAME_OPTION,
-				'type' => 'text',
-			);
+            // USPS username text input.
+            $settings[] = array(
+                'name' => __( 'USPS Username', 'bh-wc-address-validation' ),
+                'desc' => __( 'Your USPS Web Tools API username', 'bh-wc-address-validation' ),
+                'id'   => Settings::USPS_USERNAME_OPTION,
+                'type' => 'text',
+            );
+
+            $settings[] = array(
+                'name' => __( 'EasyPost API Key', 'bh-wc-address-validation' ),
+                'desc' => __( 'Your EasyPost API Key', 'bh-wc-address-validation' ),
+                'id'   => Settings::EASYPOST_API_KEY_OPTION,
+                'type' => 'text',
+            );
 
 			$log_levels        = array( 'none', LogLevel::ERROR, LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG );
 			$log_levels_option = array();

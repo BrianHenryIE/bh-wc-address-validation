@@ -81,6 +81,9 @@ class Cron {
 	}
 
 	/**
+	 * @see Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB
+	 * @hooked bh_wc_address_validation_check_many_addresses
+	 *
 	 * @param int[] $order_ids
 	 */
 	public function check_address_for_multiple_orders( array $order_ids ): void {
@@ -91,6 +94,9 @@ class Cron {
 
 	}
 
+	/**
+	 * Sometimes the check fails – e.g. sometimes the USPS API is offline.
+	 */
 	public function recheck_bad_address_orders(): void {
 		$this->api->recheck_bad_address_orders();
 	}

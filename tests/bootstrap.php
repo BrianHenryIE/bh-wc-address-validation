@@ -13,5 +13,3 @@ $GLOBALS['plugin_basename']    = $plugin_name . '/' . $plugin_name_php;
 $GLOBALS['wordpress_root_dir'] = $project_root_dir . '/wordpress';
 
 define( 'WP_PLUGIN_DIR', $GLOBALS['wordpress_root_dir'] . '/wp-content/plugins' );
-
-require_once $plugin_root_dir . '/autoload.php';

@@ -5,7 +5,7 @@ namespace BrianHenryIE\WC_Address_Validation\WooCommerce\Email;
 
 use WC_Email;
 use WC_Order;
-use BrianHenryIE\WC_Address_Validation\woocommerce\Order_Status;
+use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 
 class Bad_Address_Email extends WC_Email {
 

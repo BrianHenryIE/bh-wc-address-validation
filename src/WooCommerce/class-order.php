@@ -1,18 +1,24 @@
 <?php
 /**
- * When an order is moving to processing, check with USPS for any error in the address.
+ * When an order is paid, check its address.
+ * When an order is marked processing via the order list page bulk actions "Mark processing", check its address.
+ * Add a "Validate address" option on the order page's order actions
  */
 
 namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
 use BrianHenryIE\WC_Address_Validation\API\API_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\Includes\Cron;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use WC_Order;
-use BrianHenryIE\WC_Address_Validation\API\API;
-use BrianHenryIE\WC_Address_Validation\Includes\Cron;
 
+/**
+ * Class Order
+ *
+ * @package BrianHenryIE\WC_Address_Validation\WooCommerce
+ */
 class Order {
 
 	use LoggerAwareTrait;
@@ -42,10 +48,11 @@ class Order {
 	}
 
 	/**
-	 * When an order is marked processing, i.e. paid and ready to fulfill, check with USPS
-	 * are there problems with the address.
+	 * When an order is paid, validate the address.
 	 *
-	 * Do not run on bulk updates.
+	 * Runs when the order status has changed from an unpaid to a paid status.
+	 *
+	 * TODO: Do not run on bulk updates.
 	 *
 	 * @hooked woocommerce_order_status_changed
 	 * @see WC_Order::status_transition()
@@ -61,7 +68,7 @@ class Order {
 		// return;
 		// }
 
-		if ( 'processing' === $status_to ) {
+		if ( ! in_array( $status_from, wc_get_is_paid_statuses(), true ) && in_array( $status_to, wc_get_is_paid_statuses(), true ) ) {
 
 			$args = array( $order_id );
 
@@ -72,6 +79,9 @@ class Order {
 	}
 
 	/**
+	 *
+	 * This runs asynchronously.
+	 *
 	 * @hooked admin_action_marked_processing
 	 */
 	public function check_address_on_bulk_order_processing(): void {
@@ -81,8 +91,7 @@ class Order {
 			return;
 		}
 
-		// TODO: sanitize.
-		$order_ids = $_REQUEST['post'];
+		$order_ids = array_map( 'intval', $_REQUEST['post'] );
 
 		$args = array( $order_ids );
 
@@ -104,6 +113,8 @@ class Order {
 	 * @return string[]
 	 */
 	public function add_admin_ui_order_action( $actions ): array {
+
+		// global $order?
 
 		$actions['bh_wc_address_validate'] = __( 'Validate address', 'bh-wc-address-validation' );
 
@@ -128,6 +139,11 @@ class Order {
 
 
 	/**
+	 * On the single order admin UI screen, if the order status is bad-address, and it is a US order, show a link
+	 * to the USPS Zip Code Lookup Tool.
+	 *
+	 * @see https://tools.usps.com/zip-code-lookup.htm?byaddress
+	 *
 	 * @hooked woocommerce_admin_order_data_after_shipping_address
 	 * @see class-wc-meta-box-order-data.php
 	 *
@@ -135,8 +151,7 @@ class Order {
 	 */
 	public function print_link_to_usps_tools_zip_lookup( WC_Order $order ): void {
 
-		// Check order status
-		if ( Order_Status::BAD_ADDRESS_STATUS === $order->get_status() ) {
+		if ( Order_Status::BAD_ADDRESS_STATUS === $order->get_status() && 'US' === $order->get_shipping_country() ) {
 
 			echo '<a target="_blank" href="https://tools.usps.com/zip-code-lookup.htm?byaddress">USPS Zip Code Lookup Tool</a>';
 		}
