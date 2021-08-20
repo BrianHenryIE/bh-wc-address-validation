@@ -81,8 +81,8 @@ class Order {
 	/**
 	 *
 	 * This runs asynchronously.
-     *
-     * TODO: Maybe check nonce.
+	 *
+	 * TODO: Maybe check nonce.
 	 *
 	 * @hooked admin_action_mark_processing
 	 */
