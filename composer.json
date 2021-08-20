@@ -1,6 +1,6 @@
 {
     "name": "brianhenryie/bh-wc-address-validation",
-    "description": "Checks WooCommerce orders' addresses against the USPS API after payment.",
+    "description": "Checks WooCommerce orders' addresses against the USPS & EasyPost APIs after payment.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0+-or-later",
     "authors": [
@@ -19,6 +19,10 @@
         "BrianHenryIE\\WC_Address_Validation\\": ["tests/unit","tests/wpunit","tests/integration"]
     },
     "repositories": [
+        {
+            "url": "https://github.com/BrianHenryIE/dist-archive-command",
+            "type": "git"
+        },
         {
             "url": "https://github.com/BrianHenryIE/composer-phpstorm",
             "type": "git"
@@ -76,6 +80,7 @@
         "voku/portable-ascii": "dev-master",
         "wordpress/wordpress": "*",
         "wp-cli/wp-cli-bundle": "*",
+        "wp-cli/dist-archive-command": "dev-master",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-plugin/woocommerce": "^5.1",
         "wpackagist-theme/storefront": "*"
@@ -143,6 +148,9 @@
             "vendor/bin/codecept run wpunit --coverage wpunit.cov",
             "vendor/bin/phpcov merge --clover tests/_output/clover.xml --html tests/_output/html tests/_output;",
             "open tests/_output/html/index.html"
+        ],
+        "create-plugin-archive": [
+            "vendor/bin/wp dist-archive src --plugin-dirname=$(basename \"$PWD\")"
         ]
     }
 }

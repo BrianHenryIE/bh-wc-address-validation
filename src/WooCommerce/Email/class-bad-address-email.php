@@ -16,7 +16,7 @@ class Bad_Address_Email extends WC_Email {
 	 * @access public
 	 * @return void
 	 */
-	function __construct() {
+	public function __construct() {
 
 		$this->id             = 'bad_address_admin';
 		$this->title          = __( 'Bad Address', 'bh-wc-address-validation' );
@@ -132,6 +132,8 @@ class Bad_Address_Email extends WC_Email {
 
 	/**
 	 * Initialise settings form fields.
+	 *
+	 * @return void
 	 */
 	public function init_form_fields() {
 		/* translators: %s: list of placeholders */

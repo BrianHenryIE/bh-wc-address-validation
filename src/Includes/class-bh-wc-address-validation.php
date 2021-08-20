@@ -78,6 +78,7 @@ class BH_WC_Address_Validation {
 
 		$this->define_admin_hooks();
 		$this->define_woocommerce_hooks();
+		$this->define_woocommerce_order_hooks();
 		$this->define_cron_hooks();
 		$this->define_cli_commands();
 
@@ -113,22 +114,9 @@ class BH_WC_Address_Validation {
 	}
 
 	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
 	 *
-	 * @since    1.0.0
 	 */
 	protected function define_woocommerce_hooks(): void {
-
-		$woocommerce_order = new Order( $this->api, $this->settings, $this->logger );
-
-		add_action( 'woocommerce_order_status_changed', array( $woocommerce_order, 'check_address_on_single_order_processing' ), 10, 3 );
-		add_action( 'admin_action_marked_processing', array( $woocommerce_order, 'check_address_on_bulk_order_processing' ) );
-
-		add_filter( 'woocommerce_order_actions', array( $woocommerce_order, 'add_admin_ui_order_action' ) );
-		add_action( 'woocommerce_order_action_bh_wc_address_validate', array( $woocommerce_order, 'check_address_on_admin_order_action' ) );
-
-		add_filter( 'woocommerce_admin_order_data_after_shipping_address', array( $woocommerce_order, 'print_link_to_usps_tools_zip_lookup' ) );
 
 		$shipping_settings_page = new Shipping_Settings_Page();
 		add_filter( 'woocommerce_get_sections_shipping', array( $shipping_settings_page, 'address_validation_section' ), 10, 1 );
@@ -146,6 +134,21 @@ class BH_WC_Address_Validation {
 		$woocommerce_email = new Emails();
 		add_filter( 'woocommerce_email_classes', array( $woocommerce_email, 'register_email' ), 10, 1 );
 
+	}
+
+	/**
+	 *
+	 */
+	protected function define_woocommerce_order_hooks(): void {
+		$woocommerce_order = new Order( $this->api, $this->settings, $this->logger );
+
+		add_action( 'woocommerce_order_status_changed', array( $woocommerce_order, 'check_address_on_single_order_processing' ), 10, 3 );
+		add_action( 'admin_action_mark_processing', array( $woocommerce_order, 'check_address_on_bulk_order_processing' ) );
+
+		add_filter( 'woocommerce_order_actions', array( $woocommerce_order, 'add_admin_ui_order_action' ) );
+		add_action( 'woocommerce_order_action_bh_wc_address_validate', array( $woocommerce_order, 'check_address_on_admin_order_action' ) );
+
+		add_filter( 'woocommerce_admin_order_data_after_shipping_address', array( $woocommerce_order, 'print_link_to_usps_tools_zip_lookup' ) );
 	}
 
 	/**
@@ -168,7 +171,7 @@ class BH_WC_Address_Validation {
 
 		if ( class_exists( WP_CLI::class ) ) {
 			CLI::$api = $this->api;
-			// vendor/bin/wp address_validation check_order 123
+			// e.g. `vendor/bin/wp address_validation check_order 123`.
 			WP_CLI::add_command( 'address_validation', CLI::class );
 		}
 	}

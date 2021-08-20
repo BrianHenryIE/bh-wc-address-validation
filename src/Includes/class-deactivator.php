@@ -35,17 +35,23 @@ class Deactivator {
 	 */
 	public static function deactivate(): void {
 
+		if ( ! function_exists( 'wc_get_orders' ) ) {
+			return;
+		}
+
+		/** @var \WC_Order[] $orders */
 		$orders = wc_get_orders(
 			array(
-				'limit'  => -1,
-				'status' => array( 'wc-' . Order_Status::BAD_ADDRESS_STATUS ),
+				'limit'    => -1,
+				'status'   => array( 'wc-' . Order_Status::BAD_ADDRESS_STATUS ),
+				'paginate' => false,
 			)
 		);
 
 		foreach ( $orders as $order ) {
 			$order_note = 'Changed from Bad Address on plugin deactivation.';
 			$order->set_status( 'on-hold', $order_note );
-			$order->add_meta_data( self::DEACTIVATED_BAD_ADDRESS_META_KEY, time(), true );
+			$order->add_meta_data( self::DEACTIVATED_BAD_ADDRESS_META_KEY, gmdate( DATE_ATOM ), true );
 			$order->save();
 		}
 	}

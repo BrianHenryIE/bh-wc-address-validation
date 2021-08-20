@@ -81,8 +81,10 @@ class Order {
 	/**
 	 *
 	 * This runs asynchronously.
+     *
+     * TODO: Maybe check nonce.
 	 *
-	 * @hooked admin_action_marked_processing
+	 * @hooked admin_action_mark_processing
 	 */
 	public function check_address_on_bulk_order_processing(): void {
 
@@ -123,6 +125,8 @@ class Order {
 
 	/**
 	 * This runs synchronously.
+	 *
+	 * @hooked woocommerce_order_action_bh_wc_address_validate
 	 *
 	 * @param WC_Order $order
 	 */

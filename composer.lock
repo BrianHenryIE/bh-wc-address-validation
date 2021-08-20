@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "504d3cde74c0f5a6d6bc9d55afc1998a",
+    "content-hash": "bd3c8820e4a0301a988c64c5107695b6",
     "packages": [
         {
             "name": "brianhenryie/wp-logger",
@@ -621,16 +621,16 @@
         },
         {
             "name": "antecedent/patchwork",
-            "version": "2.1.12",
+            "version": "2.1.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/antecedent/patchwork.git",
-                "reference": "b98e046dd4c0acc34a0846604f06f6111654d9ea"
+                "reference": "cd5663d66df1e760e5b2277a2c22d85a5c8398fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/antecedent/patchwork/zipball/b98e046dd4c0acc34a0846604f06f6111654d9ea",
-                "reference": "b98e046dd4c0acc34a0846604f06f6111654d9ea",
+                "url": "https://api.github.com/repos/antecedent/patchwork/zipball/cd5663d66df1e760e5b2277a2c22d85a5c8398fa",
+                "reference": "cd5663d66df1e760e5b2277a2c22d85a5c8398fa",
                 "shasum": ""
             },
             "require": {
@@ -663,9 +663,9 @@
             ],
             "support": {
                 "issues": "https://github.com/antecedent/patchwork/issues",
-                "source": "https://github.com/antecedent/patchwork/tree/2.1.12"
+                "source": "https://github.com/antecedent/patchwork/tree/2.1.14"
             },
-            "time": "2019-12-22T17:52:09+00:00"
+            "time": "2021-08-20T05:01:49+00:00"
         },
         {
             "name": "behat/gherkin",
@@ -1371,16 +1371,16 @@
         },
         {
             "name": "codeception/module-webdriver",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/module-webdriver.git",
-                "reference": "ebbe729c630415e8caf6b0087e457906f0c6c0c6"
+                "reference": "fdf7051a8ba7b69f1f5bb1a85e2d7eab84775a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/module-webdriver/zipball/ebbe729c630415e8caf6b0087e457906f0c6c0c6",
-                "reference": "ebbe729c630415e8caf6b0087e457906f0c6c0c6",
+                "url": "https://api.github.com/repos/Codeception/module-webdriver/zipball/fdf7051a8ba7b69f1f5bb1a85e2d7eab84775a3e",
+                "reference": "fdf7051a8ba7b69f1f5bb1a85e2d7eab84775a3e",
                 "shasum": ""
             },
             "require": {
@@ -1421,9 +1421,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Codeception/module-webdriver/issues",
-                "source": "https://github.com/Codeception/module-webdriver/tree/1.2.1"
+                "source": "https://github.com/Codeception/module-webdriver/tree/1.2.2"
             },
-            "time": "2021-04-23T17:30:57+00:00"
+            "time": "2021-08-19T11:04:22+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",
@@ -1623,16 +1623,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.1.5",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "ac679902e9f66b85a8f9d8c1c88180f609a8745d"
+                "reference": "e5cac5f9d2354d08b67f1d21c664ae70d748c603"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/ac679902e9f66b85a8f9d8c1c88180f609a8745d",
-                "reference": "ac679902e9f66b85a8f9d8c1c88180f609a8745d",
+                "url": "https://api.github.com/repos/composer/composer/zipball/e5cac5f9d2354d08b67f1d21c664ae70d748c603",
+                "reference": "e5cac5f9d2354d08b67f1d21c664ae70d748c603",
                 "shasum": ""
             },
             "require": {
@@ -1699,9 +1699,9 @@
                 "package"
             ],
             "support": {
-                "irc": "irc://irc.freenode.org/composer",
+                "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.1.5"
+                "source": "https://github.com/composer/composer/tree/2.1.6"
             },
             "funding": [
                 {
@@ -1717,7 +1717,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-23T08:35:47+00:00"
+            "time": "2021-08-19T15:11:08+00:00"
         },
         {
             "name": "composer/installers",
@@ -3602,7 +3602,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v6.20.31",
+            "version": "v6.20.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -3650,7 +3650,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v6.20.31",
+            "version": "v6.20.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -3946,16 +3946,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "f3ad69181b8afed2c9edf7be5a2918144ff4ea32"
+                "reference": "18634df356bfd4119fe3d6156bdb990c414c14ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f3ad69181b8afed2c9edf7be5a2918144ff4ea32",
-                "reference": "f3ad69181b8afed2c9edf7be5a2918144ff4ea32",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/18634df356bfd4119fe3d6156bdb990c414c14ea",
+                "reference": "18634df356bfd4119fe3d6156bdb990c414c14ea",
                 "shasum": ""
             },
             "require": {
@@ -4028,7 +4028,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/1.1.4"
+                "source": "https://github.com/thephpleague/flysystem/tree/1.1.5"
             },
             "funding": [
                 {
@@ -4036,7 +4036,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-06-23T21:56:05+00:00"
+            "time": "2021-08-17T13:49:42+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -4637,16 +4637,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.51.1",
+            "version": "2.52.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922"
+                "reference": "369c0e2737c56a0f39c946dd261855255a6fccbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922",
-                "reference": "8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/369c0e2737c56a0f39c946dd261855255a6fccbe",
+                "reference": "369c0e2737c56a0f39c946dd261855255a6fccbe",
                 "shasum": ""
             },
             "require": {
@@ -4727,7 +4727,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-28T13:16:28+00:00"
+            "time": "2021-08-14T19:10:52+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -4898,16 +4898,16 @@
         },
         {
             "name": "php-stubs/woocommerce-stubs",
-            "version": "v5.5.0",
+            "version": "v5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/woocommerce-stubs.git",
-                "reference": "b80d16b146a6858b4c53afff116c7af7d59afad5"
+                "reference": "310159b717404028f8703e8adf9a4e87a93edc56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/b80d16b146a6858b4c53afff116c7af7d59afad5",
-                "reference": "b80d16b146a6858b4c53afff116c7af7d59afad5",
+                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/310159b717404028f8703e8adf9a4e87a93edc56",
+                "reference": "310159b717404028f8703e8adf9a4e87a93edc56",
                 "shasum": ""
             },
             "require": {
@@ -4936,9 +4936,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/woocommerce-stubs/issues",
-                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v5.5.0"
+                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v5.6.0"
             },
-            "time": "2021-07-12T13:57:36+00:00"
+            "time": "2021-08-18T05:07:47+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -5494,16 +5494,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.94",
+            "version": "0.12.95",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6"
+                "reference": "4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6",
-                "reference": "3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58",
+                "reference": "4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58",
                 "shasum": ""
             },
             "require": {
@@ -5534,7 +5534,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.94"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.95"
             },
             "funding": [
                 {
@@ -5554,7 +5554,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-30T09:05:27+00:00"
+            "time": "2021-08-20T12:53:41+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -7483,16 +7483,16 @@
         },
         {
             "name": "seld/phar-utils",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/phar-utils.git",
-                "reference": "8674b1d84ffb47cc59a101f5d5a3b61e87d23796"
+                "reference": "749042a2315705d2dfbbc59234dd9ceb22bf3ff0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/phar-utils/zipball/8674b1d84ffb47cc59a101f5d5a3b61e87d23796",
-                "reference": "8674b1d84ffb47cc59a101f5d5a3b61e87d23796",
+                "url": "https://api.github.com/repos/Seldaek/phar-utils/zipball/749042a2315705d2dfbbc59234dd9ceb22bf3ff0",
+                "reference": "749042a2315705d2dfbbc59234dd9ceb22bf3ff0",
                 "shasum": ""
             },
             "require": {
@@ -7525,9 +7525,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/phar-utils/issues",
-                "source": "https://github.com/Seldaek/phar-utils/tree/master"
+                "source": "https://github.com/Seldaek/phar-utils/tree/1.1.2"
             },
-            "time": "2020-07-07T18:42:57+00:00"
+            "time": "2021-08-19T21:01:38+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -9993,6 +9993,81 @@
             "time": "2021-08-06T13:42:22+00:00"
         },
         {
+            "name": "wp-cli/dist-archive-command",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BrianHenryIE/dist-archive-command",
+                "reference": "deb05086083b701c2f970d239caba43afdfccbc8"
+            },
+            "require": {
+                "php": ">=5.4",
+                "wp-cli/wp-cli": "^2"
+            },
+            "require-dev": {
+                "behat/behat": "~2.5",
+                "wp-cli/extension-command": "^2",
+                "wp-cli/scaffold-command": "^2",
+                "wp-cli/wp-cli-tests": "^2.1"
+            },
+            "default-branch": true,
+            "type": "wp-cli-package",
+            "extra": {
+                "commands": [
+                    "dist-archive"
+                ],
+                "readme": {
+                    "shields": [
+                        "[![CircleCI](https://circleci.com/gh/wp-cli/dist-archive-command/tree/master.svg?style=svg)](https://circleci.com/gh/wp-cli/dist-archive-command/tree/master)"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                },
+                "files": [
+                    "dist-archive-command.php"
+                ]
+            },
+            "scripts": {
+                "behat": [
+                    "run-behat-tests"
+                ],
+                "lint": [
+                    "run-linter-tests"
+                ],
+                "phpcs": [
+                    "run-phpcs-tests"
+                ],
+                "phpunit": [
+                    "run-php-unit-tests"
+                ],
+                "prepare-tests": [
+                    "install-package-tests"
+                ],
+                "test": [
+                    "@lint",
+                    "@phpcs",
+                    "@phpunit",
+                    "@behat"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Bachhuber",
+                    "email": "daniel@runcommand.io",
+                    "homepage": "https://runcommand.io"
+                }
+            ],
+            "description": "Create a distribution .zip or .tar.gz based on a plugin or theme's .distignore file.",
+            "homepage": "https://runcommand.io/wp/dist-archive/",
+            "time": "2021-08-20T19:30:52+00:00"
+        },
+        {
             "name": "wp-cli/embed-command",
             "version": "v2.0.9",
             "source": {
@@ -11721,15 +11796,15 @@
         },
         {
             "name": "wpackagist-plugin/woocommerce",
-            "version": "5.5.2",
+            "version": "5.6.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/woocommerce/",
-                "reference": "tags/5.5.2"
+                "reference": "tags/5.6.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/woocommerce.5.5.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/woocommerce.5.6.0.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -11739,15 +11814,15 @@
         },
         {
             "name": "wpackagist-theme/storefront",
-            "version": "3.7.0",
+            "version": "3.8.1",
             "source": {
                 "type": "svn",
                 "url": "https://themes.svn.wordpress.org/storefront/",
-                "reference": "3.7.0"
+                "reference": "3.8.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/storefront.3.7.0.zip"
+                "url": "https://downloads.wordpress.org/theme/storefront.3.8.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -11819,7 +11894,8 @@
         "pablo-sg-pacheco/wp-namespace-autoloader": 20,
         "brianhenryie/composer-phpstorm": 20,
         "kporras07/composer-symlinks": 20,
-        "voku/portable-ascii": 20
+        "voku/portable-ascii": 20,
+        "wp-cli/dist-archive-command": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

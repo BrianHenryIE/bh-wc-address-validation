@@ -17,5 +17,7 @@ interface Settings_Interface {
 
 	public function get_plugin_basename(): string;
 
+	public function get_plugin_version(): string;
+
 
 }

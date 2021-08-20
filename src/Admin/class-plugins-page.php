@@ -49,10 +49,10 @@ class Plugins_Page {
 	 *
 	 * @see https://rudrastyh.com/wordpress/plugin_action_links-plugin_row_meta.html
 	 *
-	 * @param array<int|string, string> $plugin_meta The meta information/links displayed by the plugin description.
-	 * @param string                    $plugin_file_name The plugin filename to match when filtering.
-	 * @param array                     $_plugin_data Associative array including PluginURI, slug, Author, Version.
-	 * @param string                    $_status The plugin status, e.g. 'Inactive'.
+	 * @param array<int|string, string>  $plugin_meta The meta information/links displayed by the plugin description.
+	 * @param string                     $plugin_file_name The plugin filename to match when filtering.
+	 * @param array<string, string|bool> $_plugin_data Associative array including PluginURI, slug, Author, Version.
+	 * @param string                     $_status The plugin status, e.g. 'Inactive'.
 	 *
 	 * @return array<int|string, string> The filtered $plugin_meta.
 	 */

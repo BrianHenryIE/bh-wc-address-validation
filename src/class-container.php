@@ -2,9 +2,9 @@
 
 namespace BrianHenryIE\WC_Address_Validation;
 
-use BrianHenryIE\WC_Address_Validation\API\EasyPost_Address_Validator;
+use BrianHenryIE\WC_Address_Validation\API\Validators\EasyPost_Address_Validator;
 use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
-use BrianHenryIE\WC_Address_Validation\API\USPS_Address_Validator;
+use BrianHenryIE\WC_Address_Validation\API\Validators\USPS_Address_Validator;
 use BrianHenryIE\WC_Address_Validation\USPS\AddressVerify;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -48,6 +48,9 @@ class Container implements ContainerInterface {
 				return new EasyPost_Address_Validator( $this->settings->get_easypost_api_key(), $this->logger );
 
 			case self::USPS_API_ADDRESS_VERIFY:
+				if ( is_null( $this->settings->get_usps_username() ) ) {
+					return null;
+				}
 				return new AddressVerify( $this->settings->get_usps_username() );
 		}
 

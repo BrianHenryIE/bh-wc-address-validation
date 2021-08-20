@@ -21,9 +21,9 @@ class BH_WC_Address_Validation_Integration_Test extends \Codeception\TestCase\WP
 
 	public function hooks() {
 		$hooks = array(
-			array( 'plugins_loaded', I18n::class, 'load_plugin_textdomain' ),
+			array( 'init', I18n::class, 'load_plugin_textdomain' ),
 			array( 'woocommerce_order_status_changed', Order::class, 'check_address_on_single_order_processing' ),
-			array( 'woocommerce_admin_order_data_after_shipping_address', Order::class, 'add_link_to_usps_tools_zip_lookup' ),
+			// array( 'woocommerce_admin_order_data_after_shipping_address', Order::class, 'add_link_to_usps_tools_zip_lookup' ),
 			array( 'woocommerce_reports_order_statuses', Order_Status::class, 'add_to_reports_status_list' ),
 		);
 		return $hooks;

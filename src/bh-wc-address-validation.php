@@ -15,7 +15,7 @@
  * Plugin Name:       Address Validation
  * Plugin URI:        http://github.com/BrianHenryIE/bh-wc-address-validation/
  * Description:       Uses USPS API to verify and correct shipping addresses.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            Brian Henry
  * Author URI:        https://BrianHenry.ie
  * License:           GPL-2.0+
@@ -46,7 +46,7 @@ require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'BH_WC_ADDRESS_VALIDATION_VERSION', '1.1.0' );
+define( 'BH_WC_ADDRESS_VALIDATION_VERSION', '1.2.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -58,7 +58,7 @@ register_activation_hook( __FILE__, array( Activator::class, 'activate' ) );
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-deactivator.php
  */
-register_deactivation_hook( __FILE__, array( Deactivator::class , 'deactivate' ) );
+register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) );
 
 /**
  * Begins execution of the plugin.

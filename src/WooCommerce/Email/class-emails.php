@@ -7,7 +7,6 @@ use WC_Email;
 
 class Emails {
 
-
 	/**
 	 * @hooked woocommerce_email_classes
 	 * @see WC_Emails::init()

@@ -8,7 +8,7 @@
  * @author  Brian Henry <BrianHenryIE@gmail.com>
  */
 
-namespace BrianHenryIE\WC_Address_Validation\API;
+namespace BrianHenryIE\WC_Address_Validation\API\Validators;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
 use BrianHenryIE\WC_Address_Validation\Container;
@@ -16,19 +16,15 @@ use BrianHenryIE\WC_Address_Validation\USPS\AddressVerify;
 use Mockery;
 
 /**
- * Class API_Test
+ * Class USPS_Address_Validator_Test
  *
- * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\API\USPS_Address_Validator
+ * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\API\Validators\USPS_Address_Validator
  */
 class USPS_Address_Validator_Test extends \Codeception\Test\Unit {
-	//
-	// protected function _before() {
-	// \WP_Mock::setUp();
-	// }
-	//
-	// protected function _after() {
-	// \WP_Mock::tearDown();
-	// }
+
+	protected function _after() {
+		\Patchwork\restoreAll();
+	}
 
 	/**
 	 * Verifies the plugin initialization.

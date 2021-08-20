@@ -15,8 +15,6 @@ namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\WC_Address_Validation\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
 
-require_once __DIR__ . '/strauss/autoload.php';
-
 $class_map_file = __DIR__ . '/autoload-classmap.php';
 if ( file_exists( $class_map_file ) ) {
 
@@ -34,5 +32,8 @@ if ( file_exists( $class_map_file ) ) {
 	}
 }
 
+require_once __DIR__ . '/strauss/autoload.php';
+
 $wpcs_autoloader = new WP_Namespace_Autoloader();
 $wpcs_autoloader->init();
+

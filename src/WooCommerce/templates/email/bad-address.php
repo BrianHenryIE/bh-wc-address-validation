@@ -28,7 +28,6 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 <p><?php printf( esc_html__( 'USPS address verification for order #%1$s from %2$s has failed. The customer details were as follows:', 'bh-wc-address-validation' ), esc_html( $order->get_order_number() ), esc_html( $order->get_formatted_billing_full_name() ) ); ?></p>
 
 <?php
-
 /*
  * @hooked WC_Emails::customer_details() Shows customer details
  * @hooked WC_Emails::email_address() Shows email address

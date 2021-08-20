@@ -32,20 +32,43 @@ class Settings implements Settings_Interface, Logger_Settings_Interface, WooComm
 		return get_option( self::IS_ADMIN_EMAIL_ENABLED_OPTION, false );
 	}
 
-	// @see Logger_Settings_Interface
 
-
+	/**
+	 *
+	 * @see Logger_Settings_Interface
+	 *
+	 * @return string
+	 */
 	public function get_log_level(): string {
 
 		return get_option( 'bh-wc-address-validation-log-level', LogLevel::NOTICE );
 	}
 
+	/**
+	 * @see Logger_Settings_Interface
+	 *
+	 * @return string
+	 */
 	public function get_plugin_name(): string {
 		return 'Address Validation';
 	}
 
+	/**
+	 * @see Logger_Settings_Interface
+	 *
+	 * @return string
+	 */
 	public function get_plugin_slug(): string {
 		return 'bh-wc-address-validation';
+	}
+
+	/**
+	 * Updates?
+	 *
+	 * @return string
+	 */
+	public function get_plugin_version(): string {
+		return '1.2.0';
 	}
 
 	/**

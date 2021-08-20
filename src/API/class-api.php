@@ -1,11 +1,11 @@
 <?php
 /**
  *
- * `wp post meta delete 11 bh-wc-address-validation-checked`
  */
 
 namespace BrianHenryIE\WC_Address_Validation\API;
 
+use BrianHenryIE\WC_Address_Validation\API\Validators\Address_Validator_Interface;
 use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\Includes\Cron;
 use BrianHenryIE\WC_Address_Validation\Includes\Deactivator;
@@ -24,7 +24,7 @@ class API implements API_Interface {
 
 	use LoggerAwareTrait;
 
-	const BH_WC_ADDRESS_VALIDATION_CHECKED_META = 'bh-wc-address-validation-checked';
+	const BH_WC_ADDRESS_VALIDATION_CHECKED_META = 'bh_wc_address_validation_checked';
 
 	protected Settings_Interface $settings;
 
@@ -33,6 +33,7 @@ class API implements API_Interface {
 	/**
 	 * API constructor.
 	 *
+	 * @param Container          $container
 	 * @param Settings_Interface $settings
 	 * @param LoggerInterface    $logger
 	 */
@@ -44,24 +45,19 @@ class API implements API_Interface {
 	}
 
 	/**
-	 * Adds the +4 zip code or marks the order BAAADDD!
+	 * Adds the +4 zip code or marks the order with 'bad-address' status.
 	 *
 	 * @param WC_Order $order
 	 * @throws WC_Data_Exception
 	 */
 	public function check_address_for_order( WC_Order $order, bool $is_manual = false ): void {
 
-		if ( empty( $this->settings->get_usps_username() ) ) {
-			$this->logger->debug( 'USPS username not set.' );
-			return;
-		}
-
 		$checked_meta = (array) $order->get_meta( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META, true );
-		$reactivating = $order->get_meta( Deactivator::DEACTIVATED_BAD_ADDRESS_META_KEY );
+		$reactivating = $order->get_meta( Deactivator::DEACTIVATED_BAD_ADDRESS_META_KEY, true );
 
 		// Only automatically run once, except when reactivating.
 		// Always run when manually run.
-		// array_filter is here because (array) results in array( 0 => "" ) rather than a trully empty array.
+		// array_filter is here because casting the meta to (array) results `in array( 0 => "" )` rather than a truly empty array.
 		if ( ! empty( array_filter( $checked_meta ) ) && false === $is_manual && empty( $reactivating ) ) {
 			return;
 		}
@@ -74,54 +70,74 @@ class API implements API_Interface {
 
 		$this->logger->debug( 'Checking address for order ' . $order->get_id(), array( 'order_id', $order->get_id() ) );
 
-		$order_address              = array();
-		$order_address['address_1'] = $order->get_shipping_address_1();
-		$order_address['address_2'] = $order->get_shipping_address_2();
-		$order_address['city']      = $order->get_shipping_city();
-		$order_address['state']     = $order->get_shipping_state();
-		$order_address['postcode']  = substr( $order->get_shipping_postcode(), 0, 5 );
-		$order_address['country']   = $order->get_shipping_country();
+		$order_shipping_address              = array();
+		$order_shipping_address['address_1'] = $order->get_shipping_address_1();
+		$order_shipping_address['address_2'] = $order->get_shipping_address_2();
+		$order_shipping_address['city']      = $order->get_shipping_city();
+		$order_shipping_address['state']     = $order->get_shipping_state();
+		$order_shipping_address['postcode']  = $order->get_shipping_postcode();
+		$order_shipping_address['country']   = $order->get_shipping_country();
 
-		$order_address = array_map( 'trim', $order_address );
+		$result = $this->validate_address( $order_shipping_address );
 
-		/**
-		 * An interface to the APIs.
-		 *
-		 * @var Address_Validator_Interface $address_validator
-		 */
+		if ( $result['success'] ) { // Address is valid.
 
-		if ( 'US' === $order_address['country'] ) {
-			$address_validator = $this->container->get( Container::USPS_ADDRESS_VALIDATOR );
-		} elseif ( ! empty( $this->settings->get_easypost_api_key() ) ) {
-			$address_validator = $this->container->get( Container::EASYPOST_ADDRESS_VALIDATOR );
-		}
-
-		if ( ! isset( $address_validator ) || is_null( $address_validator ) ) {
-			// TODO: Log.
-			return;
-		}
-
-		$result = $address_validator->validate( $order_address );
-
-		if ( $result['success'] ) {
+			$order_shipping_address = array_map( 'strtoupper', array_map( 'trim', $order_shipping_address ) );
 
 			$updated_address = $result['updated_address'];
 
-			if ( $updated_address['address_1'] !== $order_address['address_1'] ) {
+			$address_was_changed = implode( ',', $order_shipping_address ) !== implode( ',', $updated_address );
+
+			if ( $address_was_changed ) {
+				// If the billing address was the same as the shipping address, update it too.
+				$order_billing_address              = array();
+				$order_billing_address['address_1'] = $order->get_billing_address_1();
+				$order_billing_address['address_2'] = $order->get_billing_address_2();
+				$order_billing_address['city']      = $order->get_billing_city();
+				$order_billing_address['state']     = $order->get_billing_state();
+				$order_billing_address['postcode']  = $order->get_billing_postcode();
+				$order_billing_address['country']   = $order->get_billing_country();
+				$order_billing_address              = array_map( 'strtoupper', array_map( 'trim', $order_billing_address ) );
+
+				// Compare the addresses.
+				$billing_equals_shipping = implode( ',', $order_shipping_address ) === implode( ',', $order_billing_address );
+
+				$customer    = null;
+				$customer_id = $order->get_customer_id();
+				if ( 0 !== $customer_id ) {
+					$customer = new \WC_Customer( $customer_id );
+				}
+
 				$order->set_shipping_address_1( $updated_address['address_1'] );
-			}
-			if ( $updated_address['address_2'] !== $order_address['address_2'] ) {
 				$order->set_shipping_address_2( $updated_address['address_2'] );
-			}
-			if ( $updated_address['city'] !== $order_address['city'] ) {
 				$order->set_shipping_city( $updated_address['city'] );
-			}
-			// TODO: Is it OK to ever change the state?
-			if ( $updated_address['state'] !== $order_address['state'] ) {
 				$order->set_shipping_state( $updated_address['state'] );
-			}
-			if ( $updated_address['postcode'] !== $order_address['postcode'] ) {
 				$order->set_shipping_postcode( $updated_address['postcode'] );
+
+				if ( $billing_equals_shipping ) {
+					$order->set_billing_address_1( $updated_address['address_1'] );
+					$order->set_billing_address_2( $updated_address['address_2'] );
+					$order->set_billing_city( $updated_address['city'] );
+					$order->set_billing_state( $updated_address['state'] );
+					$order->set_billing_postcode( $updated_address['postcode'] );
+				}
+
+				if ( $billing_equals_shipping && ( $customer instanceof \WC_Customer ) ) {
+					$customer->set_billing_address_1( $updated_address['address_1'] );
+					$customer->set_billing_address_2( $updated_address['address_2'] );
+					$customer->set_billing_city( $updated_address['city'] );
+					$customer->set_billing_state( $updated_address['state'] );
+					$customer->set_billing_postcode( $updated_address['postcode'] );
+				}
+
+				if ( $customer instanceof \WC_Customer ) {
+					$customer->set_shipping_address_1( $updated_address['address_1'] );
+					$customer->set_shipping_address_2( $updated_address['address_2'] );
+					$customer->set_shipping_city( $updated_address['city'] );
+					$customer->set_shipping_state( $updated_address['state'] );
+					$customer->set_shipping_postcode( $updated_address['postcode'] );
+					$customer->save();
+				}
 			}
 
 			// If this is a re-check, update order status from bad-address to processing.
@@ -143,10 +159,6 @@ class API implements API_Interface {
 			$message = $result['message'];
 			$order->add_order_note( $message );
 
-			// TODO Update customer address (if they have a user account).
-
-			// TODO update billing address (if originals matched).
-
 		} else {
 
 			$error_message = $result['error_message'];
@@ -164,10 +176,43 @@ class API implements API_Interface {
 
 		}
 
-		$checked_meta[ gmdate( 'c' ) ] = $result;
+		$checked_meta[ gmdate( DATE_ATOM ) ] = $result;
 		$order->update_meta_data( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META, $checked_meta );
 
 		$order->save();
+
+	}
+
+	/**
+	 * @param array{address_1: string, address_2: string, city: string, state: string, postcode: string, country: string} $address_array
+	 * @return array{success: bool, original_address: array, updated_address: ?array, message: ?string, error_message: ?string}
+	 */
+	public function validate_address( array $address_array ): array {
+
+		if ( 'US' === $address_array['country'] && ! empty( $this->settings->get_usps_username() ) ) {
+			$address_validator_type = Container::USPS_ADDRESS_VALIDATOR;
+		} elseif ( ! empty( $this->settings->get_easypost_api_key() ) ) {
+			$address_validator_type = Container::EASYPOST_ADDRESS_VALIDATOR;
+		} else {
+			$this->logger->info( 'not configured' );
+			$result = array(
+				'success'          => false,
+				'error_message'    => 'No validator settings present',
+				'original_address' => $address_array,
+			);
+			return $result;
+		}
+
+		/**
+		 * An interface to the APIs.
+		 *
+		 * @var Address_Validator_Interface $address_validator
+		 */
+		$address_validator = $this->container->get( $address_validator_type );
+
+		$result = $address_validator->validate( $address_array );
+
+		return $result;
 
 	}
 

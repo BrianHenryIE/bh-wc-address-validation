@@ -7,21 +7,23 @@
  * @see https://github.com/easypost/easypost-php
  */
 
-namespace BrianHenryIE\WC_Address_Validation\API;
+namespace BrianHenryIE\WC_Address_Validation\API\Validators;
 
 use BrianHenryIE\WC_Address_Validation\EasyPost\Address;
 use BrianHenryIE\WC_Address_Validation\EasyPost\EasyPost;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class EasyPost_Address_Validator
+ *
  * @package BrianHenryIE\WC_Address_Validation\API
  */
 class EasyPost_Address_Validator implements Address_Validator_Interface {
 
 	use LoggerAwareTrait;
 
-	public function __construct( $api_key, $logger ) {
+	public function __construct( string $api_key, LoggerInterface $logger ) {
 		$this->setLogger( $logger );
 
 		EasyPost::setApiKey( $api_key );
@@ -31,9 +33,8 @@ class EasyPost_Address_Validator implements Address_Validator_Interface {
 	/**
 	 *
 	 *
-	 *
 	 * @param array{address_1: string, address_2: string, city: string, state: string, postcode: string, country: string} $address
-	 * @return array{success: bool, original_address: array, updated_address?: array, message?: string, error_message?: string}
+	 * @return array{success: bool, original_address: array, updated_address: ?array, message: ?string, error_message: ?string}
 	 */
 	public function validate( array $address ): array {
 
@@ -68,7 +69,6 @@ class EasyPost_Address_Validator implements Address_Validator_Interface {
 			'state'     => $verified['state'],
 			'postcode'  => $verified['zip'],
 			'country'   => $verified['country'],
-
 		);
 
 		$result['updated_address'] = $updated_address;
