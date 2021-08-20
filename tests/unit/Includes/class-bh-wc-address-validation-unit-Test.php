@@ -102,7 +102,7 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 		);
 
 		\WP_Mock::expectActionAdded(
-			'admin_action_marked_processing',
+			'admin_action_mark_processing',
 			array( new AnyInstance( Order::class ), 'check_address_on_bulk_order_processing' )
 		);
 
