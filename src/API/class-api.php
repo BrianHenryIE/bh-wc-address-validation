@@ -6,6 +6,7 @@
 namespace BrianHenryIE\WC_Address_Validation\API;
 
 use BrianHenryIE\WC_Address_Validation\API\Validators\Address_Validator_Interface;
+use BrianHenryIE\WC_Address_Validation\API\Validators\No_Validator_Exception;
 use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\Includes\Cron;
 use BrianHenryIE\WC_Address_Validation\Includes\Deactivator;
@@ -78,7 +79,14 @@ class API implements API_Interface {
 		$order_shipping_address['postcode']  = $order->get_shipping_postcode();
 		$order_shipping_address['country']   = $order->get_shipping_country();
 
-		$result = $this->validate_address( $order_shipping_address );
+		try {
+			$result = $this->validate_address( $order_shipping_address );
+		} catch ( No_Validator_Exception $e ) {
+			$this->logger->info( 'No validator available for address', array( 'address' => $order_shipping_address ) );
+			$order->add_order_note( 'No validator available for address' );
+			$order->save();
+			return;
+		}
 
 		if ( $result['success'] ) { // Address is valid.
 
@@ -194,13 +202,7 @@ class API implements API_Interface {
 		} elseif ( ! empty( $this->settings->get_easypost_api_key() ) ) {
 			$address_validator_type = Container::EASYPOST_ADDRESS_VALIDATOR;
 		} else {
-			$this->logger->info( 'not configured' );
-			$result = array(
-				'success'          => false,
-				'error_message'    => 'No validator settings present',
-				'original_address' => $address_array,
-			);
-			return $result;
+			throw new No_Validator_Exception( $address_array );
 		}
 
 		/**

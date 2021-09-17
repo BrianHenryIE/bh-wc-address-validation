@@ -10,6 +10,7 @@ namespace BrianHenryIE\WC_Address_Validation\API;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
 use BrianHenryIE\WC_Address_Validation\API\Validators\Address_Validator_Interface;
+use BrianHenryIE\WC_Address_Validation\API\Validators\No_Validator_Exception;
 use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\Includes\Deactivator;
 use Mockery;
@@ -529,5 +530,36 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 
 		$sut->check_address_for_order( $order );
 
+	}
+
+	/**
+	 * When only USPS validator was present, all international orders were being marked as bad address!
+	 */
+	public function test_international_address_with_no_validator() {
+
+		$logger    = new ColorLogger();
+		$settings  = $this->makeEmpty( Settings_Interface::class );
+		$container = Mockery::mock( Container::class );
+
+		$sut = new API( $container, $settings, $logger );
+
+		$address = array(
+			'address_1' => 'ADDRESS 1',
+			'address_2' => 'ADDRESS 2',
+			'city'      => 'CITY',
+			'state'     => 'Dublin',
+			'postcode'  => '2',
+			'country'   => 'IE',
+		);
+
+		$exception = null;
+
+		try {
+			$result = $sut->validate_address( $address );
+		} catch ( No_Validator_Exception $e ) {
+			$exception = $e;
+		}
+
+		$this->assertNotNull( $exception );
 	}
 }

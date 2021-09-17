@@ -22,8 +22,21 @@ use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
  */
 class Plugins_Page {
 
+	/**
+	 * The plugin settings.
+	 *
+	 * @see Settings_Interface::get_plugin_basename()
+	 * @see Settings_Interface::get_plugin_slug()
+	 *
+	 * @var Settings_Interface
+	 */
 	protected Settings_Interface $settings;
 
+	/**
+	 * Plugins_Page constructor.
+	 *
+	 * @param Settings_Interface $settings The plugin settings.
+	 */
 	public function __construct( Settings_Interface $settings ) {
 		$this->settings = $settings;
 	}
@@ -37,7 +50,11 @@ class Plugins_Page {
 	 */
 	public function action_links( array $links_array ): array {
 
-		$settings_url = admin_url( '/admin.php?page=wc-settings&tab=shipping&section=' . $this->settings->get_plugin_slug() );
+		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			return $links_array;
+		}
+
+		$settings_url = admin_url( 'admin.php?page=wc-settings&tab=shipping&section=' . $this->settings->get_plugin_slug() );
 
 		array_unshift( $links_array, '<a href="' . $settings_url . '">Settings</a>' );
 

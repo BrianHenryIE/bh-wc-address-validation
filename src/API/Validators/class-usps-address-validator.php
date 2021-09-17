@@ -120,8 +120,9 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 
 			$updated_address = array();
 
-			$updated_address['address_1'] = isset( $response_address['Address1'] ) ? $response_address['Address1'] : '';
-			$updated_address['address_2'] = $response_address['Address2'];
+			// WooCommerce address_1 is the building an stree, whereas USPS Address1 is the apartment number.
+			$updated_address['address_1'] = $response_address['Address2'];
+			$updated_address['address_2'] = isset( $response_address['Address1'] ) ? $response_address['Address1'] : '';
 			$updated_address['city']      = $response_address['City'];
 			$updated_address['state']     = $response_address['State'];
 			$updated_address['country']   = 'US';

@@ -12,7 +12,6 @@
 namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
 use BrianHenryIE\WC_Address_Validation\API\Settings;
-
 use Psr\Log\LogLevel;
 
 /**
