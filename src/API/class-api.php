@@ -82,8 +82,8 @@ class API implements API_Interface {
 		try {
 			$result = $this->validate_address( $order_shipping_address );
 		} catch ( No_Validator_Exception $e ) {
-			$this->logger->info( 'No validator available for address', array( 'address' => $order_shipping_address ) );
-			$order->add_order_note( 'No validator available for address' );
+			$this->logger->info( 'No address validator available for address. ' . implode( ',', $order_shipping_address ) , array( 'address' => $order_shipping_address ) );
+			$order->add_order_note( 'No address validator available for address.' . implode( ',', $order_shipping_address )  );
 			$order->save();
 			return;
 		}

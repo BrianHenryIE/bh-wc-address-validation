@@ -83,7 +83,7 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 
 				// TODO: This is a weird scenario, but it has happened.
 				if ( strtoupper( $address['state'] ) !== $usps_address['State'] ) {
-					$error_message = 'State returned from USPS ' . $usps_address['State'] . 'did not match customer supplied state ' . strtoupper( $address['state'] );
+					$error_message = 'State returned from USPS ' . $usps_address['State'] . ' did not match customer supplied state ' . strtoupper( $address['state'] );
 					$this->logger->notice( $error_message, array( 'array_response' => $array_response ) );
 
 					$result['error_message'] = $error_message;
@@ -154,7 +154,7 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 
 			$result['success'] = false;
 
-			$error_message = 'USPS Address Information API failed validation: ' . $this->address_verify->getErrorMessage();
+			$error_message = 'USPS Address Information API failed validation: ' . $this->address_verify->getErrorMessage() . "\n" . implode("\n", array_values($address));
 
 			$result['error_message'] = $error_message;
 
@@ -164,6 +164,7 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 					'error_message'  => $this->address_verify->getErrorMessage(),
 					'xml_response'   => $xml_response,
 					'array_response' => $array_response,
+					'address'       => $address
 				)
 			);
 		}
