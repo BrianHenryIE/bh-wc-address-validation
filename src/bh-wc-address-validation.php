@@ -16,7 +16,7 @@
  * Plugin URI:        http://github.com/BrianHenryIE/bh-wc-address-validation/
  * Description:       Uses USPS API to verify and correct shipping addresses.
  * Version:           1.2.2
- * Author:            Brian Henry
+ * Author:            BrianHenryIE
  * Author URI:        https://BrianHenry.ie
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
