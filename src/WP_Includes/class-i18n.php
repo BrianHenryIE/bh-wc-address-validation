@@ -12,7 +12,7 @@
  * @subpackage BH_WC_Address_Validation/includes
  */
 
-namespace BrianHenryIE\WC_Address_Validation\Includes;
+namespace BrianHenryIE\WC_Address_Validation\WP_Includes;
 
 /**
  * Define the internationalization functionality.
@@ -38,7 +38,7 @@ class I18n {
 		load_plugin_textdomain(
 			'bh-wc-address-validation',
 			false,
-			plugin_basename( dirname( __FILE__, 2 ) ) . '/languages/'
+			plugin_basename( dirname( __FILE__, 3 ) ) . '/languages/'
 		);
 
 	}

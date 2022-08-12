@@ -12,15 +12,18 @@
  * @subpackage BH_WC_Address_Validation/includes
  */
 
-namespace BrianHenryIE\WC_Address_Validation\Includes;
+namespace BrianHenryIE\WC_Address_Validation;
 
-use BrianHenryIE\WC_Address_Validation\API\API_Interface;
-use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\API_Interface;
+use BrianHenryIE\WC_Address_Validation\Settings_Interface;
 use BrianHenryIE\WC_Address_Validation\Admin\Plugins_Page;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Email\Emails;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Shipping_Settings_Page;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\CLI;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\Cron;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\I18n;
 use Psr\Log\LoggerInterface;
 use WP_CLI;
 

@@ -9,7 +9,7 @@
  * @subpackage BH_WC_Address_Validation/includes
  */
 
-namespace BrianHenryIE\WC_Address_Validation\Includes;
+namespace BrianHenryIE\WC_Address_Validation\WP_Includes;
 
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 

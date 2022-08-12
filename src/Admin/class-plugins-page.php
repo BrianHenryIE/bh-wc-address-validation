@@ -11,7 +11,7 @@
 
 namespace BrianHenryIE\WC_Address_Validation\Admin;
 
-use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\Settings_Interface;
 
 /**
  * This class adds a `Settings` link on the plugins.php page.

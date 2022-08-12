@@ -7,9 +7,11 @@ namespace BrianHenryIE\WC_Address_Validation\API;
 
 use BrianHenryIE\WC_Address_Validation\API\Validators\Address_Validator_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Validators\No_Validator_Exception;
+use BrianHenryIE\WC_Address_Validation\API_Interface;
 use BrianHenryIE\WC_Address_Validation\Container;
-use BrianHenryIE\WC_Address_Validation\Includes\Cron;
-use BrianHenryIE\WC_Address_Validation\Includes\Deactivator;
+use BrianHenryIE\WC_Address_Validation\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\Cron;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\Deactivator;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
@@ -82,8 +84,8 @@ class API implements API_Interface {
 		try {
 			$result = $this->validate_address( $order_shipping_address );
 		} catch ( No_Validator_Exception $e ) {
-			$this->logger->info( 'No address validator available for address. ' . implode( ',', $order_shipping_address ) , array( 'address' => $order_shipping_address ) );
-			$order->add_order_note( 'No address validator available for address.' . implode( ',', $order_shipping_address )  );
+			$this->logger->info( 'No address validator available for address. ' . implode( ',', $order_shipping_address ), array( 'address' => $order_shipping_address ) );
+			$order->add_order_note( 'No address validator available for address.' . implode( ',', $order_shipping_address ) );
 			$order->save();
 			return;
 		}
@@ -92,6 +94,7 @@ class API implements API_Interface {
 
 			$order_shipping_address = array_map( 'strtoupper', array_map( 'trim', $order_shipping_address ) );
 
+			/** @var array $updated_address */
 			$updated_address = $result['updated_address'];
 
 			$address_was_changed = implode( ',', $order_shipping_address ) !== implode( ',', $updated_address );

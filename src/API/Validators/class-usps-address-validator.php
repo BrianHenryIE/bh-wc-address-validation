@@ -5,6 +5,7 @@
 
 namespace BrianHenryIE\WC_Address_Validation\API\Validators;
 
+use BrianHenryIE\WC_Address_Validation\API\Address_Validator_Interface;
 use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\USPS\Address;
 use BrianHenryIE\WC_Address_Validation\USPS\AddressVerify;
@@ -29,8 +30,7 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 	}
 
 	/**
-	 *
-	 *
+	 * TODO: AE (military) addresses cannot be validated.
 	 *
 	 * @param array{address_1: string, address_2: string, city: string, state: string, postcode: string, country: string} $address
 	 * @return array{success: bool, original_address: array, updated_address: ?array, message: ?string, error_message: ?string}
@@ -154,7 +154,7 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 
 			$result['success'] = false;
 
-			$error_message = 'USPS Address Information API failed validation: ' . $this->address_verify->getErrorMessage() . "\n" . implode("\n", array_values($address));
+			$error_message = 'USPS Address Information API failed validation: ' . $this->address_verify->getErrorMessage() . "\n" . implode( "\n", array_values( $address ) );
 
 			$result['error_message'] = $error_message;
 
@@ -164,7 +164,7 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 					'error_message'  => $this->address_verify->getErrorMessage(),
 					'xml_response'   => $xml_response,
 					'array_response' => $array_response,
-					'address'       => $address
+					'address'        => $address,
 				)
 			);
 		}

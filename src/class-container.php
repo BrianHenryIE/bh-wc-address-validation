@@ -3,7 +3,6 @@
 namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\WC_Address_Validation\API\Validators\EasyPost_Address_Validator;
-use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Validators\USPS_Address_Validator;
 use BrianHenryIE\WC_Address_Validation\USPS\AddressVerify;
 use Psr\Container\ContainerExceptionInterface;

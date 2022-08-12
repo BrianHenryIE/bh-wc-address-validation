@@ -5,7 +5,10 @@
 
 namespace BrianHenryIE\WC_Address_Validation\API\Validators;
 
-class No_Validator_Exception extends \Exception {
+use Exception;
+use Throwable;
+
+class No_Validator_Exception extends Exception {
 
 	public function __construct( array $address, $message = '', $code = 0, Throwable $previous = null ) {
 		parent::__construct( $message, $code, $previous );

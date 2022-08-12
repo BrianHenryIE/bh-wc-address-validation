@@ -3,10 +3,10 @@
  * Since we call an external API, let's do everything in a background task.
  */
 
-namespace BrianHenryIE\WC_Address_Validation\Includes;
+namespace BrianHenryIE\WC_Address_Validation\WP_Includes;
 
-use BrianHenryIE\WC_Address_Validation\API\API_Interface;
-use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\API_Interface;
+use BrianHenryIE\WC_Address_Validation\Settings_Interface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use WC_Order;
@@ -53,7 +53,8 @@ class Cron {
 	 */
 	public function add_cron_jon(): void {
 
-		if ( ! wp_next_scheduled( self::RECHECK_BAD_ADDRESSES_CRON_JOB ) ) {
+		// TODO: This action does not ezxist.
+		if ( false && ! wp_next_scheduled( self::RECHECK_BAD_ADDRESSES_CRON_JOB ) ) {
 			wp_schedule_event( time(), 'twicedaily', self::RECHECK_BAD_ADDRESSES_CRON_JOB );
 			$this->logger->notice( 'Cron job scheduled' );
 		}

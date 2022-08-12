@@ -3,7 +3,7 @@
  * Needs order status added via WooCommerce fitler to work.
  */
 
-namespace BrianHenryIE\WC_Address_Validation\Includes;
+namespace BrianHenryIE\WC_Address_Validation\WP_Includes;
 
 use WC_Order;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
@@ -11,7 +11,7 @@ use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 /**
  * Class Deactivator_Test
  *
- * @package BrianHenryIE\WC_Address_Validation\Includes
+ * @package BrianHenryIE\WC_Address_Validation\WP_Includes
  * @coversNothing
  */
 class Deactivator_Test extends \Codeception\TestCase\WPTestCase {

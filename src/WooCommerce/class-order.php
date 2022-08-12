@@ -7,9 +7,9 @@
 
 namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
-use BrianHenryIE\WC_Address_Validation\API\API_Interface;
-use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
-use BrianHenryIE\WC_Address_Validation\Includes\Cron;
+use BrianHenryIE\WC_Address_Validation\API_Interface;
+use BrianHenryIE\WC_Address_Validation\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\Cron;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use WC_Order;

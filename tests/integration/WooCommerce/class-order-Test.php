@@ -2,7 +2,7 @@
 
 namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
-use BrianHenryIE\WC_Address_Validation\Includes\Cron;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\Cron;
 use WC_Order;
 
 /**

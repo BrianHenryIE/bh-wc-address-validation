@@ -1,8 +1,8 @@
 <?php
 
-namespace BrianHenryIE\WC_Address_Validation\Includes;
+namespace BrianHenryIE\WC_Address_Validation\WP_Includes;
 
-use BrianHenryIE\WC_Address_Validation\API\API_Interface;
+use BrianHenryIE\WC_Address_Validation\API_Interface;
 use WC_Order;
 use WP_CLI;
 use WP_CLI_Command;

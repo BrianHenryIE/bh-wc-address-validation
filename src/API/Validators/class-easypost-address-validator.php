@@ -9,16 +9,12 @@
 
 namespace BrianHenryIE\WC_Address_Validation\API\Validators;
 
+use BrianHenryIE\WC_Address_Validation\API\Address_Validator_Interface;
 use BrianHenryIE\WC_Address_Validation\EasyPost\Address;
 use BrianHenryIE\WC_Address_Validation\EasyPost\EasyPost;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class EasyPost_Address_Validator
- *
- * @package BrianHenryIE\WC_Address_Validation\API
- */
 class EasyPost_Address_Validator implements Address_Validator_Interface {
 
 	use LoggerAwareTrait;

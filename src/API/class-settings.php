@@ -5,11 +5,11 @@
 
 namespace BrianHenryIE\WC_Address_Validation\API;
 
-use BrianHenryIE\WC_Address_Validation\WP_Logger\API\Logger_Settings_Interface;
-use BrianHenryIE\WC_Address_Validation\WP_Logger\WooCommerce\WooCommerce_Logger_Interface;
+use BrianHenryIE\WC_Address_Validation\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\WP_Logger\WooCommerce_Logger_Settings_Interface;
 use Psr\Log\LogLevel;
 
-class Settings implements Settings_Interface, Logger_Settings_Interface, WooCommerce_Logger_Interface {
+class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interface {
 
 	// TODO: Convert to underscores.
 	const USPS_USERNAME_OPTION    = 'bh-wc-address-validation-usps-username';

@@ -24,19 +24,18 @@
  * Domain Path:       /languages
  */
 
+
 namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\WC_Address_Validation\API\API;
-use BrianHenryIE\WC_Address_Validation\API\API_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Settings;
-use BrianHenryIE\WC_Address_Validation\Includes\Activator;
-use BrianHenryIE\WC_Address_Validation\Includes\Deactivator;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\Activator;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\Deactivator;
 use BrianHenryIE\WC_Address_Validation\WP_Logger\Logger;
-use BrianHenryIE\WC_Address_Validation\Includes\BH_WC_Address_Validation;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+	throw new \Exception( 'WordPress not loaded.' );
 }
 
 require_once plugin_dir_path( __FILE__ ) . 'autoload.php';
@@ -71,8 +70,8 @@ register_deactivation_hook( __FILE__, array( Deactivator::class, 'deactivate' ) 
  */
 function instantiate_bh_wc_address_validation(): API_Interface {
 
-	$settings  = new Settings();
-	$logger    = Logger::instance( $settings );
+	$settings = new Settings();
+	$logger   = Logger::instance( $settings );
 
 	$upgrader = new Upgrader( $settings, $logger );
 	$upgrader->do_upgrade();
@@ -90,7 +89,7 @@ function instantiate_bh_wc_address_validation(): API_Interface {
 }
 
 /**
- * @var \BrianHenryIE\WC_Address_Validation\API\API_Interface $GLOBALS['bh_wc_address_validation']
+ * @var \BrianHenryIE\WC_Address_Validation\API_Interface $GLOBALS['bh_wc_address_validation']
  */
 $GLOBALS['bh_wc_address_validation'] = instantiate_bh_wc_address_validation();
 

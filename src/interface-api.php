@@ -1,6 +1,6 @@
 <?php
 
-namespace BrianHenryIE\WC_Address_Validation\API;
+namespace BrianHenryIE\WC_Address_Validation;
 
 use WC_Order;
 

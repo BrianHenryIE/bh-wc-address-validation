@@ -9,7 +9,7 @@
 namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\WC_Address_Validation\API\API;
-use BrianHenryIE\WC_Address_Validation\Includes\BH_WC_Address_Validation;
+use BrianHenryIE\WC_Address_Validation\WP_Logger\Logger;
 
 /**
  * Class Plugin_WP_Mock_Test
@@ -35,67 +35,36 @@ class BH_WC_Address_Validation_Unit_Test extends \Codeception\Test\Unit {
 			function( $api, $settings, $logger ) {}
 		);
 
-		$plugin_root_dir = dirname( __DIR__, 2 ) . '/src';
+		\Patchwork\redefine(
+			array( Upgrader::class, 'do_upgrade' ),
+			function() {}
+		);
+
+		\Patchwork\redefine(
+			array( Logger::class, '__construct' ),
+			function( $settings ) {}
+		);
+
+		global $plugin_root_dir;
 
 		\WP_Mock::userFunction(
 			'plugin_dir_path',
 			array(
 				'args'   => array( \WP_Mock\Functions::type( 'string' ) ),
 				'return' => $plugin_root_dir . '/',
-			)
-		);
-
-		// \WP_Mock::userFunction(
-		// 'get_option'
-		// );
-
-		\WP_Mock::userFunction(
-			'register_activation_hook'
-		);
-
-		\WP_Mock::userFunction(
-			'register_deactivation_hook'
-		);
-
-		\WP_Mock::userFunction(
-			'get_option',
-			array(
-				'args'   => array( 'bh-wc-address-validation-log-level', 'notice' ),
-				'return' => 'notice',
+				'times'  => 1,
 			)
 		);
 
 		\WP_Mock::userFunction(
-			'get_option',
-			array(
-				'args'   => array( 'active_plugins' ),
-				'return' => array(),
-			)
+			'register_activation_hook',
+			array( 'times' => 1 )
 		);
 
 		\WP_Mock::userFunction(
-			'get_option',
+			'register_deactivation_hook',
 			array(
-				'args'   => array( 'bh-wc-address-validation-usps-username' ),
-				'return' => null,
-			)
-		);
-
-		\WP_Mock::userFunction(
-			'is_admin',
-			array(
-				'return_arg' => false,
-			)
-		);
-
-		\WP_Mock::userFunction(
-			'get_current_user_id'
-		);
-
-		\WP_Mock::userFunction(
-			'wp_normalize_path',
-			array(
-				'return_arg' => true,
+				'times' => 1,
 			)
 		);
 

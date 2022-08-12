@@ -2,9 +2,8 @@
 
 namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
-use BrianHenryIE\WC_Address_Validation\API\API;
-use BrianHenryIE\WC_Address_Validation\API\API_Interface;
-use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\API_Interface;
+use BrianHenryIE\WC_Address_Validation\Settings_Interface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 

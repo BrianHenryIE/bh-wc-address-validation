@@ -5,7 +5,7 @@
  * The email-enabled setting is part of WooCommerce's standard email configuration.
  */
 
-namespace BrianHenryIE\WC_Address_Validation\API;
+namespace BrianHenryIE\WC_Address_Validation;
 
 interface Settings_Interface {
 

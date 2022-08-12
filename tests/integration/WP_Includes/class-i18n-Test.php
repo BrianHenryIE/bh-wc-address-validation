@@ -6,7 +6,7 @@
  * @author  Brian Henry <BrianHenryIE@gmail.com>
  */
 
-namespace BrianHenryIE\WC_Address_Validation\Includes;
+namespace BrianHenryIE\WC_Address_Validation\WP_Includes;
 
 /**
  * Class BH_WC_Address_Validation_Test

@@ -9,8 +9,8 @@
 namespace BrianHenryIE\WC_Address_Validation\WooCommerce;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
-use BrianHenryIE\WC_Address_Validation\API\API_Interface;
-use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\API_Interface;
+use BrianHenryIE\WC_Address_Validation\Settings_Interface;
 use Codeception\Stub\Expected;
 use WC_Order;
 use BrianHenryIE\WC_Address_Validation\API\API;

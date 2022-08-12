@@ -1,19 +1,18 @@
 <?php
 
-namespace BrianHenryIE\WC_Address_Validation\Includes;
+namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
 use BrianHenryIE\WC_Address_Validation\Admin\Plugins_Page;
-use BrianHenryIE\WC_Address_Validation\API\API_Interface;
-use BrianHenryIE\WC_Address_Validation\API\Settings_Interface;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
+use BrianHenryIE\WC_Address_Validation\WP_Includes\I18n;
 use WP_Mock\Matcher\AnyInstance;
 
 /**
  * Class BH_WC_Address_Validation_Unit_Test
  *
- * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\Includes\BH_WC_Address_Validation
+ * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\BH_WC_Address_Validation
  */
 class Plugin_Unit_Test extends \Codeception\Test\Unit {
 

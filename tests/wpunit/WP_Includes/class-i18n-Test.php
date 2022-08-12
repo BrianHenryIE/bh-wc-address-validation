@@ -6,13 +6,13 @@
  * @author  Brian Henry <BrianHenryIE@gmail.com>
  */
 
-namespace BrianHenryIE\WC_Address_Validation\Includes;
+namespace BrianHenryIE\WC_Address_Validation\WP_Includes;
 
 /**
  * Class BH_WC_Address_Validation_Test
  *
  * @see I18n
- * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\Includes\I18n
+ * @coversDefaultClass \BrianHenryIE\WC_Address_Validation\WP_Includes\I18n
  */
 class I18n_Test extends \Codeception\TestCase\WPTestCase {
 

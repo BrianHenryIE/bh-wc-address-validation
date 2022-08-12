@@ -1,6 +1,6 @@
 <?php
 
-namespace BrianHenryIE\WC_Address_Validation\API\Validators;
+namespace BrianHenryIE\WC_Address_Validation\API;
 
 interface Address_Validator_Interface {
 
