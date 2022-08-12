@@ -33,3 +33,6 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 delete_option( 'bh-wc-address-validation-usps-username' );
 delete_option( 'bh-wc-address-validation-is-logging-enabled' );
 
+delete_option( 'bh_wc_address_validation_usps_username' );
+delete_option( 'bh_wc_address_validation_is_logging_enabled' );
+

@@ -73,6 +73,10 @@ function instantiate_bh_wc_address_validation(): API_Interface {
 
 	$settings  = new Settings();
 	$logger    = Logger::instance( $settings );
+
+	$upgrader = new Upgrader( $settings, $logger );
+	$upgrader->do_upgrade();
+
 	$container = new Container( $settings, $logger );
 	$api       = new API( $container, $settings, $logger );
 
