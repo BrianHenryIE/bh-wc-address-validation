@@ -69,7 +69,7 @@ class Settings implements Settings_Interface, Logger_Settings_Interface, WooComm
 	 * @return string
 	 */
 	public function get_plugin_version(): string {
-		return '1.2.2';
+		return defined( 'BH_WC_ADDRESS_VALIDATION_VERSION' ) ? BH_WC_ADDRESS_VALIDATION_VERSION : '1.2.2';
 	}
 
 	/**
