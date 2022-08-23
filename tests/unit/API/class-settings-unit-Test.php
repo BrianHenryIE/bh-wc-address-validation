@@ -28,7 +28,7 @@ class Settings_Unit_Test extends \Codeception\Test\Unit {
 			)
 		);
 
-		$this->assertEquals( 'bh-wc-address-validation-usps-username', Settings::USPS_USERNAME_OPTION );
+		$this->assertEquals( 'bh_wc_address_validation_usps_username', Settings::USPS_USERNAME_OPTION );
 
 		$sut = new Settings();
 		$sut->get_usps_username();

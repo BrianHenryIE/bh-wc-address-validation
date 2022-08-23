@@ -12,7 +12,7 @@ use Psr\Log\LogLevel;
 class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interface {
 
 	// TODO: Convert to underscores.
-	const USPS_USERNAME_OPTION    = 'bh-wc-address-validation-usps-username';
+	const USPS_USERNAME_OPTION    = 'bh_wc_address_validation_usps_username';
 	const EASYPOST_API_KEY_OPTION = 'bh_wc_address_validation_easypost_api_key';
 
 	const IS_ADMIN_EMAIL_ENABLED_OPTION = 'bh-wc-address-validation-is-admin-email-enabled';
