@@ -22,7 +22,13 @@ use Mockery;
  */
 class USPS_Address_Validator_Test extends \Codeception\Test\Unit {
 
+
+	protected function _before() {
+		\WP_Mock::setUp();
+	}
+
 	protected function _after() {
+		\WP_Mock::tearDown();
 		\Patchwork\restoreAll();
 	}
 
@@ -50,6 +56,13 @@ class USPS_Address_Validator_Test extends \Codeception\Test\Unit {
 			'state'     => 'CA',
 			'postcode'  => '95814',
 			'country'   => 'US',
+		);
+
+		\WP_Mock::userFunction(
+			'normalize_whitespace',
+			array(
+				'return_arg' => true,
+			)
 		);
 
 		$result = $usps_address_validator->validate( $address );
