@@ -67,7 +67,7 @@
         "brianhenryie/bh-wp-logger": "dev-master",
         "easypost/easypost-php": "^3.6",
         "pablo-sg-pacheco/wp-namespace-autoloader": "dev-master#015c9654459fd267cf12fa7846d3bf36b11c3bd7",
-        "psr/container": "^1.1",
+        "psr/container": "1.0",
         "vinceg/usps-php-api": "^1.0"
     },
     "require-dev": {
@@ -97,8 +97,9 @@
         "szepeviktor/phpstan-wordpress": "^0.7.2",
         "voku/portable-ascii": "dev-master",
         "wordpress/wordpress": "*",
-        "wp-cli/wp-cli-bundle": "*",
         "wp-cli/dist-archive-command": "dev-main",
+        "wp-cli/i18n-command": "^2.4",
+        "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
         "wpackagist-plugin/woocommerce": "^5.1",
         "wpackagist-theme/storefront": "*"
@@ -110,9 +111,6 @@
             },
             "10up/wp_mock": {
                 "Add AnyObject matcher": "https://github.com/10up/wp_mock/pull/161.patch"
-            },
-            "wp-cli/dist-archive-command": {
-                "Copy non-ignored files to temp": "https://github.com/wp-cli/dist-archive-command/pull/61.patch"
             },
             "brianhenryie/strauss": {
                 "Fix blocked by your allow-plugins config": "https://github.com/BrianHenryIE/strauss/pull/45.patch",
@@ -209,6 +207,7 @@
             "updated_files=$( git status | grep 'modified:\\s.*.php$' | cut -c14- | awk '{ printf(\"%s \", $0) }' ); vendor/bin/phpcbf $(echo $updated_files); vendor/bin/phpcs $(echo $updated_files); vendor/bin/phpstan analyse $(echo $updated_files) --memory-limit 1G"
         ],
         "create-plugin-archive": [
+            "vendor/bin/wp i18n make-pot src languages/bh-wc-address-validation.pot",
             "vendor/bin/wp dist-archive . ./dist-archive --plugin-dirname=$(basename \"$PWD\") --create-target-dir"
         ]
     }
