@@ -14,6 +14,7 @@
 
 namespace BrianHenryIE\WC_Address_Validation;
 
+use BrianHenryIE\WC_Address_Validation\Admin\Plugin_Installer_Skin;
 use BrianHenryIE\WC_Address_Validation\API_Interface;
 use BrianHenryIE\WC_Address_Validation\Settings_Interface;
 use BrianHenryIE\WC_Address_Validation\Admin\Plugins_Page;
@@ -80,6 +81,7 @@ class BH_WC_Address_Validation {
 		$this->set_locale();
 
 		$this->define_admin_hooks();
+		$this->define_plugin_installer_hooks();
 		$this->define_woocommerce_hooks();
 		$this->define_woocommerce_order_hooks();
 		$this->define_cron_hooks();
@@ -114,6 +116,11 @@ class BH_WC_Address_Validation {
 		$plugin_basename = $this->settings->get_plugin_basename();
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $plugins_page, 'action_links' ) );
 		add_filter( 'plugin_row_meta', array( $plugins_page, 'row_meta' ), 20, 4 );
+	}
+
+	protected function define_plugin_installer_hooks(): void {
+		$plugin_installer_skin = new Plugin_Installer_Skin();
+		add_filter( 'install_plugin_overwrite_comparison', array( $plugin_installer_skin, 'add_changelog_entry_to_upgrade_screen' ), 10, 3 );
 	}
 
 	/**
