@@ -314,7 +314,7 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 		unset( $new_address );
 
 		// If "RD" has been misspelled as "RE".
-		$re_to_rd = preg_replace( '/.*\bre\b/', '$1RD', $address['address_1'] );
+		$re_to_rd = preg_replace( '/.*\bRE\b/', '$1RD', $address['address_1'] );
 		if ( $re_to_rd !== $address['address_1'] ) {
 			$new_address              = $address;
 			$new_address['address_1'] = $re_to_rd;
