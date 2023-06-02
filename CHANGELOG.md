@@ -1,6 +1,16 @@
 # Changelog
 
-## 1.2.2 2012-09-17
+## 1.3.1 2023-06-01
+
+* Exclude AO, AA military addresses
+* Fix: uppercase in regex
+* Update libraries
+
+...
+
+...
+
+## 1.2.2 2021-09-17
 
 * Do not show settings link on plugins.php when WooCommerce is inactive.
 

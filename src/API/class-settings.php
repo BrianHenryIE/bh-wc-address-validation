@@ -69,7 +69,7 @@ class Settings implements Settings_Interface, WooCommerce_Logger_Settings_Interf
 	 * @return string
 	 */
 	public function get_plugin_version(): string {
-		return defined( 'BH_WC_ADDRESS_VALIDATION_VERSION' ) ? BH_WC_ADDRESS_VALIDATION_VERSION : '1.3.0';
+		return defined( 'BH_WC_ADDRESS_VALIDATION_VERSION' ) ? BH_WC_ADDRESS_VALIDATION_VERSION : '1.3.1';
 	}
 
 	/**
