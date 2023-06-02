@@ -5,7 +5,6 @@
 
 namespace BrianHenryIE\WC_Address_Validation\API;
 
-use BrianHenryIE\WC_Address_Validation\API\Validators\Address_Validator_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Validators\No_Validator_Exception;
 use BrianHenryIE\WC_Address_Validation\API_Interface;
 use BrianHenryIE\WC_Address_Validation\Container;
