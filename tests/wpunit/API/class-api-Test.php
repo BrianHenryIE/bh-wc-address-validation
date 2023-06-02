@@ -9,7 +9,6 @@
 namespace BrianHenryIE\WC_Address_Validation\API;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
-use BrianHenryIE\WC_Address_Validation\API\Validators\Address_Validator_Interface;
 use BrianHenryIE\WC_Address_Validation\API\Validators\No_Validator_Exception;
 use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\Settings_Interface;
