@@ -71,7 +71,7 @@
         "vinceg/usps-php-api": "^1.0"
     },
     "require-dev": {
-        "10up/wp_mock": "0.4.2",
+        "10up/wp_mock": "*",
         "antecedent/patchwork": "^2.1",
         "brianhenryie/color-logger": "^1.0",
         "brianhenryie/composer-phpstorm": "dev-master",
@@ -99,9 +99,10 @@
         "wordpress/wordpress": "*",
         "wp-cli/dist-archive-command": "dev-main",
         "wp-cli/i18n-command": "^2.4",
-        "wp-cli/wp-cli-bundle": "*",
+        "wp-cli/wp-cli": "2.7.1",
+        "wp-cli/wp-cli-bundle": "2.7.1",
         "wp-coding-standards/wpcs": "*",
-        "wpackagist-plugin/woocommerce": "^5.1",
+        "wpackagist-plugin/woocommerce": "*",
         "wpackagist-theme/storefront": "*"
     },
     "extra": {
@@ -109,12 +110,8 @@
             "jaschilz/php-coverage-badger": {
                 "Allow customising the text": "https://github.com/JASchilz/PHPCoverageBadge/pull/1.patch"
             },
-            "10up/wp_mock": {
-                "Add AnyObject matcher": "https://github.com/10up/wp_mock/pull/161.patch"
-            },
-            "brianhenryie/strauss": {
-                "Fix blocked by your allow-plugins config": "https://github.com/BrianHenryIE/strauss/pull/45.patch",
-                "Static in array and ternary": "https://github.com/BrianHenryIE/strauss/pull/46.patch"
+            "wp-cli/dist-archive-command": {
+                "Add Increment Version": "https://github.com/BrianHenryIE/dist-archive-command/commit/f37c375ba8069c9160d642dd0c00435e0f1c4804.patch"
             }
         },
         "strauss": {
@@ -128,7 +125,12 @@
                 "file_patterns": [
                     "~psr/log/Psr/Log/Test.*~"
                 ]
-            }
+            },
+          "exclude_from_prefix": {
+            "packages": [
+              "psr/log"
+            ]
+          }
         },
         "symlinks": {
             ".": "wp-content/plugins/bh-wc-address-validation",
@@ -148,7 +150,8 @@
                 ],
                 "composer-symlinks": false
             }
-        }
+        },
+        "enable-patching": "true"
     },
     "scripts": {
         "post-install-cmd": [
@@ -207,7 +210,7 @@
             "updated_files=$( git status | grep 'modified:\\s.*.php$' | cut -c14- | awk '{ printf(\"%s \", $0) }' ); vendor/bin/phpcbf $(echo $updated_files); vendor/bin/phpcs $(echo $updated_files); vendor/bin/phpstan analyse $(echo $updated_files) --memory-limit 1G"
         ],
         "create-plugin-archive": [
-            "vendor/bin/wp i18n make-pot src languages/bh-wc-address-validation.pot",
+            "vendor/bin/wp i18n make-pot src languages/$(basename \"$PWD\").pot --domain=$(basename \"$PWD\")",
             "vendor/bin/wp dist-archive . ./dist-archive --plugin-dirname=$(basename \"$PWD\") --create-target-dir"
         ]
     }
