@@ -79,7 +79,7 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 
 		$address_to_validate = $this->wc_address_array_to_usps_address_object( $address );
 
-		if ( in_array( $address['state'], array( 'AP' ), true ) ) {
+		if ( in_array( $address['state'], array( 'AE', 'AP', 'AA' ), true ) ) {
 
 			$result['success'] = true;
 
