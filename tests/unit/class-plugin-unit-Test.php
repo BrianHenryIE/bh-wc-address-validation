@@ -10,6 +10,7 @@ namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\WC_Address_Validation\API\API;
 use BrianHenryIE\WC_Address_Validation\WP_Logger\Logger;
+use Psr\Log\NullLogger;
 
 /**
  * Class Plugin_WP_Mock_Test
@@ -41,8 +42,10 @@ class BH_WC_Address_Validation_Unit_Test extends \Codeception\Test\Unit {
 		);
 
 		\Patchwork\redefine(
-			array( Logger::class, '__construct' ),
-			function( $settings ) {}
+			array( Logger::class, 'instance' ),
+			function( $settings ) {
+				return new NullLogger();
+			}
 		);
 
 		global $plugin_root_dir;
