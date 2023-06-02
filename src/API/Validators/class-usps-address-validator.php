@@ -72,7 +72,8 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 
 		// Let's clean up punctuation which USPS does not like.
 		// TODO: is "#" ok?
-		$address = preg_replace( '/[^a-zA-Z\d\s]+/', ' ', $address );
+		// forwards slash is ok, e.g. 123 1/2 22nd st.
+		$address = preg_replace( '/[^a-zA-Z\d\s\/]+/', ' ', $address );
 		// Trim and remove double spaces.
 		$address = array_map( 'normalize_whitespace', $address );
 
