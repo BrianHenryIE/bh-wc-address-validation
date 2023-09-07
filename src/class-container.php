@@ -4,10 +4,10 @@ namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\WC_Address_Validation\API\Validators\EasyPost_Address_Validator;
 use BrianHenryIE\WC_Address_Validation\API\Validators\USPS_Address_Validator;
+use BrianHenryIE\WC_Address_Validation\Psr\Container\ContainerExceptionInterface;
+use BrianHenryIE\WC_Address_Validation\Psr\Container\ContainerInterface;
+use BrianHenryIE\WC_Address_Validation\Psr\Container\NotFoundExceptionInterface;
 use BrianHenryIE\WC_Address_Validation\USPS\AddressVerify;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
