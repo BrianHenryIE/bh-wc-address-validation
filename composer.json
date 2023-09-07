@@ -18,7 +18,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "cweagans/composer-patches": true,
             "phpstan/extension-installer": true,
-            "composer/installers": true
+            "composer/installers": true,
+            "johnpbloch/wordpress-core-installer": true
         }
     },
     "autoload-dev": {
@@ -85,25 +86,28 @@
         "codeception/util-universalframework": "^1.0",
         "cweagans/composer-patches": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
-        "hoa/console": "^3.17",
         "jaschilz/php-coverage-badger": "^2.0",
+        "johnpbloch/wordpress": "*",
         "kporras07/composer-symlinks": "dev-master",
         "lucatume/wp-browser": "*",
-        "php-stubs/woocommerce-stubs": "^5.2",
+        "php-stubs/woocommerce-stubs": "^7.6",
         "phpcompatibility/phpcompatibility-wp": "*",
-        "phpstan/extension-installer": "^1.1",
+        "phpstan/extension-installer": "*",
         "phpunit/phpcov": "*",
         "squizlabs/php_codesniffer": "*",
         "szepeviktor/phpstan-wordpress": "*",
-        "voku/portable-ascii": "dev-master",
+        "woocommerce/woocommerce-sniffs": "*",
         "wordpress/wordpress": "*",
+        "wp-api/basic-auth": "*",
         "wp-cli/dist-archive-command": "dev-main",
         "wp-cli/i18n-command": "^2.4",
-        "wp-cli/wp-cli": "2.7.1",
-        "wp-cli/wp-cli-bundle": "2.7.1",
+        "wp-cli/wp-cli-bundle": "*",
         "wp-coding-standards/wpcs": "*",
+        "wpackagist-plugin/woo-gutenberg-products-block": "*",
+        "wpackagist-plugin/gutenberg": "*",
         "wpackagist-plugin/woocommerce": "*",
-        "wpackagist-theme/storefront": "*"
+        "wpackagist-theme/storefront": "*",
+        "wpackagist-theme/twentytwenty": "*"
     },
     "extra": {
         "patches": {
@@ -156,7 +160,6 @@
     "scripts": {
         "post-install-cmd": [
             "vendor/bin/strauss",
-            "vendor/bin/wp core download --path=wordpress --allow-root || true;",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
             "@setup-wordpress",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
@@ -164,19 +167,16 @@
         ],
         "post-update-cmd": [
             "vendor/bin/strauss",
-            "@setup-wordpress",
             "Kporras07\\ComposerSymlinks\\ScriptHandler::createSymlinks",
+            "@setup-wordpress",
             "BrianHenryIE\\ComposerPhpStorm\\ExcludeFolders::update",
             "BrianHenryIE\\ComposerPhpStorm\\PHPUnitRunConfigurations::update"
         ],
         "setup-wordpress": [
-            "wp core download --path=wordpress --allow-root || true",
-            "export $(grep -v '^#' .env.testing | xargs); wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --allow-root --extra-php=\"\ndefine( 'WP_DEBUG_LOG', true );\ndefine( 'SCRIPT_DEBUG', true );\" || true",
-            "export $(grep -v '^#' .env.testing | xargs); vendor/bin/wp core install --url=\"localhost:8080/$PLUGIN_SLUG\" --title=\"$PLUGIN_NAME\" --admin_user=admin --admin_password=password --admin_email=admin@example.org || true; wp plugin activate $PLUGIN_SLUG || true;",
+            "export $(grep -v '^#' .env.testing | xargs); wp config create --dbname=$TEST_SITE_DB_NAME --dbuser=$TEST_SITE_DB_USER --dbpass=$TEST_SITE_DB_PASSWORD --allow-root || true",
+            "export $(grep -v '^#' .env.testing | xargs); wp core install --url=\"localhost:8080/$PLUGIN_SLUG\" --title=\"$PLUGIN_NAME\" --admin_user=admin --admin_password=password --admin_email=admin@example.org || true; wp plugin activate $PLUGIN_SLUG || true;",
+            "wp config set WP_DEBUG true --raw; wp config set WP_DEBUG_LOG true --raw; wp config set SCRIPT_DEBUG true --raw",
             "wp user create bob bob@example.org --user_pass=password || true;",
-            "wp core update --allow-root || true",
-            "patch ./wordpress/wp-config.php ./patches/wp-debug.diff -s -N -f --no-backup-if-mismatch --reject-file= || true;",
-            "patch ./wordpress/wp-includes/plugin.php ./patches/42670.diff -s -N -f --no-backup-if-mismatch --reject-file= || true;",
             "mkdir -p wordpress/wp-content/uploads"
         ],
         "create-databases": [
@@ -186,8 +186,7 @@
             "@restore-acceptance-database"
         ],
         "delete-databases": [
-            "export $(grep -v '^#' .env.testing | xargs); mysql -e \"DROP TABLE IF EXISTS $TEST_SITE_DB_NAME;\" mysql -e \"DROP TABLE IF EXISTS $TEST_DB_NAME;\"",
-            "export $(grep -v '^#' .env.testing | xargs); DB_DIR=$(mysql -e \"select @@datadir\" -N -B); rm -rf $DB_DIR$TEST_SITE_DB_NAME; rm -rf  $DB_DIR$TEST_DB_NAME;"
+            "export $(grep -v '^#' .env.testing | xargs); DB_DIR=$(mysql -e \"select @@datadir\" -N -B); if [[ \"$DB_DIR\" != \"$DB_DIR$TEST_SITE_DB_NAME\" ]]; then rm -rf $DB_DIR$TEST_SITE_DB_NAME; fi; if [[ \"$DB_DIR\" != \"$DB_DIR$TEST_DB_NAME\" ]]; then rm -rf $DB_DIR$TEST_DB_NAME; fi;"
         ],
         "save-acceptance-database": [
             "export $(grep -v '^#' .env.testing | xargs); mysqldump -u $TEST_SITE_DB_USER -p$TEST_SITE_DB_PASSWORD  $TEST_SITE_DB_NAME > tests/_data/dump.sql;"
@@ -198,20 +197,29 @@
         "coverage-tests": [
             "vendor/bin/codecept run unit --coverage unit.cov",
             "vendor/bin/codecept run wpunit --coverage wpunit.cov",
-            "vendor/bin/phpcov merge --clover tests/_output/clover.xml --html tests/_output/html tests/_output;",
-            "open tests/_output/html/index.html"
+            "vendor/bin/phpcov merge --clover tests/_output/clover.xml --html tests/_output/phpunit tests/_output;",
+            "open tests/_output/phpunit/index.html"
         ],
         "lint": [
-            "vendor/bin/phpcbf || true",
-            "vendor/bin/phpcs || true",
+            "phpcbf || true",
+            "phpcbf --standard=phpcs.woocommerce.xml || true",
+            "phpcs || true",
+            "phpcs --standard=phpcs.woocommerce.xml || true",
             "vendor/bin/phpstan analyse --memory-limit 1G"
         ],
         "lint-changes": [
             "updated_files=$( git status | grep 'modified:\\s.*.php$' | cut -c14- | awk '{ printf(\"%s \", $0) }' ); vendor/bin/phpcbf $(echo $updated_files); vendor/bin/phpcs $(echo $updated_files); vendor/bin/phpstan analyse $(echo $updated_files) --memory-limit 1G"
         ],
+        "php-compatibility": [
+            "vendor/bin/phpcs -p src templates vendor-prefixed --standard=PHPCompatibilityWP --runtime-set testVersion 7.4-"
+        ],
         "create-plugin-archive": [
+            "php ./data/original/parser/data-parser.php",
             "vendor/bin/wp i18n make-pot src languages/$(basename \"$PWD\").pot --domain=$(basename \"$PWD\")",
             "vendor/bin/wp dist-archive . ./dist-archive --plugin-dirname=$(basename \"$PWD\") --create-target-dir"
+        ],
+        "github-actions":  [
+            "act -P ubuntu-latest=shivammathur/node:latest --container-architecture linux/amd64"
         ]
     }
 }
