@@ -95,7 +95,7 @@ class Order {
 
 		$order_ids = array_map( 'intval', $_REQUEST['post'] );
 
-		$args = array( $order_ids );
+		$args = array( array( $order_ids ) );
 
 		$this->logger->debug( 'Scheduling background process to check orders ' . implode( ', ', $order_ids ), array( 'order_ids' => $order_ids ) );
 
