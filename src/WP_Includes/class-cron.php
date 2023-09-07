@@ -52,13 +52,10 @@ class Cron {
 	 * @hooked plugins_loaded
 	 */
 	public function add_cron_jon(): void {
-
-		// TODO: This action does not ezxist.
-		if ( false && ! wp_next_scheduled( self::RECHECK_BAD_ADDRESSES_CRON_JOB ) ) {
+		if ( ! wp_next_scheduled( self::RECHECK_BAD_ADDRESSES_CRON_JOB ) ) {
 			wp_schedule_event( time(), 'twicedaily', self::RECHECK_BAD_ADDRESSES_CRON_JOB );
-			$this->logger->notice( 'Cron job scheduled' );
+			$this->logger->info( 'Cron job scheduled: ' . self::RECHECK_BAD_ADDRESSES_CRON_JOB );
 		}
-
 	}
 
 	/**

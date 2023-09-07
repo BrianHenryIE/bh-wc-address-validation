@@ -3,6 +3,7 @@
 ## 1.4.0
 
 * Add: show customer's last order's address on order page
+* Add: twice-daily cron job to re-check bad addresses, e.g. if USPS API was offline
 
 ## 1.3.1 2023-06-01
 

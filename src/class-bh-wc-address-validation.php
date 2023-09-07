@@ -168,14 +168,13 @@ class BH_WC_Address_Validation {
 	 * @since    1.0.0
 	 */
 	protected function define_cron_hooks(): void {
-
 		$cron = new Cron( $this->api, $this->settings, $this->logger );
 
 		add_action( Cron::CHECK_SINGLE_ADDRESS_CRON_JOB, array( $cron, 'check_address_for_single_order' ) );
 		add_action( Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, array( $cron, 'check_address_for_multiple_orders' ) );
+		add_action( Cron::RECHECK_BAD_ADDRESSES_CRON_JOB, array( $cron, 'recheck_bad_address_orders' ) );
 
 		add_action( 'plugins_loaded', array( $cron, 'add_cron_jon' ) );
-
 	}
 
 	protected function define_cli_commands(): void {
