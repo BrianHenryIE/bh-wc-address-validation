@@ -158,7 +158,8 @@ class BH_WC_Address_Validation {
 		add_filter( 'woocommerce_order_actions', array( $woocommerce_order, 'add_admin_ui_order_action' ) );
 		add_action( 'woocommerce_order_action_bh_wc_address_validate', array( $woocommerce_order, 'check_address_on_admin_order_action' ) );
 
-		add_filter( 'woocommerce_admin_order_data_after_shipping_address', array( $woocommerce_order, 'print_link_to_usps_tools_zip_lookup' ) );
+		add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $woocommerce_order, 'print_link_to_usps_tools_zip_lookup' ) );
+		add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $woocommerce_order, 'add_previous_address_to_order' ) );
 	}
 
 	/**

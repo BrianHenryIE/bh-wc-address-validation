@@ -161,4 +161,46 @@ class Order {
 		}
 
 	}
+
+	/**
+	 * Show "previous customer address" when possible for bad-address orders.
+	 *
+	 * When viewing a bad-address order, using the customer's past orders is useful to find the correct address.
+	 *
+	 * @hooked woocommerce_admin_order_data_after_shipping_address
+	 * @see class-wc-meta-box-order-data.php
+	 *
+	 * @param WC_Order $order
+	 */
+	public function add_previous_address_to_order( WC_Order $order ) {
+
+		if ( Order_Status::BAD_ADDRESS_STATUS !== $order->get_status() ) {
+			return;
+		}
+
+		// TODO: sort by most recent.
+		$customer_orders = wc_get_orders(
+			array(
+				'status'        => 'wc-completed',
+				'billing_email' => $order->get_billing_email(),
+				'limit'         => 1,
+			)
+		);
+
+		if( 0 === count( $customer_orders ) ) {
+			echo '<p class="none_set" style="clear:both;"><strong>' . esc_html__( 'Previous Order\'s Address:', 'bh-wc-address-validation' ) . '</strong> ' . esc_html__( 'No previous order.', 'bh-wc-address-validation' ) . '</p>';
+			return;
+		}
+
+		$previous_order = array_pop($customer_orders);
+
+		if ( $previous_order->get_formatted_shipping_address() ) {
+
+			echo '<p class="none_set" style="clear:both;"><strong>' . esc_html__( 'Previous Order\'s Address:', 'bh-wc-address-validation' ) . '</strong> ' . '</p>';
+
+			echo '<p>' . wp_kses( $previous_order->get_formatted_shipping_address(), array( 'br' => array() ) ) . '</p>';
+
+			echo '<p class="none_set">Order <a href="' .$previous_order->get_edit_order_url() . '">#'.$previous_order->get_id().'</a>.' . '</p>';
+		}
+	}
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+
+* Add: show customer's last order's address on order page
+
 ## 1.3.1 2023-06-01
 
 * Exclude AO, AA military addresses
