@@ -44,7 +44,7 @@ class EasyPost_Address_Validator_Unit_Test extends \Codeception\Test\Unit {
 		 */
 		\Patchwork\redefine(
 			array( \BrianHenryIE\WC_Address_Validation\EasyPost\Requestor::class, 'request' ),
-			function( $method, $url, $params = null, $apiKeyRequired = true ) {
+			function ( $method, $url, $params = null, $apiKeyRequired = true ) {
 				$response = array(
 					'address' =>
 						array(
@@ -103,7 +103,6 @@ class EasyPost_Address_Validator_Unit_Test extends \Codeception\Test\Unit {
 		$this->assertTrue( $result['success'] );
 
 		$this->assertEquals( 'SACRAMENTO', $result['updated_address']['city'] );
-
 	}
 
 
@@ -130,7 +129,5 @@ class EasyPost_Address_Validator_Unit_Test extends \Codeception\Test\Unit {
 		$this->assertTrue( $result['success'] );
 
 		$this->assertEquals( 'DUBLIN', $result['updated_address']['city'] );
-
 	}
-
 }

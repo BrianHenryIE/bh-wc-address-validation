@@ -92,6 +92,5 @@ class Activator {
 		if ( ! empty( $orders_to_check ) ) {
 			wp_schedule_single_event( time(), Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, array( $orders_to_check ) );
 		}
-
 	}
 }

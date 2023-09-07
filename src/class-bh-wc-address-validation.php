@@ -86,7 +86,6 @@ class BH_WC_Address_Validation {
 		$this->define_woocommerce_order_hooks();
 		$this->define_cron_hooks();
 		$this->define_cli_commands();
-
 	}
 
 	/**
@@ -143,7 +142,6 @@ class BH_WC_Address_Validation {
 
 		$woocommerce_email = new Emails();
 		add_filter( 'woocommerce_email_classes', array( $woocommerce_email, 'register_email' ), 10, 1 );
-
 	}
 
 	/**
@@ -185,5 +183,4 @@ class BH_WC_Address_Validation {
 			WP_CLI::add_command( 'address_validation', CLI::class );
 		}
 	}
-
 }

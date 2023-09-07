@@ -23,7 +23,6 @@ class EasyPost_Address_Validator implements Address_Validator_Interface {
 		$this->setLogger( $logger );
 
 		EasyPost::setApiKey( $api_key );
-
 	}
 
 	/**
@@ -72,6 +71,5 @@ class EasyPost_Address_Validator implements Address_Validator_Interface {
 		$result['message'] = '';
 
 		return $result;
-
 	}
 }

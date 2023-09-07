@@ -82,5 +82,4 @@ class Plugins_Page {
 
 		return $plugin_meta;
 	}
-
 }

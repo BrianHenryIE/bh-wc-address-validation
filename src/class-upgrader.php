@@ -46,7 +46,5 @@ class Upgrader {
 				delete_option( $from );
 			}
 		}
-
 	}
-
 }

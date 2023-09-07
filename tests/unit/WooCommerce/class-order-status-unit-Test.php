@@ -39,7 +39,6 @@ class Order_Status_Unit_Test extends \Codeception\Test\Unit {
 		$result = $sut->add_to_reports_status_list( array() );
 
 		$this->assertEmpty( $result );
-
 	}
 
 	public function test_reports_status_filter() {
@@ -53,7 +52,5 @@ class Order_Status_Unit_Test extends \Codeception\Test\Unit {
 		$result = $sut->add_to_reports_status_list( array( 'completed', 'processing', 'on-hold' ) );
 
 		$this->assertContains( 'bad-address', $result );
-
 	}
-
 }

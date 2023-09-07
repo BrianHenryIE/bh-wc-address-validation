@@ -101,5 +101,4 @@ class Shipping_Settings_Page {
 
 		return $settings;
 	}
-
 }

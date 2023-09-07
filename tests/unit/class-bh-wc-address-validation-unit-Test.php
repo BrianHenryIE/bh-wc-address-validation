@@ -115,5 +115,4 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 		$logger   = new ColorLogger();
 		new BH_WC_Address_Validation( $api, $settings, $logger );
 	}
-
 }

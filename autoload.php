@@ -36,5 +36,3 @@ require_once __DIR__ . '/vendor-prefixed/autoload.php';
 
 $wpcs_autoloader = new WP_Namespace_Autoloader( array( 'classes_dir' => array( 'src' ) ) );
 $wpcs_autoloader->init();
-
-

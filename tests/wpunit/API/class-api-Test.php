@@ -62,7 +62,6 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$order->set_shipping_country( 'US' );
 
 		$sut->check_address_for_order( $order );
-
 	}
 
 
@@ -102,7 +101,6 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$order->set_shipping_country( 'IE' );
 
 		$sut->check_address_for_order( $order );
-
 	}
 
 
@@ -164,7 +162,6 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$order->shouldReceive( 'save' );
 
 		$sut->check_address_for_order( $order );
-
 	}
 
 
@@ -242,7 +239,6 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$order->shouldReceive( 'save' );
 
 		$sut->check_address_for_order( $order );
-
 	}
 
 
@@ -326,7 +322,6 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$order->shouldReceive( 'save' );
 
 		$sut->check_address_for_order( $order );
-
 	}
 
 
@@ -379,7 +374,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		// need to set object_read true here so changes will be available later
 		$store_mock->shouldReceive( 'read' )->with(
 			Mockery::on(
-				function( \WC_Customer $customer ) {
+				function ( \WC_Customer $customer ) {
 
 					$customer->set_object_read();
 
@@ -390,7 +385,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 
 		$store_mock->shouldReceive( 'update' )->with(
 			Mockery::on(
-				function( $customer ) {
+				function ( $customer ) {
 
 					$changes = $customer->get_changes();
 
@@ -401,7 +396,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 
 		add_filter(
 			'woocommerce_customer_data_store',
-			function( $store ) use ( $store_mock ) {
+			function ( $store ) use ( $store_mock ) {
 				return $store_mock;
 			}
 		);
@@ -443,7 +438,6 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$order->shouldReceive( 'save' );
 
 		$sut->check_address_for_order( $order );
-
 	}
 
 
@@ -474,7 +468,6 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$order->shouldReceive( 'get_meta' )->with( Deactivator::DEACTIVATED_BAD_ADDRESS_META_KEY, true )->andReturn( null );
 
 		$sut->check_address_for_order( $order );
-
 	}
 
 
@@ -529,7 +522,6 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$order->shouldReceive( 'save' );
 
 		$sut->check_address_for_order( $order );
-
 	}
 
 	/**

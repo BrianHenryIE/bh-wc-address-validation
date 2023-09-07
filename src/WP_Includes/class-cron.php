@@ -75,7 +75,6 @@ class Cron {
 		}
 
 		$this->api->check_address_for_order( $order, false );
-
 	}
 
 	/**
@@ -89,7 +88,6 @@ class Cron {
 		foreach ( $order_ids as $order_id ) {
 			$this->check_address_for_single_order( $order_id );
 		}
-
 	}
 
 	/**

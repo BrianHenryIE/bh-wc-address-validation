@@ -69,6 +69,4 @@ class USPS_Address_Validator_Test extends \Codeception\Test\Unit {
 
 		$this->assertTrue( $result['success'] );
 	}
-
-
 }

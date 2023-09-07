@@ -100,7 +100,6 @@ class Order {
 		$this->logger->debug( 'Scheduling background process to check orders ' . implode( ', ', $order_ids ), array( 'order_ids' => $order_ids ) );
 
 		wp_schedule_single_event( time() - 60, Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, $args );
-
 	}
 
 	/**
@@ -159,7 +158,6 @@ class Order {
 
 			echo '<a target="_blank" href="https://tools.usps.com/zip-code-lookup.htm?byaddress">USPS Zip Code Lookup Tool</a>';
 		}
-
 	}
 
 	/**
@@ -187,12 +185,12 @@ class Order {
 			)
 		);
 
-		if( 0 === count( $customer_orders ) ) {
+		if ( 0 === count( $customer_orders ) ) {
 			echo '<p class="none_set" style="clear:both;"><strong>' . esc_html__( 'Previous Order\'s Address:', 'bh-wc-address-validation' ) . '</strong> ' . esc_html__( 'No previous order.', 'bh-wc-address-validation' ) . '</p>';
 			return;
 		}
 
-		$previous_order = array_pop($customer_orders);
+		$previous_order = array_pop( $customer_orders );
 
 		if ( $previous_order->get_formatted_shipping_address() ) {
 
@@ -200,7 +198,7 @@ class Order {
 
 			echo '<p>' . wp_kses( $previous_order->get_formatted_shipping_address(), array( 'br' => array() ) ) . '</p>';
 
-			echo '<p class="none_set">Order <a href="' .$previous_order->get_edit_order_url() . '">#'.$previous_order->get_id().'</a>.' . '</p>';
+			echo '<p class="none_set">Order <a href="' . $previous_order->get_edit_order_url() . '">#' . $previous_order->get_id() . '</a>.' . '</p>';
 		}
 	}
 }

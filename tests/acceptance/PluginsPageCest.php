@@ -18,5 +18,4 @@ class PluginsPageCest {
 
 		$I->canSee( 'Address Validation' );
 	}
-
 }

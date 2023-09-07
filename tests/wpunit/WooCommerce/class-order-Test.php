@@ -42,7 +42,6 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 		$this->assertIsArray( $result );
 		$this->arrayHasKey( 'bh_wc_address_validate' );
 		$this->assertEquals( 'Validate address', $result['bh_wc_address_validate'] );
-
 	}
 
 	public function test_order_action_handler() {
@@ -63,5 +62,4 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 
 		$order->check_address_on_admin_order_action( $an_order );
 	}
-
 }

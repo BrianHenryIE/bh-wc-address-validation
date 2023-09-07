@@ -49,10 +49,9 @@ class USPS_Address_Validator_Integration_Test extends \Codeception\TestCase\WPTe
 		$result = $usps_address_validator->validate( $address_array );
 
 		$this->assertTrue( $result['success'] );
-
 	}
 
-	public function bad_addresses() : array {
+	public function bad_addresses(): array {
 
 		$addresses = array(
 			array(

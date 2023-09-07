@@ -190,5 +190,4 @@ class Bad_Address_Email extends WC_Email {
 			),
 		);
 	}
-
 }

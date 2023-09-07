@@ -26,5 +26,4 @@ class Plugin_Load_Test extends \Codeception\TestCase\WPTestCase {
 
 		$this->assertInstanceOf( API::class, $GLOBALS['bh_wc_address_validation'] );
 	}
-
 }

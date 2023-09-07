@@ -213,7 +213,6 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 			return $result;
 
 		}
-
 	}
 
 
@@ -321,7 +320,5 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 			$this->address_verify->addAddress( $this->wc_address_array_to_usps_address_object( $new_address ) );
 			unset( $new_address );
 		}
-
 	}
-
 }

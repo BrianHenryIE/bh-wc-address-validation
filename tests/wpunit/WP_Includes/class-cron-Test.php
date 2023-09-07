@@ -36,7 +36,7 @@ class Cron_Test extends \Codeception\TestCase\WPTestCase {
 			API::class,
 			array(
 				'check_address_for_order' => Expected::atLeastOnce(
-					function( $order ) use ( $order_id ) {
+					function ( $order ) use ( $order_id ) {
 						if ( ! $order instanceof WC_Order ) {
 							throw new \Exception( 'order not passed to function' );
 						}
@@ -51,7 +51,6 @@ class Cron_Test extends \Codeception\TestCase\WPTestCase {
 		$cron = new Cron( $api, 'bh-wc-address-validation', '1.0.0' );
 
 		$cron->check_address_for_single_order( $order->get_id() );
-
 	}
 
 	public function test_cron_is_registered() {
@@ -86,8 +85,5 @@ class Cron_Test extends \Codeception\TestCase\WPTestCase {
 		$cron = new Cron( $api, $settings, $logger );
 
 		$cron->recheck_bad_address_orders();
-
 	}
-
-
 }

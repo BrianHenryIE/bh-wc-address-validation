@@ -12,5 +12,4 @@ interface Address_Validator_Interface {
 	 * @return array{success: bool, original_address: array, updated_address: ?array, message: ?string, error_message: ?string}
 	 */
 	public function validate( array $address ): array;
-
 }

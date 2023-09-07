@@ -15,7 +15,5 @@ class Order_Status_Integration_Test extends \Codeception\TestCase\WPTestCase {
 		$result = apply_filters( 'woocommerce_reports_order_statuses', array( 'completed', 'processing', 'on-hold' ) );
 
 		$this->assertContains( 'bad-address', $result );
-
 	}
-
 }

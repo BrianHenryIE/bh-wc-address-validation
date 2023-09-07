@@ -37,7 +37,6 @@ class Settings_WPUnit_Test extends \Codeception\TestCase\WPTestCase {
 
 		$this->assertEquals( $bh_wc_gateway_load_balancer_version, $plugin_data['Version'] );
 		$this->assertEquals( $settings->get_plugin_version(), $bh_wc_gateway_load_balancer_version );
-
 	}
 
 	/**
@@ -52,6 +51,5 @@ class Settings_WPUnit_Test extends \Codeception\TestCase\WPTestCase {
 		$plugin_data = get_plugin_data( "$plugin_root_dir/{$settings->get_plugin_slug()}.php", false, false );
 
 		$this->assertEquals( $settings->get_plugin_name(), $plugin_data['Name'] );
-
 	}
 }

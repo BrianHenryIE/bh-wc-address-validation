@@ -94,7 +94,6 @@ class Plugins_Page_Unit_Test extends \Codeception\Test\Unit {
 
 		$this->assertIsArray( $result );
 		$this->assertEmpty( $result );
-
 	}
 
 	/**
@@ -128,6 +127,4 @@ class Plugins_Page_Unit_Test extends \Codeception\Test\Unit {
 
 		$this->assertStringContainsString( 'https://github.com/BrianHenryIE/bh-wc-address-validation', $link_html );
 	}
-
-
 }

@@ -28,5 +28,4 @@ class Plugin_Installer_Skin {
 
 		return $table;
 	}
-
 }

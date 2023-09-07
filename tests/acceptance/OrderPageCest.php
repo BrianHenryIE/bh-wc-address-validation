@@ -5,7 +5,6 @@ class OrderPageCest {
 	public function _before( AcceptanceTester $I ) {
 
 		$I->loginAsAdmin();
-
 	}
 
 	/**
@@ -81,5 +80,4 @@ class OrderPageCest {
 
 		$I->selectOption( 'wc_order_action', 'bh_wc_address_validate' );
 	}
-
 }

@@ -36,6 +36,5 @@ class CLI extends WP_CLI_Command {
 	 * wp address_validation check_address '{"address_1": "123 Main St.", "address_2": "APT 456", "city":"New York", "state:": "NY", "country":"USA"}'
 	 */
 	public function check_address( array $args ): void {
-
 	}
 }

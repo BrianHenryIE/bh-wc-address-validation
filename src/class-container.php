@@ -52,7 +52,6 @@ class Container implements ContainerInterface {
 				}
 				return new AddressVerify( $this->settings->get_usps_username() );
 		}
-
 	}
 
 	/**

@@ -92,5 +92,3 @@ function instantiate_bh_wc_address_validation(): API_Interface {
  * @var \BrianHenryIE\WC_Address_Validation\API_Interface $GLOBALS['bh_wc_address_validation']
  */
 $GLOBALS['bh_wc_address_validation'] = instantiate_bh_wc_address_validation();
-
-

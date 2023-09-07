@@ -34,7 +34,6 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 		$cron_hooks_after = array_keys( call_user_func_array( 'array_merge', $wp_cron_after ) );
 
 		$this->assertContains( CRON::CHECK_SINGLE_ADDRESS_CRON_JOB, $cron_hooks_after, 'cron job was not scheduled when order was marked processing.' );
-
 	}
 
 	/**
@@ -112,7 +111,5 @@ class Order_Test extends \Codeception\TestCase\WPTestCase {
 		$this->assertNotEmpty( $hooked_methods, "No methods on an instance of $class_type hooked to $action_name" );
 
 		$this->assertContains( $function_name, $hooked_methods, "{$class_type}->{$function_name} not hooked to {$action_name}[{$expected_priority}]" );
-
 	}
-
 }

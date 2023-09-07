@@ -190,7 +190,6 @@ class API implements API_Interface {
 		$order->update_meta_data( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META, $checked_meta );
 
 		$order->save();
-
 	}
 
 	/**
@@ -217,7 +216,6 @@ class API implements API_Interface {
 		$result = $address_validator->validate( $address_array );
 
 		return $result;
-
 	}
 
 	/**
