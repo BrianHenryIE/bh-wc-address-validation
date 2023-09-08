@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.0
+## 1.4.0 2023-09-07
 
 * Add: show customer's last order's address on order page
 * Add: twice-daily cron job to re-check bad addresses, e.g. if USPS API was offline
