@@ -4,8 +4,8 @@
 
 * Add: show customer's last order's address on order page
 * Add: twice-daily cron job to re-check bad addresses, e.g. if USPS API was offline
+* Add: changelog on plugin install screen
 * Fix: bulk-mark-processing was not passing the list of orders to cron as an array
-
 
 ## 1.3.1 2023-06-01
 
