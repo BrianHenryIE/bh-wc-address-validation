@@ -1,5 +1,7 @@
 # Changelog
 
+* Fix: error when orders marked processing via bulk action
+
 ## 1.4.0 2023-09-07
 
 * Add: show customer's last order's address on order page
