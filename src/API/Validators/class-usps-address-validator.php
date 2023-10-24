@@ -219,6 +219,8 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 	/**
 	 * Probably unnecessary to apply every combination of these?
 	 *
+	 * TODO: document if the supplied address is assumed to be uppercase
+	 *
 	 * @param array $address
 	 *
 	 * @return void
