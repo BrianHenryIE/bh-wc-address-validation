@@ -33,7 +33,7 @@ class BH_WC_Address_Validation_Unit_Test extends \Codeception\Test\Unit {
 		// Prevents code-coverage counting, and removes the need to define the WordPress functions that are used in that class.
 		\Patchwork\redefine(
 			array( BH_WC_Address_Validation::class, '__construct' ),
-			function ( $api, $settings, $logger ) {}
+			function ( $container ) {}
 		);
 
 		\Patchwork\redefine(

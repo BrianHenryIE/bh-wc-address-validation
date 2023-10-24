@@ -7,7 +7,6 @@ namespace BrianHenryIE\WC_Address_Validation\API;
 
 use BrianHenryIE\WC_Address_Validation\API\Validators\No_Validator_Exception;
 use BrianHenryIE\WC_Address_Validation\API_Interface;
-use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\Settings_Interface;
 use BrianHenryIE\WC_Address_Validation\WP_Includes\Cron;
 use BrianHenryIE\WC_Address_Validation\WP_Includes\Deactivator;
@@ -30,20 +29,22 @@ class API implements API_Interface {
 
 	protected Settings_Interface $settings;
 
-	protected Container $container;
+	/**
+	 * An interface to the APIs.
+	 */
+	protected Address_Validator_Interface $address_validator;
 
 	/**
 	 * API constructor.
 	 *
-	 * @param Container          $container
 	 * @param Settings_Interface $settings
 	 * @param LoggerInterface    $logger
 	 */
-	public function __construct( Container $container, Settings_Interface $settings, LoggerInterface $logger ) {
+	public function __construct( Address_Validator_Interface $address_validator, Settings_Interface $settings, LoggerInterface $logger ) {
 
 		$this->setLogger( $logger );
-		$this->settings  = $settings;
-		$this->container = $container;
+		$this->settings          = $settings;
+		$this->address_validator = $address_validator;
 	}
 
 	/**
@@ -200,22 +201,7 @@ class API implements API_Interface {
 	 */
 	public function validate_address( array $address_array ): array {
 
-		if ( 'US' === $address_array['country'] && ! empty( $this->settings->get_usps_username() ) ) {
-			$address_validator_type = Container::USPS_ADDRESS_VALIDATOR;
-		} elseif ( ! empty( $this->settings->get_easypost_api_key() ) ) {
-			$address_validator_type = Container::EASYPOST_ADDRESS_VALIDATOR;
-		} else {
-			throw new No_Validator_Exception( $address_array );
-		}
-
-		/**
-		 * An interface to the APIs.
-		 *
-		 * @var Address_Validator_Interface $address_validator
-		 */
-		$address_validator = $this->container->get( $address_validator_type );
-
-		$result = $address_validator->validate( $address_array );
+		$result = $this->address_validator->validate( $address_array );
 
 		return $result;
 	}

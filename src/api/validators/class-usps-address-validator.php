@@ -6,7 +6,6 @@
 namespace BrianHenryIE\WC_Address_Validation\API\Validators;
 
 use BrianHenryIE\WC_Address_Validation\API\Address_Validator_Interface;
-use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\USPS\Address;
 use BrianHenryIE\WC_Address_Validation\USPS\AddressVerify;
 use Psr\Log\LoggerAwareTrait;
@@ -21,10 +20,10 @@ class USPS_Address_Validator implements Address_Validator_Interface {
 	 */
 	protected AddressVerify $address_verify;
 
-	public function __construct( Container $container, LoggerInterface $logger ) {
+	public function __construct( AddressVerify $address_verify, LoggerInterface $logger ) {
 
 		$this->setLogger( $logger );
-		$this->address_verify = $container->get( Container::USPS_API_ADDRESS_VERIFY );
+		$this->address_verify = $address_verify;
 
 		$this->address_verify->setRevision( 1 );
 	}

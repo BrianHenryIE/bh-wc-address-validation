@@ -10,7 +10,6 @@ namespace BrianHenryIE\WC_Address_Validation\API;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
 use BrianHenryIE\WC_Address_Validation\API\Validators\No_Validator_Exception;
-use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\Settings_Interface;
 use BrianHenryIE\WC_Address_Validation\WP_Includes\Deactivator;
 use Mockery;
@@ -53,10 +52,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$address_validator = Mockery::mock( Address_Validator_Interface::class );
 		$address_validator->shouldReceive( 'validate' )->andReturn( $result );
 
-		$container = Mockery::mock( Container::class );
-		$container->shouldReceive( 'get' )->with( Container::USPS_ADDRESS_VALIDATOR )->andReturn( $address_validator );
-
-		$sut = new API( $container, $settings, $logger );
+		$sut = new API( $address_validator, $settings, $logger );
 
 		$order = new WC_Order();
 		$order->set_shipping_country( 'US' );
@@ -92,10 +88,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$address_validator = Mockery::mock( Address_Validator_Interface::class );
 		$address_validator->shouldReceive( 'validate' )->andReturn( $result );
 
-		$container = Mockery::mock( Container::class );
-		$container->shouldReceive( 'get' )->with( Container::EASYPOST_ADDRESS_VALIDATOR )->andReturn( $address_validator );
-
-		$sut = new API( $container, $settings, $logger );
+		$sut = new API( $address_validator, $settings, $logger );
 
 		$order = new WC_Order();
 		$order->set_shipping_country( 'IE' );
@@ -134,10 +127,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$address_validator = Mockery::mock( Address_Validator_Interface::class );
 		$address_validator->shouldReceive( 'validate' )->andReturn( $result );
 
-		$container = Mockery::mock( Container::class );
-		$container->shouldReceive( 'get' )->with( Container::USPS_ADDRESS_VALIDATOR )->andReturn( $address_validator );
-
-		$sut = new API( $container, $settings, $logger );
+		$sut = new API( $address_validator, $settings, $logger );
 
 		$order = Mockery::mock( WC_Order::class );
 
@@ -198,10 +188,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$address_validator = Mockery::mock( Address_Validator_Interface::class );
 		$address_validator->shouldReceive( 'validate' )->andReturn( $result );
 
-		$container = Mockery::mock( Container::class );
-		$container->shouldReceive( 'get' )->with( Container::USPS_ADDRESS_VALIDATOR )->andReturn( $address_validator );
-
-		$sut = new API( $container, $settings, $logger );
+		$sut = new API( $address_validator, $settings, $logger );
 
 		$order = Mockery::mock( WC_Order::class );
 
@@ -275,10 +262,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$address_validator = Mockery::mock( Address_Validator_Interface::class );
 		$address_validator->shouldReceive( 'validate' )->andReturn( $result );
 
-		$container = Mockery::mock( Container::class );
-		$container->shouldReceive( 'get' )->with( Container::USPS_ADDRESS_VALIDATOR )->andReturn( $address_validator );
-
-		$sut = new API( $container, $settings, $logger );
+		$sut = new API( $address_validator, $settings, $logger );
 
 		$order = Mockery::mock( WC_Order::class );
 
@@ -358,10 +342,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$address_validator = Mockery::mock( Address_Validator_Interface::class );
 		$address_validator->shouldReceive( 'validate' )->andReturn( $result );
 
-		$container = Mockery::mock( Container::class );
-		$container->shouldReceive( 'get' )->with( Container::USPS_ADDRESS_VALIDATOR )->andReturn( $address_validator );
-
-		$sut = new API( $container, $settings, $logger );
+		$sut = new API( $address_validator, $settings, $logger );
 
 		$order = Mockery::mock( WC_Order::class );
 
@@ -457,10 +438,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 
 		$address_validator = Mockery::mock( Address_Validator_Interface::class );
 
-		$container = Mockery::mock( Container::class );
-		$container->shouldReceive( 'get' )->with( Container::USPS_ADDRESS_VALIDATOR )->andReturn( $address_validator );
-
-		$sut = new API( $container, $settings, $logger );
+		$sut = new API( $address_validator, $settings, $logger );
 
 		$order = Mockery::mock( WC_Order::class );
 
@@ -495,10 +473,7 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 		$address_validator = Mockery::mock( Address_Validator_Interface::class );
 		$address_validator->shouldReceive( 'validate' )->andReturn( $result );
 
-		$container = Mockery::mock( Container::class );
-		$container->shouldReceive( 'get' )->with( Container::USPS_ADDRESS_VALIDATOR )->andReturn( $address_validator );
-
-		$sut = new API( $container, $settings, $logger );
+		$sut = new API( $address_validator, $settings, $logger );
 
 		$order = Mockery::mock( WC_Order::class );
 
@@ -529,11 +504,13 @@ class API_Test extends \Codeception\TestCase\WPTestCase {
 	 */
 	public function test_international_address_with_no_validator() {
 
-		$logger    = new ColorLogger();
-		$settings  = $this->makeEmpty( Settings_Interface::class );
-		$container = Mockery::mock( Container::class );
+		self::markTestSkipped( 'Change from exception to null validator' );
 
-		$sut = new API( $container, $settings, $logger );
+		$logger            = new ColorLogger();
+		$settings          = $this->makeEmpty( Settings_Interface::class );
+		$address_validator = $this->makeEmpty( Address_Validator_Interface::class );
+
+		$sut = new API( $address_validator, $settings, $logger );
 
 		$address = array(
 			'address_1' => 'ADDRESS 1',

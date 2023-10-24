@@ -4,9 +4,16 @@ namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
 use BrianHenryIE\WC_Address_Validation\Admin\Plugins_Page;
+use BrianHenryIE\WC_Address_Validation\API\API;
+use BrianHenryIE\WC_Address_Validation\API\Settings;
+use BrianHenryIE\WC_Address_Validation\lucatume\DI52\Container;
+use BrianHenryIE\WC_Address_Validation\Psr\Container\ContainerInterface;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order_Status;
 use BrianHenryIE\WC_Address_Validation\WP_Includes\I18n;
+use BrianHenryIE\WC_Address_Validation\WP_Logger\Logger;
+use BrianHenryIE\WC_Address_Validation\WP_Logger\Logger_Settings_Interface;
+use Psr\Log\LoggerInterface;
 use WP_Mock\Matcher\AnyInstance;
 
 /**
@@ -26,6 +33,31 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 		// parent::tearDown();
 	}
 
+	protected function getContainer(): ContainerInterface {
+
+		$container = new Container();
+
+		$container->bind(
+			API_Interface::class,
+			$this->makeEmpty( API_Interface::class )
+		);
+		$container->bind(
+			Settings_Interface::class,
+			$this->makeEmpty(
+				Settings_Interface::class,
+				array( 'get_plugin_basename' => 'bh-wc-address-validation/bh-wc-address-validation.php' )
+			)
+		);
+		$container->singleton(
+			LoggerInterface::class,
+			static function () {
+				return new ColorLogger();
+			}
+		);
+
+		return $container;
+	}
+
 	/**
 	 * @covers ::set_locale
 	 */
@@ -36,10 +68,7 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 			array( new AnyInstance( I18n::class ), 'load_plugin_textdomain' )
 		);
 
-		$api      = $this->makeEmpty( API_Interface::class );
-		$settings = $this->makeEmpty( Settings_Interface::class );
-		$logger   = new ColorLogger();
-		new BH_WC_Address_Validation( $api, $settings, $logger );
+		new BH_WC_Address_Validation( $this->getContainer() );
 	}
 
 	/**
@@ -59,10 +88,7 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 			4
 		);
 
-		$api      = $this->makeEmpty( API_Interface::class );
-		$settings = $this->makeEmpty( Settings_Interface::class, array( 'get_plugin_basename' => 'bh-wc-address-validation/bh-wc-address-validation.php' ) );
-		$logger   = new ColorLogger();
-		new BH_WC_Address_Validation( $api, $settings, $logger );
+		new BH_WC_Address_Validation( $this->getContainer() );
 	}
 
 	/**
@@ -80,10 +106,7 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 			array( new AnyInstance( Order_Status::class ), 'add_order_status_to_woocommerce' )
 		);
 
-		$api      = $this->makeEmpty( API_Interface::class );
-		$settings = $this->makeEmpty( Settings_Interface::class );
-		$logger   = new ColorLogger();
-		new BH_WC_Address_Validation( $api, $settings, $logger );
+		new BH_WC_Address_Validation( $this->getContainer() );
 	}
 
 
@@ -110,9 +133,6 @@ class Plugin_Unit_Test extends \Codeception\Test\Unit {
 			array( new AnyInstance( Order::class ), 'add_admin_ui_order_action' )
 		);
 
-		$api      = $this->makeEmpty( API_Interface::class );
-		$settings = $this->makeEmpty( Settings_Interface::class );
-		$logger   = new ColorLogger();
-		new BH_WC_Address_Validation( $api, $settings, $logger );
+		new BH_WC_Address_Validation( $this->getContainer() );
 	}
 }

@@ -11,9 +11,7 @@
 namespace BrianHenryIE\WC_Address_Validation\API\Validators;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
-use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\USPS\AddressVerify;
-use Mockery;
 
 /**
  * Class USPS_Address_Validator_Test
@@ -44,10 +42,7 @@ class USPS_Address_Validator_Test extends \Codeception\Test\Unit {
 		$address_verify = new AddressVerify( $usps_username );
 		$address_verify->setTestMode( true );
 
-		$container = Mockery::mock( Container::class );
-		$container->shouldReceive( 'get' )->with( Container::USPS_API_ADDRESS_VERIFY )->andReturn( $address_verify );
-
-		$usps_address_validator = new USPS_Address_Validator( $container, $logger );
+		$usps_address_validator = new USPS_Address_Validator( $address_verify, $logger );
 
 		$address = array(
 			'address_1' => '815 E ST',

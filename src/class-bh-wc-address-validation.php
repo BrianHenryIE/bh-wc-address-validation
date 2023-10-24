@@ -15,8 +15,7 @@
 namespace BrianHenryIE\WC_Address_Validation;
 
 use BrianHenryIE\WC_Address_Validation\Admin\Plugin_Installer_Skin;
-use BrianHenryIE\WC_Address_Validation\API_Interface;
-use BrianHenryIE\WC_Address_Validation\Settings_Interface;
+use BrianHenryIE\WC_Address_Validation\Psr\Container\ContainerInterface;
 use BrianHenryIE\WC_Address_Validation\Admin\Plugins_Page;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Email\Emails;
 use BrianHenryIE\WC_Address_Validation\WooCommerce\Order;
@@ -25,7 +24,6 @@ use BrianHenryIE\WC_Address_Validation\WooCommerce\Shipping_Settings_Page;
 use BrianHenryIE\WC_Address_Validation\WP_Includes\CLI;
 use BrianHenryIE\WC_Address_Validation\WP_Includes\Cron;
 use BrianHenryIE\WC_Address_Validation\WP_Includes\I18n;
-use Psr\Log\LoggerInterface;
 use WP_CLI;
 
 /**
@@ -44,20 +42,7 @@ use WP_CLI;
  */
 class BH_WC_Address_Validation {
 
-	/**
-	 * @var LoggerInterface
-	 */
-	protected LoggerInterface $logger;
-
-	/**
-	 * @var Settings_Interface
-	 */
-	protected Settings_Interface $settings;
-
-	/**
-	 * @var API_Interface
-	 */
-	protected API_Interface $api;
+	protected ContainerInterface $container;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -67,16 +52,10 @@ class BH_WC_Address_Validation {
 	 * the woocommerce-facing side of the site.
 	 *
 	 * @since    1.0.0
-	 *
-	 * @param API_Interface      $api
-	 * @param Settings_Interface $settings
-	 * @param LoggerInterface    $logger
 	 */
-	public function __construct( API_Interface $api, Settings_Interface $settings, LoggerInterface $logger ) {
+	public function __construct( ContainerInterface $container ) {
 
-		$this->logger   = $logger;
-		$this->settings = $settings;
-		$this->api      = $api;
+		$this->container = $container;
 
 		$this->set_locale();
 
@@ -98,7 +77,7 @@ class BH_WC_Address_Validation {
 	 */
 	protected function set_locale(): void {
 
-		$plugin_i18n = new I18n();
+		$plugin_i18n = $this->container->get( I18n::class );
 
 		add_action( 'init', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 	}
@@ -111,14 +90,17 @@ class BH_WC_Address_Validation {
 	 */
 	protected function define_admin_hooks(): void {
 
-		$plugins_page    = new Plugins_Page( $this->settings );
-		$plugin_basename = $this->settings->get_plugin_basename();
+		$plugins_page = $this->container->get( Plugins_Page::class );
+
+		$settings        = $this->container->get( Settings_Interface::class );
+		$plugin_basename = $settings->get_plugin_basename();
+
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $plugins_page, 'action_links' ) );
 		add_filter( 'plugin_row_meta', array( $plugins_page, 'row_meta' ), 20, 4 );
 	}
 
 	protected function define_plugin_installer_hooks(): void {
-		$plugin_installer_skin = new Plugin_Installer_Skin();
+		$plugin_installer_skin = $this->container->get( Plugin_Installer_Skin::class );
 		add_filter( 'install_plugin_overwrite_comparison', array( $plugin_installer_skin, 'add_changelog_entry_to_upgrade_screen' ), 10, 3 );
 	}
 
@@ -127,20 +109,20 @@ class BH_WC_Address_Validation {
 	 */
 	protected function define_woocommerce_hooks(): void {
 
-		$shipping_settings_page = new Shipping_Settings_Page();
+		$shipping_settings_page = $this->container->get( Shipping_Settings_Page::class );
 		add_filter( 'woocommerce_get_sections_shipping', array( $shipping_settings_page, 'address_validation_section' ), 10, 1 );
 		add_filter( 'woocommerce_get_settings_shipping', array( $shipping_settings_page, 'address_validation_settings' ), 10, 2 );
 
 		/**
 		 * The Order_Status class defines one new order status, wc-bad-address.
 		 */
-		$order_status = new Order_Status( $this->api, $this->settings, $this->logger );
+		$order_status = $this->container->get( Order_Status::class );
 		add_action( 'woocommerce_init', array( $order_status, 'register_status' ) );
 		add_filter( 'wc_order_statuses', array( $order_status, 'add_order_status_to_woocommerce' ) );
 		add_filter( 'woocommerce_order_is_paid_statuses', array( $order_status, 'add_to_paid_status_list' ) );
 		add_filter( 'woocommerce_reports_order_statuses', array( $order_status, 'add_to_reports_status_list' ) );
 
-		$woocommerce_email = new Emails();
+		$woocommerce_email = $this->container->get( Emails::class );
 		add_filter( 'woocommerce_email_classes', array( $woocommerce_email, 'register_email' ), 10, 1 );
 	}
 
@@ -148,7 +130,7 @@ class BH_WC_Address_Validation {
 	 *
 	 */
 	protected function define_woocommerce_order_hooks(): void {
-		$woocommerce_order = new Order( $this->api, $this->settings, $this->logger );
+		$woocommerce_order = $this->container->get( Order::class );
 
 		add_action( 'woocommerce_order_status_changed', array( $woocommerce_order, 'check_address_on_single_order_processing' ), 10, 3 );
 		add_action( 'admin_action_mark_processing', array( $woocommerce_order, 'check_address_on_bulk_order_processing' ) );
@@ -166,7 +148,7 @@ class BH_WC_Address_Validation {
 	 * @since    1.0.0
 	 */
 	protected function define_cron_hooks(): void {
-		$cron = new Cron( $this->api, $this->settings, $this->logger );
+		$cron = $this->container->get( Cron::class );
 
 		add_action( Cron::CHECK_SINGLE_ADDRESS_CRON_JOB, array( $cron, 'check_address_for_single_order' ) );
 		add_action( Cron::CHECK_MULTIPLE_ADDRESSES_CRON_JOB, array( $cron, 'check_address_for_multiple_orders' ) );
@@ -178,7 +160,7 @@ class BH_WC_Address_Validation {
 	protected function define_cli_commands(): void {
 
 		if ( class_exists( WP_CLI::class ) ) {
-			CLI::$api = $this->api;
+			CLI::$api = $this->container->get( API_Interface::class );
 			// e.g. `vendor/bin/wp address_validation check_order 123`.
 			WP_CLI::add_command( 'address_validation', CLI::class );
 		}

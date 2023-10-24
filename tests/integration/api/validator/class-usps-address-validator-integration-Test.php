@@ -8,10 +8,8 @@
 namespace BrianHenryIE\WC_Address_Validation\API\Validators;
 
 use BrianHenryIE\ColorLogger\ColorLogger;
-use BrianHenryIE\WC_Address_Validation\Container;
 use BrianHenryIE\WC_Address_Validation\USPS\Address;
 use BrianHenryIE\WC_Address_Validation\USPS\AddressVerify;
-use BrianHenryIE\WC_Address_Validation\USPS\USPSBase;
 
 
 /**
