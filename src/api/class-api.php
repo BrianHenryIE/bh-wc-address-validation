@@ -221,7 +221,7 @@ class API implements API_Interface {
 	}
 
 	/**
-	 * Often the USPS API returns "no address" but later a manual invokation will validate the address.
+	 * Often the USPS API returns "no address" but later a manual invocation will validate the address.
 	 *
 	 * This function is intended to be hooked on a regular cron (~4 hours) to re-run the check.
 	 */
