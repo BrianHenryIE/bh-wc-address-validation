@@ -62,3 +62,6 @@ docker_tag
 vendor-prefixed
 dist-archive
 languages/bh-wc-address-validation.pot
+/test-results/
+/playwright-report/
+/playwright/.cache/

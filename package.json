@@ -1,0 +1,27 @@
+{
+  "name": "bh-wc-address-validation",
+  "version": "1.0.0",
+  "description": "[![WordPress tested 5.5](https://img.shields.io/badge/WordPress-v5.5%20tested-0073aa.svg)](#) [![PHPUnit ](.github/coverage.svg)](https://brianhenryie.github.io/bh-wc-address-validation/)",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrianHenryIE/bh-wc-address-validation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrianHenryIE/bh-wc-address-validation/issues"
+  },
+  "homepage": "https://github.com/BrianHenryIE/bh-wc-address-validation#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.39.0",
+    "@types/node": "^20.8.8",
+    "@wordpress/e2e-test-utils-playwright": "^0.12.0",
+    "@wordpress/env": "^8.10.0"
+  }
+}
