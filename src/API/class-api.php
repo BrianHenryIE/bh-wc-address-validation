@@ -96,6 +96,8 @@ class API implements API_Interface {
 			/** @var array $updated_address */
 			$updated_address = $result['updated_address'];
 
+			// Fatal error here where $updated_address was a string ''
+
 			$address_was_changed = implode( ',', $order_shipping_address ) !== implode( ',', $updated_address );
 
 			if ( $address_was_changed ) {
