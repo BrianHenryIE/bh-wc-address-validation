@@ -2,8 +2,10 @@ parameters:
     level: 8
     paths:
         - src
+        - tests
     excludePaths:
         - vendor-prefixed
+        - tests/_support
     bootstrapFiles:
         - phpstanbootstrap.php
         - autoload.php
