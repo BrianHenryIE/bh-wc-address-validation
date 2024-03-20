@@ -48,7 +48,7 @@
         }
     },
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "alleyinteractive/wordpress-autoloader": "^1.1",
         "brianhenryie/bh-wp-logger": "dev-master",
         "easypost/easypost-php": "^3.6",

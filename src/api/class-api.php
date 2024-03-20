@@ -27,24 +27,19 @@ class API implements API_Interface {
 
 	const BH_WC_ADDRESS_VALIDATION_CHECKED_META = 'bh_wc_address_validation_checked';
 
-	protected Settings_Interface $settings;
-
-	/**
-	 * An interface to the APIs.
-	 */
-	protected Address_Validator_Interface $address_validator;
-
 	/**
 	 * API constructor.
 	 *
-	 * @param Settings_Interface $settings
-	 * @param LoggerInterface    $logger
+	 * @param Address_Validator_Interface $address_validator An interface to the APIs.
+	 * @param Settings_Interface          $settings The plugin settings.
+	 * @param LoggerInterface             $logger A PSR logger.
 	 */
-	public function __construct( Address_Validator_Interface $address_validator, Settings_Interface $settings, LoggerInterface $logger ) {
-
+	public function __construct(
+		protected Address_Validator_Interface $address_validator,
+		protected Settings_Interface $settings,
+		LoggerInterface $logger
+	) {
 		$this->setLogger( $logger );
-		$this->settings          = $settings;
-		$this->address_validator = $address_validator;
 	}
 
 	/**
