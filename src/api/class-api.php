@@ -1,6 +1,10 @@
 <?php
 /**
+ * Checks an address against an address validator, either directly as an address or from a WooCommerce order,
+ * and adds a comment to the order with the result. If the address is invalid, the order status is set to
+ * 'bad-address' and a cron job is scheduled to re-check the address in a few hours.
  *
+ * @package brianhenryie/bh-wc-address-validation
  */
 
 namespace BrianHenryIE\WC_Address_Validation\API;
@@ -16,11 +20,6 @@ use Psr\Log\LoggerInterface;
 use WC_Data_Exception;
 use WC_Order;
 
-/**
- * Class API
- *
- * @package BrianHenryIE\WC_Address_Validation\API
- */
 class API implements API_Interface {
 
 	use LoggerAwareTrait;
@@ -206,7 +205,9 @@ class API implements API_Interface {
 	}
 
 	/**
-	 * @param array{address_1: string, address_2: string, city: string, state: string, postcode: string, country: string} $address_array
+	 * Validate any arbitrary address.
+	 *
+	 * @param array{address_1: string, address_2: string, city: string, state: string, postcode: string, country: string} $address_array An address, in the array format a WooCommerce order uses.
 	 * @return array{success: bool, original_address: array, updated_address: ?array, message: ?string, error_message: ?string}
 	 */
 	public function validate_address( array $address_array ): array {
