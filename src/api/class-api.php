@@ -50,7 +50,8 @@ class API implements API_Interface {
 	/**
 	 * Adds the +4 zip code or marks the order with 'bad-address' status.
 	 *
-	 * @param WC_Order $order
+	 * @param WC_Order $order The WooCommerce order whose address to check.
+	 * @param bool     $is_manual
 	 * @throws WC_Data_Exception
 	 */
 	public function check_address_for_order( WC_Order $order, bool $is_manual = false ): void {
@@ -94,10 +95,24 @@ class API implements API_Interface {
 
 			$order_shipping_address = array_map( 'strtoupper', array_map( 'trim', $order_shipping_address ) );
 
-			/** @var array $updated_address */
+			/** @var array|string $updated_address */
 			$updated_address = $result['updated_address'];
 
-			// Fatal error here where $updated_address was a string ''
+			// Fatal error here where $updated_address was a string ''.
+			if ( is_string( $updated_address ) ) {
+				$this->logger->info(
+					'Updated address unexpectedly a string. From: ' . implode( ',', $order_shipping_address ) . ' to updated_address: `' . $updated_address . '`.',
+					array( 'address' => $order_shipping_address )
+				);
+				$order->add_order_note( 'Failed to validate address.' . implode( ',', $order_shipping_address ) );
+
+				$checked_meta[ gmdate( DATE_ATOM ) ] = $result;
+				$order->update_meta_data( self::BH_WC_ADDRESS_VALIDATION_CHECKED_META, $checked_meta );
+
+				$order->save();
+
+				return;
+			}
 
 			$address_was_changed = implode( ',', $order_shipping_address ) !== implode( ',', $updated_address );
 
